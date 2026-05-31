@@ -1,0 +1,11 @@
+# Binary
+ninja-trainer
+
+# User progress (auto-generated, don't track)
+progress.json
+
+# AI assistant context
+.clinerules
+
+# Internal design docs
+pratchett_magic_uu_skill.md

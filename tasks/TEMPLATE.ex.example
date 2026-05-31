@@ -1,0 +1,33 @@
+META
+# Title: Название задания
+# Number: 001
+# Level: 1
+# Difficulty: easy|medium|hard|expert
+# TimeLimitMin: 10
+
+SETUP
+#!/bin/bash
+# Подготовительный скрипт — выполняется при нажатии [R]
+# Создай файлы, папки, данные для задания
+rm -rf /tmp/ninja_training 2>/dev/null
+mkdir -p /tmp/ninja_training
+echo "✅ Окружение готово!"
+
+TASK
+Описание задания для пользователя.
+
+Пиши понятно, с примерами команд если нужно.
+Используй эмодзи для наглядности 🥷
+
+VALIDATION
+#!/bin/bash
+# Скрипт проверки — exit 0 = успех, exit 1+ = ошибки
+errors=0
+[ -d /tmp/ninja_training ] && echo "✓ Папка существует" || { echo "✗ Папка не найдена"; errors=$((errors+1)); }
+[ "$errors" -eq 0 ] && echo "✓✓✓ ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ! ✓✓✓"
+exit $errors
+
+HINTS
+Первая подсказка — намёк на подход
+Вторая подсказка — конкретная команда
+Третья подсказка — почти готовое решение
