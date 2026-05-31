@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/инвентарь.json" << 'EOF'
+cat > "$DIR/inventory.json" << 'EOF'
 {
   "склад": "Главный",
   "зелья": [
@@ -51,11 +51,11 @@ TASK
 📋 **Боевые задания**:
 
 **JSON часть**:
-1. Только зелья в наличии (наличие > 0): `jq '.зелья[] | select(.наличие > 0)' инвентарь.json`
-2. Отсортируй по цене по убыванию: `jq '.зелья | sort_by(.цена) | reverse' инвентарь.json`
-3. Сгруппируй по типу и посчитай количество: `jq '.зелья | group_by(.тип) | map({тип: .[0].тип, количество: length})' инвентарь.json`
-4. Экспортируй в CSV: `jq -r '.зелья[] | [.название, .цена, .тип] | @csv' инвентарь.json > отчёт.csv`
-5. Общая стоимость инвентаря: `jq '[.зелья[] | .цена * .наличие] | add' инвентарь.json`
+1. Только зелья в наличии (наличие > 0): `jq '.зелья[] | select(.наличие > 0)' inventory.json`
+2. Отсортируй по цене по убыванию: `jq '.зелья | sort_by(.цена) | reverse' inventory.json`
+3. Сгруппируй по типу и посчитай количество: `jq '.зелья | group_by(.тип) | map({тип: .[0].тип, количество: length})' inventory.json`
+4. Экспортируй в CSV: `jq -r '.зелья[] | [.название, .цена, .тип] | @csv' inventory.json > report.csv`
+5. Общая стоимость инвентаря: `jq '[.зелья[] | .цена * .наличие] | add' inventory.json`
 
 **YAML часть**:
 6. Обнови реплики на 5: `yq -i '.spec.replicas = 5' deploy.yaml`
@@ -69,10 +69,10 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/jqyq_011"
 score=0
 
-r1=$(jq '[.зелья[] | select(.наличие > 0)] | length' "$DIR/инвентарь.json" 2>/dev/null)
+r1=$(jq '[.зелья[] | select(.наличие > 0)] | length' "$DIR/inventory.json" 2>/dev/null)
 [ "$r1" -ge 4 ] && { echo "✓ Фильтрация работает ($r1 зелий)"; score=$((score+1)); }
 
-r2=$(jq '[.зелья[] | .цена * .наличие] | add' "$DIR/инвентарь.json" 2>/dev/null)
+r2=$(jq '[.зелья[] | .цена * .наличие] | add' "$DIR/inventory.json" 2>/dev/null)
 [ "$r2" -ge 100 ] && { echo "✓ Общая стоимость: $r2"; score=$((score+1)); }
 
 rep=$(yq '.spec.replicas' "$DIR/deploy.yaml" 2>/dev/null)
@@ -81,7 +81,7 @@ rep=$(yq '.spec.replicas' "$DIR/deploy.yaml" 2>/dev/null)
 img=$(yq '.spec.template.spec.containers[0].image' "$DIR/deploy.yaml" 2>/dev/null)
 echo "$img" | grep -q 'v2' && { echo "✓ Образ обновлён: $img"; score=$((score+1)); }
 
-[ -f "$DIR/отчёт.csv" ] && { echo "✓ CSV создан"; score=$((score+1)); }
+[ -f "$DIR/report.csv" ] && { echo "✓ CSV создан"; score=$((score+1)); }
 
 [ $score -ge 3 ] && { echo "✓ ok: БОСС пройден! Пайплайн работает! (баллов: $score/5)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/5)"

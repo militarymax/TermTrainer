@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/зелья.json" << 'EOF'
+cat > "$DIR/potions.json" << 'EOF'
 {
   "название": "Каталог зелий",
   "автор": "Казначейство УУ",
@@ -24,7 +24,7 @@ cat > "$DIR/зелья.json" << 'EOF'
   ]
 }
 EOF
-cat > "$DIR/конфиг.yaml" << 'EOF'
+cat > "$DIR/config.yaml" << 'EOF'
 университет:
   название: Незримый Университет
   ректор: Архиканцлер Ридкулли
@@ -59,22 +59,22 @@ TASK
 📂 Рабочий каталог: `~/.ninja_trainer/jqyq_002`
 
 📋 **Попробуй**:
-1. С кавычками: `jq '.название' зелья.json`
-2. Без кавычек: `jq -r '.название' зелья.json`
-3. Pretty YAML: `yq -P '.' конфиг.yaml`
-4. Конвертация: `yq -o json '.' конфиг.yaml`
+1. С кавычками: `jq '.название' potions.json`
+2. Без кавычек: `jq -r '.название' potions.json`
+3. Pretty YAML: `yq -P '.' config.yaml`
+4. Конвертация: `yq -o json '.' config.yaml`
 
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/jqyq_002"
 score=0
 
-if [ -f "$DIR/зелья.json" ] && [ -f "$DIR/конфиг.yaml" ]; then
+if [ -f "$DIR/potions.json" ] && [ -f "$DIR/config.yaml" ]; then
   echo "✓ Файлы данных на месте"
   score=$((score+1))
 fi
 
-result=$(jq -r '.название' "$DIR/зелья.json" 2>/dev/null)
+result=$(jq -r '.название' "$DIR/potions.json" 2>/dev/null)
 [ "$result" = "Каталог зелий" ] && { echo "✓ -r работает корректно"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: Чистый пергамент освоен! (баллов: $score/2)"; exit 0; }

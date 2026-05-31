@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/серверы.json" << 'EOF'
+cat > "$DIR/servers.json" << 'EOF'
 {
   "окружение": "production",
   "серверы": [
@@ -34,19 +34,19 @@ TASK
 
 📋 **Задания**:
 1. **Select раньше** — фильтруй как можно раньше:
-   Плохо: `jq '.серверы | map(select(.статус == "ok")) | map(.имя)' серверы.json`
-   Хорошо: `jq '[.серверы[] | select(.статус == "ok") | .имя]' серверы.json`
+   Плохо: `jq '.серверы | map(select(.статус == "ok")) | map(.имя)' servers.json`
+   Хорошо: `jq '[.серверы[] | select(.статус == "ok") | .имя]' servers.json`
 
-2. **Компактный вывод**: `jq -c '.' серверы.json` — всё в одну строку
+2. **Компактный вывод**: `jq -c '.' servers.json` — всё в одну строку
 
 3. **Серверы с высокой нагрузкой** (CPU>70 ИЛИ память>80):
-   `jq '[.серверы[] | select(.cpu > 70 or .память > 80)]' серверы.json`
+   `jq '[.серверы[] | select(.cpu > 70 or .память > 80)]' servers.json`
 
 4. **Статистика по регионам**:
-   `jq '.серверы | group_by(.регион) | map({регион: .[0].регион, количество: length, средний_cpu: (map(.cpu) | add / length)})' серверы.json`
+   `jq '.серверы | group_by(.регион) | map({регион: .[0].регион, количество: length, средний_cpu: (map(.cpu) | add / length)})' servers.json`
 
 5. **Пакетная обработка нескольких файлов**:
-   Создай второй JSON и попробуй: `jq -s '.' серверы.json второй.json`
+   Создай второй JSON и попробуй: `jq -s '.' servers.json второй.json`
    
 6. **Объединить с yq eval-all**:
    `yq eval-all 'select(fileIndex == 0)' файл1.yaml файл2.yaml`
@@ -64,13 +64,13 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/jqyq_014"
 score=0
 
-r1=$(jq '[.серверы[] | select(.cpu > 70)] | length' "$DIR/серверы.json" 2>/dev/null)
+r1=$(jq '[.серверы[] | select(.cpu > 70)] | length' "$DIR/servers.json" 2>/dev/null)
 [ "$r1" -ge 2 ] && { echo "✓ Фильтрация CPU>$r1"; score=$((score+1)); }
 
-r2=$(jq -c '.' "$DIR/серверы.json" 2>/dev/null | wc -l)
+r2=$(jq -c '.' "$DIR/servers.json" 2>/dev/null | wc -l)
 [ "$r2" -le 5 ] && { echo "✓ Компактный вывод ($r2 строк)"; score=$((score+1)); }
 
-r3=$(jq '.серверы | group_by(.регион) | length' "$DIR/серверы.json" 2>/dev/null)
+r3=$(jq '.серверы | group_by(.регион) | length' "$DIR/servers.json" 2>/dev/null)
 [ "$r3" -ge 2 ] && { echo "✓ Группировка по $r3 регионам"; score=$((score+1)); }
 
 [ $score -ge 2 ] && { echo "✓ ok: Оптимизация освоена! (баллов: $score/3)"; exit 0; }

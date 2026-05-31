@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/университет.json" << 'EOF'
+cat > "$DIR/university.json" << 'EOF'
 {
   "название": "Незримый Университет",
   "год": 2024,
@@ -62,21 +62,21 @@ TASK
 
 📋 **БЛОК 1 — Reduce и агрегации**:
 1. Общая прибыль всех факультетов через reduce:
-   `jq 'reduce .факультеты[] as $f (0; . + ($f.доход - $f.бюджет))' университет.json`
+   `jq 'reduce .факультеты[] as $f (0; . + ($f.доход - $f.бюджет))' university.json`
 2. Средняя оценка всех студентов:
-   `jq '[.факультеты[] | .студенты[] | .оценка] | add / length' университет.json`
+   `jq '[.факультеты[] | .студенты[] | .оценка] | add / length' university.json`
 3. Факультет с максимальной прибылью:
-   `jq '.факультеты | sort_by(.доход - .бюджет) | reverse | .[0].название' университет.json`
+   `jq '.факультеты | sort_by(.доход - .бюджет) | reverse | .[0].название' university.json`
 
 📋 **БЛОК 2 — Функции и модули**:
 4. Напиши функцию прибыли и используй:
-   `jq 'def profit: .доход - .бюджет; .факультеты[] | {название, profit: profit}' университет.json`
-5. Создай файл `анализ.jq` с функциями и запусти через `-f`
+   `jq 'def profit: .доход - .бюджет; .факультеты[] | {название, profit: profit}' university.json`
+5. Создай файл `analysis.jq` с функциями и запусти через `-f`
 
 📋 **БЛОК 3 — Сложные трансформации**:
 6. Трансформация: факультет → {название, студенты_количество, средняя_оценка, рентабельность}:
-   `jq '.факультеты[] | {название, студентов: (.студенты|length), средняя: ((.студенты|map(.оценка)|add)/(.студенты|length)), roi: (((.доход-.бюджет)/.доход*100)|floor)}' университет.json`
-7. Экспорт в CSV: `jq -r '"название,прибыль"', (.факультеты[] | [.название, .доход-.бюджет] | @csv)' университет.json > отчёт.csv`
+   `jq '.факультеты[] | {название, студентов: (.студенты|length), средняя: ((.студенты|map(.оценка)|add)/(.студенты|length)), roi: (((.доход-.бюджет)/.доход*100)|floor)}' university.json`
+7. Экспорт в CSV: `jq -r '"название,прибыль"', (.факультеты[] | [.название, .доход-.бюджет] | @csv)' university.json > report.csv`
 
 📋 **БЛОК 4 — YAML мутации**:
 8. Обнови образ: `yq -i '.spec.template.spec.containers[0].image = "uu/api:v2.0.0"' deploy.yaml`
@@ -89,8 +89,8 @@ TASK
 
 📋 **БЛОК 6 — CI/CD сценарий**:
 13. Напиши скрипт который:
-    - Читает версию из JSON: `jq -r '.год' университет.json`
-    - Обновляет YAML: `yq -i ".spec.template.spec.containers[0].image = \"uu/api:v"$(jq -r '.год' университет.json)"\"" deploy.yaml`
+    - Читает версию из JSON: `jq -r '.год' university.json`
+    - Обновляет YAML: `yq -i ".spec.template.spec.containers[0].image = \"uu/api:v"$(jq -r '.год' university.json)"\"" deploy.yaml`
     - Проверяет результат: `yq '.spec.template.spec.containers[0].image' deploy.yaml`
 
 📂 Рабочий каталог: `~/.ninja_trainer/jqyq_016`
@@ -104,20 +104,20 @@ max=8
 cd "$DIR" 2>/dev/null || exit 1
 
 # БЛОК 1: Reduce
-r1=$(jq 'reduce .факультеты[] as $f (0; . + ($f.доход - $f.бюджет))' университет.json 2>/dev/null)
+r1=$(jq 'reduce .факультеты[] as $f (0; . + ($f.доход - $f.бюджет))' university.json 2>/dev/null)
 [ "$r1" = "10000" ] && { echo "✓ Reduce: общая прибыль=$r1"; score=$((score+1)); }
 
 # БЛОК 2: Функции
-r2=$(jq 'def profit: .доход - .бюджет; [.факультеты[] | profit] | add' университет.json 2>/dev/null)
+r2=$(jq 'def profit: .доход - .бюджет; [.факультеты[] | profit] | add' university.json 2>/dev/null)
 [ "$r2" = "10000" ] && { echo "✓ Функция profit работает"; score=$((score+1)); }
 
-if [ -f "$DIR/анализ.jq" ]; then
-  r2b=$(jq -f анализ.jq университет.json 2>/dev/null)
-  [ -n "$r2b" ] && { echo "✓ Модуль анализ.jq работает"; score=$((score+1)); }
+if [ -f "$DIR/analysis.jq" ]; then
+  r2b=$(jq -f analysis.jq university.json 2>/dev/null)
+  [ -n "$r2b" ] && { echo "✓ Модуль analysis.jq работает"; score=$((score+1)); }
 fi
 
 # БЛОК 3: CSV
-if [ -f "$DIR/отчёт.csv" ]; then
+if [ -f "$DIR/report.csv" ]; then
   echo "✓ CSV создан"
   score=$((score+1))
 fi

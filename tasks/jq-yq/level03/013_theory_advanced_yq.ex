@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/конфиг.yaml" << 'EOF'
+cat > "$DIR/config.yaml" << 'EOF'
 # Конфигурация сервиса зелий
 сервер:
   хост: spells.uu.edu
@@ -75,7 +75,7 @@ yq — не только YAML. Это швейцарский нож для фо�
 📋 **Попробуй**:
 1. XML→JSON: `yq -p xml -o json '.' data.xml`
 2. CSV→JSON: `yq -p csv -o json '.' data.csv`
-3. Обновить два поля: `yq '.сервер.порт = 9090 | .база_данных.порт = 3306' конфиг.yaml`
+3. Обновить два поля: `yq '.сервер.порт = 9090 | .база_данных.порт = 3306' config.yaml`
 
 VALIDATION
 #!/bin/bash

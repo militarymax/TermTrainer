@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/маг.json" << 'EOF'
+cat > "$DIR/wizard.json" << 'EOF'
 {
   "университет": "Незримый Университет",
   "ректор": "Архиканцлер Ридкулли",
@@ -51,20 +51,20 @@ TASK
 
 📖 **Примеры**:
 ```bash
-jq '.' маг.json              # весь JSON с отступами
-jq '.ректор' маг.json        # "Архиканцлер Ридкулли"
-jq '.факультеты[0]' маг.json # "магия"
-jq '.бюджет | .доход' маг.json # 50000
+jq '.' wizard.json              # весь JSON с отступами
+jq '.ректор' wizard.json        # "Архиканцлер Ридкулли"
+jq '.факультеты[0]' wizard.json # "магия"
+jq '.бюджет | .доход' wizard.json # 50000
 ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/jqyq_001`
 
 📋 **Попробуй**:
 1. Проверь установку: `jq --version` и `yq --version`
-2. Выведи весь JSON: `cd ~/.ninja_trainer/jqyq_001 && jq '.' маг.json`
-3. Извлеки ректора: `jq '.ректор' маг.json`
-4. Первый факультет: `jq '.факультеты[0]' маг.json`
-5. Доход через pipe: `jq '.бюджет | .доход' маг.json`
+2. Выведи весь JSON: `cd ~/.ninja_trainer/jqyq_001 && jq '.' wizard.json`
+3. Извлеки ректора: `jq '.ректор' wizard.json`
+4. Первый факультет: `jq '.факультеты[0]' wizard.json`
+5. Доход через pipe: `jq '.бюджет | .доход' wizard.json`
 
 VALIDATION
 #!/bin/bash
@@ -78,8 +78,8 @@ else
   echo "✗ jq не установлен. Выполни: brew install jq"
 fi
 
-if [ -f "$DIR/маг.json" ]; then
-  echo "✓ маг.json на месте"
+if [ -f "$DIR/wizard.json" ]; then
+  echo "✓ wizard.json на месте"
   score=$((score+1))
 fi
 

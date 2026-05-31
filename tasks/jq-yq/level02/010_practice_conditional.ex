@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/заклинания.json" << 'EOF'
+cat > "$DIR/spells.json" << 'EOF'
 {
   "заклинания": [
     {"имя": "огненный_шар", "сила": 90, "тип": "атака", "мана": 50},
@@ -32,19 +32,19 @@ TASK
 
 📋 **Задания**:
 1. Классифицируй заклинания по силе:
-   `jq '.заклинания[] | {имя, ранг: (if .сила > 80 then "S" elif .сила > 50 then "A" else "B" end)}' заклинания.json`
+   `jq '.заклинания[] | {имя, ранг: (if .сила > 80 then "S" elif .сила > 50 then "A" else "B" end)}' spells.json`
 
 2. Только атакующие с силой >50:
-   `jq '.заклинания[] | select(.тип == "атака" and .сила > 50)' заклинания.json`
+   `jq '.заклинания[] | select(.тип == "атака" and .сила > 50)' spells.json`
 
 3. Добавь поле "эффективность" (сила / мана):
-   `jq '.заклинания[] | . + {эффективность: (.сила / .мана)}' заклинания.json`
+   `jq '.заклинания[] | . + {эффективность: (.сила / .мана)}' spells.json`
 
 4. Используй --slurp для объединения двух файлов:
    Создай второй JSON и попробуй: `jq -s '.' ф1.json ф2.json`
 
 5. Рекурсивный поиск всех значений "сила":
-   `jq '.. | .сила? // empty' заклинания.json`
+   `jq '.. | .сила? // empty' spells.json`
 
 📖 **Условия**:
 • `if A then B elif C then D else E end`
@@ -61,10 +61,10 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/jqyq_010"
 score=0
 
-r1=$(jq '[.заклинания[] | select(.сила > 80)] | length' "$DIR/заклинания.json" 2>/dev/null)
+r1=$(jq '[.заклинания[] | select(.сила > 80)] | length' "$DIR/spells.json" 2>/dev/null)
 [ "$r1" -ge 2 ] && { echo "✓ Select + условие работает"; score=$((score+1)); }
 
-r2=$(jq '.заклинания[] | if .сила > 80 then "S" else "other" end' "$DIR/заклинания.json" 2>/dev/null | grep -c 'S')
+r2=$(jq '.заклинания[] | if .сила > 80 then "S" else "other" end' "$DIR/spells.json" 2>/dev/null | grep -c 'S')
 [ "$r2" -ge 2 ] && { echo "✓ If/then работает"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: Условные заклинания освоены! (баллов: $score/2)"; exit 0; }

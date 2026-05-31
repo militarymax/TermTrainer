@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/студенты.json" << 'EOF'
+cat > "$DIR/students.json" << 'EOF'
 {
   "курс": "Скриптология",
   "студенты": [
@@ -48,29 +48,29 @@ TASK
 
 📖 **Примеры**:
 ```bash
-jq '.студенты | map(.оценка) | add' студенты.json     # сумма оценок
-jq '[.студенты[] | select(.оценка > 80)]' студенты.json # отличники как массив
-jq '.студенты | length' студенты.json                    # количество
-jq '.студенты[] | del(.факультет)' студенты.json         # без факультета
+jq '.студенты | map(.оценка) | add' students.json     # сумма оценок
+jq '[.студенты[] | select(.оценка > 80)]' students.json # отличники как массив
+jq '.студенты | length' students.json                    # количество
+jq '.студенты[] | del(.факультет)' students.json         # без факультета
 ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/jqyq_007`
 
 📋 **Попробуй**:
-1. Все имена через map: `jq '.студенты | map(.имя)' студенты.json`
-2. Отличники (>80): `jq '.студенты[] | select(.оценка > 80)' студенты.json`
-3. Количество: `jq '.студенты | length' студенты.json`
-4. Удалить факультет: `jq '.студенты[] | del(.факультет)' студенты.json`
+1. Все имена через map: `jq '.студенты | map(.имя)' students.json`
+2. Отличники (>80): `jq '.студенты[] | select(.оценка > 80)' students.json`
+3. Количество: `jq '.студенты | length' students.json`
+4. Удалить факультет: `jq '.студенты[] | del(.факультет)' students.json`
 
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/jqyq_007"
 score=0
 
-r1=$(jq '.студенты | map(.имя) | length' "$DIR/студенты.json" 2>/dev/null)
+r1=$(jq '.студенты | map(.имя) | length' "$DIR/students.json" 2>/dev/null)
 [ "$r1" = "6" ] && { echo "✓ map работает"; score=$((score+1)); }
 
-r2=$(jq '[.студенты[] | select(.оценка > 80)] | length' "$DIR/студенты.json" 2>/dev/null)
+r2=$(jq '[.студенты[] | select(.оценка > 80)] | length' "$DIR/students.json" 2>/dev/null)
 [ "$r2" -ge 2 ] 2>/dev/null && { echo "✓ select работает ($r2 отличника)"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: Фильтры Астролога освоены! (баллов: $score/2)"; exit 0; }

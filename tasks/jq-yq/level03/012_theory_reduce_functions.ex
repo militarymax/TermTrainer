@@ -13,7 +13,7 @@ SETUP
 DIR="$HOME/.ninja_trainer/jqyq_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/транзакции.json" << 'EOF'
+cat > "$DIR/transactions.json" << 'EOF'
 {
   "транзакции": [
     {"тип": "доход", "сумма": 5000, "категория": "зелья"},
@@ -52,7 +52,7 @@ TASK
 📂 Рабочий каталог: `~/.ninja_trainer/jqyq_012`
 
 📋 **Попробуй**:
-1. Сумма доходов через reduce: `jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' транзакции.json`
+1. Сумма доходов через reduce: `jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' transactions.json`
 2. Функция double: `echo '[1,2,3]' | jq 'def double: . * 2; map(double)'`
 
 VALIDATION
@@ -60,7 +60,7 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/jqyq_012"
 score=0
 
-r1=$(jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' "$DIR/транзакции.json" 2>/dev/null)
+r1=$(jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' "$DIR/transactions.json" 2>/dev/null)
 [ "$r1" = "16000" ] && { echo "✓ Reduce работает: доходы=$r1"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: Редукции освоены! (баллов: $score/1)"; exit 0; }
