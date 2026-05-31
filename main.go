@@ -208,9 +208,28 @@ func loadAllTasks(tasksDir string) ([]*Task, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error scanning tasks directory: %w", err)
 	}
+	trackPriority := map[string]int{
+		"cli-basics": 1,
+		"text-fu":    2,
+		"scripting":  3,
+		"git":        4,
+		"jq-yq":      5,
+		"netdebug":   6,
+		"docker":     7,
+		"kubectl":    8,
+		"cicd":       9,
+		"terraform":  10,
+	}
 	sort.Slice(allTasks, func(i, j int) bool {
-		if allTasks[i].TrackDir != allTasks[j].TrackDir {
-			return allTasks[i].TrackDir < allTasks[j].TrackDir
+		priI, priJ := trackPriority[allTasks[i].TrackDir], trackPriority[allTasks[j].TrackDir]
+		if priI == 0 {
+			priI = 99
+		}
+		if priJ == 0 {
+			priJ = 99
+		}
+		if priI != priJ {
+			return priI < priJ
 		}
 		if allTasks[i].Level != allTasks[j].Level {
 			return allTasks[i].Level < allTasks[j].Level
