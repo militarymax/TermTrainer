@@ -4,58 +4,81 @@ META
 # Number: 010
 # Level: 2
 # Type: practice
-# Difficulty: medium
-# TimeLimitMin: 20
-# XP: 25
+# Difficulty: hard
+# TimeLimitMin: 25
+# XP: 30
 
 SETUP
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/scripting_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/звёздный_каталог.txt" << 'EOF'
-Альдебаран|Красный гигант|0.85|16
-Сириус|Белый карлик|1.42|8
-Вега|Белый голубой|0.03|25
-Бетельгейзе|Красный сверхгигант|0.50|700
-Процион|Жёлто-белый|1.14|11
-EOF
-cat > "$DIR/заклинания.log" << 'EOF'
-[2024-01-15] CAST fire_ball power=42 target=goblin
-[2024-01-15] CAST heal power=10 self=true
-[2024-01-15] FAIL curse reason=invalid_target
-[2024-01-16] CAST invisibility power=99 target=self
-[2024-01-16] CAST teleport power=75 target=tower
-[2024-01-16] FAIL summon reason=insufficient_mana
+cat > "$DIR/students.txt" << 'EOF'
+Rincewind:wizard:42:running_away
+Carrot:watchman:27:honesty
+Granny Weatherwax:witch:82:headology
+Nanny Ogg:witch:79:drinking
+Death:anthropomorphic:0:duty
 EOF
 
 TASK
-⭐ **Чтение звёздных карт**
+⚗️ ПРАКТИКУМ #010: Чтение звёздных карт
 
-Астрологи читают звёздные карты — строки данных, разделённые спецсимволами. Нужно уметь извлекать данные из любого формата и распознавать паттерны.
+Астролог развернул звёздную карту:
+«Ринсвинд, данные приходят в разных форматах. Иногда нужно прочитать
+ввод с клавиатуры, иногда — распарсить строку с помощью regex.
+Научись читать и фильтровать — или будешь вручную переписывать
+каждый свиток до конца времён.»
 
 📋 **Задания**:
-1. Создай скрипт `star_reader.sh` который:
-   - Читает `звёздный_каталог.txt` через `while IFS='|' read -r name type dist temp`
-   - Выводит каждую звезду в формате: `★ $name ($type) — расстояние: $dist, температура: $temp`
-   - Использует `[[ ]]` для проверки: если температура > 100 — добавить `⚠ СВЕРХГИГАНТ`
 
-2. Создай скрипт `spell_analyzer.sh` который:
-   - Читает `заклинания.log` построчно
-   - С помощью `=~` в `[[ ]]` проверяет формат строки
-   - Для строк с `CAST`: извлекает заклинание, power и target через BASH_REMATCH
-   - Подсчитывает успешные CAST и провальные FAIL
-   - Выводит итоговую статистику
+1. **Продвинутый read**:
+   ```bash
+   # Интерактивный ввод
+   read -r -p "Enter spell name: " spell
+   echo "Casting: $spell"
+   
+   # Чтение в несколько переменных (разделитель по умолчанию — пробел)
+   echo "Rincewind wizard 42" | read -r name class age
+   echo "$name is a $class of age $age"
+   
+   # -r: не экранировать обратные слеши
+   # -d: другой разделитель
+   ```
 
-💡 **Продвинутый read**:
-• `-r` — не экранировать обратные слеши (всегда используй!)
-• `IFS=',' read -r a b c` — разделитель запятая
-• `read -d ''` — читать до конца (а не до перевода строки)
+2. **Regex в [[ ]]**:
+   ```bash
+   name="Rincewind42"
+   
+   if [[ "$name" =~ ^[A-Za-z]+[0-9]+$ ]]; then
+       echo "Alphanumeric!"
+   fi
+   
+   # Доступ к захваченным группам:
+   if [[ "$name" =~ ^([A-Za-z]+)([0-9]+)$ ]]; then
+       echo "Name part: ${BASH_REMATCH[1]}"   # → Rincewind
+       echo "Number part: ${BASH_REMATCH[2]}"  # → 42
+   fi
+   ```
 
-💡 **Regex в bash**:
-• `[[ "$str" =~ pattern ]]` — матчинг
-• `${BASH_REMATCH[0]}` — всё совпадение
-• `${BASH_REMATCH[1]}` — первая группа захвата
+3. **Напиши `student_lookup.sh`**:
+   ```bash
+   #!/bin/bash
+   set -euo pipefail
+   
+   file="${1:-students.txt}"
+   
+   while IFS=: read -r name role age specialty; do
+       # Regex: только если имя начинается с заглавной буквы
+       if [[ "$name" =~ ^[A-Z] ]]; then
+           printf "%-20s %-15s age:%-5s %s\n" "$name" "$role" "$age" "$specialty"
+       fi
+   done < "$file"
+   ```
+
+4. **Напиши `validate.sh`** который проверяет ввод через regex:
+   - Является ли аргумент числом? `[[ "$1" =~ ^[0-9]+$ ]]`
+   - Email формат? `[[ "$1" =~ ^[^@]+@[^@]+\.[a-z]+$ ]]`
 
 📂 Рабочий каталог: `~/.ninja_trainer/scripting_010`
 
@@ -64,27 +87,25 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/scripting_010"
 score=0
 
-if [ -f "$DIR/star_reader.sh" ]; then
-  echo "✓ star_reader.sh создан"
-  score=$((score+1))
-  output=$(bash "$DIR/star_reader.sh" 2>/dev/null)
-  echo "$output" | grep -qi 'альдебаран\|сириус' && { echo "✓ Звёзды прочитаны"; score=$((score+1)); }
+if [ -f "$DIR/student_lookup.sh" ]; then
+  chmod +x "$DIR/student_lookup.sh"
+  out=$(bash "$DIR/student_lookup.sh" students.txt 2>&1)
+  echo "$out" | grep -q "Rincewind\|Carrot\|Granny\|Nanny\|Death" && { echo "✓ student_lookup.sh работает"; score=$((score+1)); }
 fi
 
-if [ -f "$DIR/spell_analyzer.sh" ]; then
-  echo "✓ spell_analyzer.sh создан"
-  score=$((score+1))
-  output=$(bash "$DIR/spell_analyzer.sh" 2>/dev/null)
-  echo "$output" | grep -qiE '(cast|fail|успешн|провал)' && { echo "✓ Статистика заклинаний"; score=$((score+1)); }
-fi
+regex_out=$(bash -c '[[ "hello123" =~ ^[a-z]+[0-9]+$ ]] && echo YES || echo NO' 2>/dev/null)
+[ "$regex_out" = "YES" ] && { echo "✓ Regex работает"; score=$((score+1)); }
 
-[ $score -ge 3 ] && { echo "✓ ok: Звёздные карты прочитаны! (баллов: $score/4)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/4)"
+[ $score -ge 1 ] && { echo "✓ ok: Read и regex освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Напиши student_lookup.sh (баллов: $score/2)"
 exit 1
 
 HINTS
-Чтение с разделителем: while IFS='|' read -r name type dist temp; do echo "$name"; done < звёздный_каталог.txt
-Regex в bash: if [[ "$line" =~ ^\[([0-9-]+)\]\ (CAST|FAIL)\ (.+)$ ]]; then echo "${BASH_REMATCH[1]}"; fi
-BASH_REMATCH: [0]=всё совпадение, [1]=первая группа (), [2]=вторая...
-Проверка числа в [[ ]]: if [[ $temp -gt 100 ]]; then echo "Сверхгигант!"; fi
-read -r: всегда используй -r чтобы обратные слеши не экранировались
+read -r: не экранировать обратные слеши (ВСЕГДА используй -r!)
+read -p: подсказка перед вводом
+IFS=: разделитель полей для read (по умолчанию пробел/таб/новая строка)
+Regex в bash: [[ "$var" =~ pattern ]] — без кавычек вокруг pattern!
+BASH_REMATCH[0]: всё совпадение, [1],[2]... — группы
+Цифры regex: [[ "$var" =~ ^[0-9]+$ ]] — проверить что это число
+Email regex: [[ "$var" =~ ^[^@]+@[^@]+\.[a-z]+$ ]]
+while IFS=: read: парсинг CSV-подобных файлов с разделителем :

@@ -5,55 +5,88 @@ META
 # Level: 3
 # Type: practice
 # Difficulty: hard
-# TimeLimitMin: 25
+# TimeLimitMin: 30
 # XP: 40
 
 SETUP
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/scripting_015"
 rm -rf "$DIR" 2>/dev/null
-mkdir -p "$DIR/секреты" "$DIR/публичное"
-echo "пароль=абракадабра" > "$DIR/секреты/ключи.txt"
-echo "инструкция по безопасности" > "$DIR/публичное/README.txt"
-for i in $(seq 1 5); do
-  echo "файл $i с данными" > "$DIR/публичное/документ_${i}.txt"
-done
-touch "$DIR/публичное/файл с пробелами.txt"
-touch "$DIR/публичное/файл-с-дефисами.txt"
+mkdir -p "$DIR/configs"
+cat > "$DIR/configs/tower.conf" << 'EOF'
+TOWER_NAME=Unseen University
+MAX_FLOORS=10
+SECRET_PASSWORD=opensesame
+EOF
 
 TASK
-🛡️ **Щиты и печати**
+⚗️ ПРАКТИКУМ #015: Щиты и печати
 
-Тёмные силы пытаются проникнуть в скрипты Университета через инъекции, globbing и небезопасные конструкции. Научись защищать свои заклинания!
+Архиканцлер вызвал тебя в Тайную Комнату:
+«Ринсвинд! Кто-то подсунул нам скрипт с eval внутри.
+EVAL! Ты понимаешь, что это значит? Любой демон может
+впрыснуть команду через переменную! И ещё — пароли
+в конфигах без защиты! Напиши БЕЗОПАСНЫЙ скрипт или
+я отправлю тебя в Подвалы. К Тому Самому.»
 
 📋 **Задания**:
-1. Создай скрипт `safe_find.sh`:
-   - Использует `find -print0` + `while read -d ''` для безопасной обработки имён файлов с пробелами
-   - Перебирает все файлы в `публичное/`
-   - Выводит имя каждого файла (без разбиения на слова)
 
-2. Создай скрипт `no_eval.sh`:
-   - Демонстрирует безопасную альтернативу `eval`: динамические команды через массивы
-   - `cmd=(ls -l "$dir"); "${cmd[@]}"` — безопасно!
-   - Сравни с опасным: `eval "ls -l $dir"` — инъекция если $dir содержит "; rm -rf /"
-   - Выведи результат выполнения команды через массив
+1. **Напиши `safe_config.sh`** — безопасное чтение конфига:
+   ```bash
+   #!/bin/bash
+   set -euo pipefail
+   
+   readonly CONF_FILE="${1:-configs/tower.conf}"
+   
+   # Безопасное чтение конфига (БЕЗ eval!)
+   declare -A config    # Ассоциативный массив
+   
+   while IFS='=' read -r key value; do
+       # Пропустить пустые строки и комментарии
+       [[ -z "$key" || "$key" == \#* ]] && continue
+       
+       # Валидация ключа: только буквы и подчёркивания
+       if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+           echo "WARNING: Invalid key '$key'" >&2
+           continue
+       fi
+       
+       config["$key"]="$value"
+   done < "$CONF_FILE"
+   
+   # Вывод (СКРЫВАЕМ секреты!)
+   for key in "${!config[@]}"; do
+       if [[ "$key" == *"SECRET"* || "$key" == *"PASSWORD"* ]]; then
+           printf "%s=***HIDDEN***\n" "$key"
+       else
+           printf "%s=%s\n" "$key" "${config[$key]}"
+       fi
+   done
+   ```
 
-3. Создай скрипт `debug_demo.sh`:
-   - Определяет функцию, которая вызывает другую функцию
-   - Использует `caller` для вывода стека вызовов
-   - Выводит `${BASH_SOURCE[0]}`, `${FUNCNAME[@]}`, `${BASH_LINENO[@]}`
-   - Создаёт trap ERR с информацией о строке ошибки
+2. **Безопасная динамическая команда** (БЕЗ eval):
+   ```bash
+   # ОПАСНО:
+   eval "ls $dir"          # Если $dir="; rm -rf /" → КАТАСТРОФА!
+   
+   # БЕЗОПАСНО через массивы:
+   cmd=(ls -la "$dir")     # Каждый элемент — отдельный аргумент
+   "${cmd[@]}"             # Выполнить безопасно!
+   ```
 
-4. Создай скрипт `interactive.sh`:
-   - Использует `select` для создания меню из списка действий
-   - Пункты: "Проверить файлы", "Показать секреты", "Выход"
-   - Обрабатывает выбор через `case`
+3. **Напиши `safe_run.sh`** который:
+   - Принимает команду как отдельные аргументы
+   - Использует массив для построения команды
+   - НЕ использует eval
+   - Проверяет что команда существует перед запуском
 
-💡 **Безопасность**:
-• Никогда не используй `eval` без крайней необходимости
-• `env -i` — запустить в чистом окружении
-• `set -f` — отключить globbing (разворачивание * и ?)
-• Всегда кавычь переменные: `"$var"`
+4. **Отладка** — добавь трассировку:
+   ```bash
+   set -x                              # Включить трассировку
+   PS4='+ ${BASH_SOURCE}:${LINENO} '   # Улучшенный формат трейса
+   # ... код ...
+   set +x                              # Выключить трассировку
+   ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/scripting_015`
 
@@ -62,39 +95,27 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/scripting_015"
 score=0
 
-if [ -f "$DIR/safe_find.sh" ]; then
-  echo "✓ safe_find.sh создан"
-  score=$((score+1))
-  grep -qE 'print0|read.*-d' "$DIR/safe_find.sh" && { echo "✓ Безопасный find+read"; score=$((score+1)); }
+if [ -f "$DIR/safe_config.sh" ]; then
+  chmod +x "$DIR/safe_config.sh"
+  out=$(bash "$DIR/safe_config.sh" 2>&1)
+  echo "$out" | grep -qi "HIDDEN\|tower\|floor\|password" && { echo "✓ safe_config.sh работает"; score=$((score+1)); }
 fi
 
-if [ -f "$DIR/no_eval.sh" ]; then
-  echo "✓ no_eval.sh создан"
-  score=$((score+1))
-  grep -qE '\$\{cmd\[@\]\}|\(' "$DIR/no_eval.sh" && { echo "✓ Массив команд"; score=$((score+1)); }
+if [ -f "$DIR/safe_run.sh" ]; then
+  chmod +x "$DIR/safe_run.sh"
+  bash "$DIR/safe_run.sh" ls /tmp 2>&1 | grep -q "." && { echo "✓ safe_run.sh работает"; score=$((score+1)); }
 fi
 
-if [ -f "$DIR/debug_demo.sh" ]; then
-  echo "✓ debug_demo.sh создан"
-  score=$((score+1))
-  grep -qE 'caller|FUNCNAME|BASH_SOURCE|BASH_LINENO' "$DIR/debug_demo.sh" && { echo "✓ Интроспекция"; score=$((score+1)); }
-fi
-
-if [ -f "$DIR/interactive.sh" ]; then
-  echo "✓ interactive.sh создан"
-  score=$((score+1))
-  grep -q 'select' "$DIR/interactive.sh" && { echo "✓ select используется"; score=$((score+1)); }
-fi
-
-[ $score -ge 6 ] && { echo "✓ ok: Щиты и печати установлены! (баллов: $score/8)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/8)"
+[ $score -ge 1 ] && { echo "✓ ok: Безопасность освоена! (баллов: $score/2)"; exit 0; }
+echo "✗ Напиши safe_config.sh (баллов: $score/2)"
 exit 1
 
 HINTS
-Безопасный find: find ~/.ninja_trainer/scripting_015/публичное/ -type f -print0 | while IFS= read -r -d '' file; do echo "$file"; done
-Массив вместо eval: cmd=(ls -l "$dir"); "${cmd[@]}"
-caller в функции: show_caller() { echo "Called from line $(caller)"; }
-BASH_SOURCE: echo "File: ${BASH_SOURCE[0]}, Line: ${BASH_LINENO[0]}, Func: ${FUNCNAME[0]}"
-select меню: select opt in "Проверить" "Секреты" "Выход"; do case "$opt" in ... esac; done
-trap ERR: trap 'echo "Error at line $LINENO"' ERR
-set -f: отключить globbing; set +f — включить обратно
+НИКОГДА eval: eval "$var" — если $var содержит ; rm -rf / → катастрофа!
+Безопасные команды: cmd=(ls -la "$dir"); "${cmd[@]}" — массив вместо eval
+Валидация ключей: [[ "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] — только допустимые символы
+Скрытие секретов: не выводить PASSWORD/SECRET значения в логи
+set -x: включить трассировку выполнения команд
+PS4: формат строки трейса (+ файл:строка )
+declare -A: ассоциативный массив для хранения конфигурации
+readonly: сделать переменную неизменяемой после присвоения

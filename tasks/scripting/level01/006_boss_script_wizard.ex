@@ -12,53 +12,63 @@ SETUP
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/scripting_006"
 rm -rf "$DIR" 2>/dev/null
-mkdir -p "$DIR/конфиги" "$DIR/отчёты"
-cat > "$DIR/конфиги/университет.conf" << 'EOF'
-# Конфигурация Незримого Университета
-NAME=Unseen University
-LOCATION=Ankh-Morpork
-STUDENTS=142
-ARCHCHANCELLOR=Ridcully
-BUDGET=10000
+mkdir -p "$DIR/configs"
+cat > "$DIR/configs/university.conf" << 'EOF'
+UNIVERSITY_NAME=Unseen University
+MAX_STUDENTS=200
+DEAN=Ridcully
+TOWER_FLOORS=10
 EOF
-cat > "$DIR/конфиги/башня.conf" << 'EOF'
-# Конфигурация Башни Искусств
-NAME=Tower of Art
-FLOORS=200
-WIZARDS=13
-STABLE=yes
-EOF
-cat > "$DIR/конфиги/сломанный.conf" << 'EOF'
-# Повреждённый конфиг
-NAME=
-LOCATION=
-STUDENTS=abc
+cat > "$DIR/configs/potions.conf" << 'EOF'
+HEALING_POWER=50
+MANA_RESTORE=30
+FIRE_DAMAGE=100
+INVISIBILITY_DURATION=60
 EOF
 
 TASK
-🐉 **Магический конфигуратор** (БОСС)
+🐉 БОСС #006: Магический конфигуратор
 
-Архиканцлер Ридкулли требует утилиту для парсинга конфигурационных файлов Университета. Скрипт должен читать ключ=значение, проверять данные и генерировать отчёт.
+Архиканцлер вызвал тебя в свой кабинет и положил на стол два конфигурационных свитка:
+«Ринсвинд! Мне нужен скрипт, который читает эти свитки, проверяет все значения
+и выводит красивый отчёт. Если хоть одно значение отсутствует — я хочу знать об этом!
+И не забудь про шебанг, кавычки и коды возврата.
+В прошлый раз ты забыл кавычки вокруг переменной с пробелом.
+Мы до сих пор восстанавливаем Башню после того "небольшого взрыва".»
 
 📋 **Боевые задания**:
-1. Создай скрипт `config_parser.sh` который:
-   - Принимает путь к конфиг-файлу как `$1`
-   - Проверяет, что файл существует (`-f`) и передан аргумент
-   - Если нет — выводит `Usage: ./config_parser.sh <config_file>` и завершается с `exit 1`
-   - Читает файл построчно через `while read`
-   - Пропускает пустые строки и комментарии (начинаются с `#`)
-   - Для каждой строки вида `KEY=VALUE` — сохраняет в переменные
-   - Выводит все найденные ключи и значения в формате: `ключ = значение`
 
-2. Добавь в скрипт проверки:
-   - Если значение пустое — вывести `⚠ ПУСТОЕ ЗНАЧЕНИЕ: ключ`
-   - Если STUDENTS не число — вывести `⚠ НЕ ЧИСЛО: STUDENTS=значение`
-   - В конце вывести общее количество обработанных ключей
+1. **Напиши `configure.sh`** который:
+   - Принимает путь к каталогу как `$1` (по умолчанию `configs`)
+   - Проверяет что каталог существует (`[ -d ]`)
+   - Перебирает все `.conf` файлы в каталоге
+   - Для каждого файла читает строки через `while read`
+   - Пропускает пустые строки и комментарии (`#`)
+   - Выводит форматированный отчёт
 
-3. Запусти скрипт для всех трёх конфигов и сохрани результаты:
-   - `bash config_parser.sh конфиги/университет.conf > отчёты/университет.log`
-   - `bash config_parser.sh конфиги/башня.conf > отчёты/башня.log`
-   - `bash config_parser.sh конфиги/сломанный.conf > отчёты/сломанный.log 2> отчёты/ошибки.log`
+2. **Скрипт должен использовать**:
+   - Шебанг `#!/bin/bash`
+   - Проверку аргументов с `exit 1` при ошибке
+   - Кавычки вокруг ВСЕХ переменных
+   - `while IFS== read -r key value` для парсинга KEY=VALUE
+   - Код возврата 0 при успехе
+
+3. **Пример вывода**:
+   ```
+   ═══ University Configuration ═══
+   UNIVERSITY_NAME = Unseen University
+   MAX_STUDENTS = 200
+   DEAN = Ridcully
+   TOWER_FLOORS = 10
+   
+   ═══ Potions Configuration ═══
+   HEALING_POWER = 50
+   MANA_RESTORE = 30
+   FIRE_DAMAGE = 100
+   INVISIBILITY_DURATION = 60
+   
+   Total: 8 settings loaded from 2 files.
+   ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/scripting_006`
 
@@ -67,41 +77,27 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/scripting_006"
 score=0
 
-if [ -f "$DIR/config_parser.sh" ]; then
-  echo "✓ config_parser.sh создан"
-  score=$((score+1))
+if [ -f "$DIR/configure.sh" ]; then
+  head -1 "$DIR/configure.sh" | grep -q '^#!' && { echo "✓ Шебанг есть"; score=$((score+1)); }
   
-  # Тест с существующим файлом
-  output=$(bash "$DIR/config_parser.sh" "$DIR/конфиги/университет.conf" 2>/dev/null)
-  echo "$output" | grep -qi 'name' && { echo "✓ Парсер читает ключи"; score=$((score+1)); }
+  chmod +x "$DIR/configure.sh"
+  out=$(bash "$DIR/configure.sh" configs 2>&1)
   
-  # Тест без аргумента
-  bash "$DIR/config_parser.sh" >/dev/null 2>&1; rc=$?
-  if [ $rc -ne 0 ]; then
-    echo "✓ Возвращает ошибку без аргумента"
-    score=$((score+1))
-  fi
+  echo "$out" | grep -qi "university\|students\|dean\|healing\|fire" && { echo "✓ Конфигурация читается"; score=$((score+1)); }
   
-  # Тест со сломанным конфигом
-  output=$(bash "$DIR/config_parser.sh" "$DIR/конфиги/сломанный.conf" 2>/dev/null)
-  echo "$output" | grep -qiE '(пусто|empty|warn|⚠)' && { echo "✓ Обнаруживает пустые значения"; score=$((score+1)); }
+  echo "$out" | grep -qi "total\|loaded\|files\|settings" && { echo "✓ Отчёт формируется"; score=$((score+1)); }
 fi
 
-# Отчёты созданы
-for f in "университет.log" "башня.log"; do
-  if [ -f "$DIR/отчёты/$f" ]; then
-    echo "✓ $f создан"
-    score=$((score+1))
-  fi
-done
-
-[ $score -ge 4 ] && { echo "✓ ok: БОСС пройден! Магический конфигуратор работает! (баллов: $score/6)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/6)"
+[ $score -ge 2 ] && { echo "✓ ok: БОСС пройден! Конфигуратор работает! (баллов: $score/3)"; exit 0; }
+echo "✗ Напиши configure.sh (баллов: $score/3)"
 exit 1
 
 HINTS
-Пропуск комментариев: case "$line" in \#*|"") continue ;; esac
-Разделение KEY=VALUE: key="${line%%=*}"; value="${line#*=}"
-Проверка числа: case "$value" in ''|*[!0-9]*) echo "Не число!" ;; esac
-Пустое значение: if [ -z "$value" ]; then echo "⚠ Пустое: $key"; fi
-Перенаправление: ./config_parser.sh файл.conf > отчёт.log 2> ошибки.log
+Шебанг: #!/bin/bash — первая строка!
+Проверка каталога: if [ ! -d "$1" ]; then echo "Error"; exit 1; fi
+Перебор файлов: for file in "$dir"/*.conf; do ... done
+Чтение построчно: while IFS== read -r key value; do ... done < "$file"
+Пропуск пустых: [ -z "$line" ] && continue
+Пропуск комментариев: [[ "$line" == \#* ]] && continue
+Кавычки: ВСЕГДА "$var" — особенно если значение содержит пробелы!
+Exit code: exit 0 при успехе, exit 1+ при ошибке

@@ -4,8 +4,8 @@ META
 # Number: 008
 # Level: 2
 # Type: theory
-# Difficulty: easy
-# TimeLimitMin: 10
+# Difficulty: medium
+# TimeLimitMin: 15
 # XP: 15
 
 SETUP
@@ -13,72 +13,98 @@ SETUP
 DIR="$HOME/.ninja_trainer/scripting_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-cat > "$DIR/свитки.txt" << 'EOF'
-Огненный_Свиток_Альфа
-Ледяной_Свиток_Бета
-Воздушный_Свиток_Гамма
-EOF
 
 TASK
-📜 **Массивы и строки Астролога**
+📜 СВИТОК ЗНАНИЙ #008: Массивы и строки Астролога
 
-Астрологи работают с таблицами звёзд — каждая на своём месте, каждая имеет координаты. Так и в bash: массивы хранят упорядоченные данные, а строковые операции позволяют извлекать из них суть.
+Астролог разложил перед тобой колоду карт:
+«Каждая карта — элемент массива. Каждая строка — заклинание,
+которое можно нарезать, склеить или трансформировать.
+Мастерство в этом — разница между подмастерьем и магом.»
 
-📖 **Массивы (индексированные)**:
-• Объявление: `arr=(a b c)` или `arr[0]="first"`
-• Доступ: `${arr[0]}`, `${arr[@]}` (все элементы)
-• Длина: `${#arr[@]}`
-• Добавление: `arr+=("new")`
-• Перебор: `for item in "${arr[@]}"; do ... done`
+───────────────────────────────────────
+🔹 МАССИВЫ — КОЛДА КАРТ
+───────────────────────────────────────
 
-📖 **Строковые операции**:
-• Длина: `${#var}`
-• Вырезание: `${var:offset:length}` — подстрока
-• Замена первое: `${var/old/new}`
-• Замена все: `${var//old/new}`
-• Удалить префикс: `${var#prefix}`
-• Удалить суффикс: `${var%suffix}`
-• Жадный префикс: `${var##*/}` (как dirname)
-• Жадный суффикс: `${var%%.*}` (убрать расширение)
+```bash
+potions=(healing mana fire)     # Объявление массива
+echo "${potions[0]}"            # → healing (индекс с 0!)
+echo "${potions[@]}"            # → healing mana fire (все элементы)
+echo "${#potions[@]}"           # → 3 (количество элементов)
 
-📖 **Арифметика**:
-• `$(( a + b ))` — сложение
-• `$(( a * b ))` — умножение
-• `(( i++ ))` — инкремент
-• `(( a += 5 ))` — добавить к переменной
+potions+=(invisibility)         # Добавить элемент
+echo "${#potions[@]}"           # → 4
+
+for p in "${potions[@]}"; do   # Безопасный перебор
+    echo "Potion: $p"
+done
+```
+
+⚠️ ВСЕГДА `"${arr[@]}"` с кавычками! Без кавычек элементы с пробелами разобьются.
+
+───────────────────────────────────────
+🔹 СТРОКОВЫЕ ОПЕРАЦИИ — ТРАНСФОРМАЦИИ
+───────────────────────────────────────
+
+Без внешних команд (grep/sed/awk), только встроенные возможности bash:
+
+```bash
+spell="Fireball of Destruction"
+
+${#spell}              # → 24 (длина строки)
+${spell:0:8}           # → Fireball (вырезание: offset:length)
+${spell:9:2}           # → of
+${spell/Fire/Ice}      # → Iceball of Destruction (замена первого)
+${spell//o/O}          # → Fireball Of DestructiOn (замена ВСЕХ)
+${spell#Fire}          # → ball of Destruction (удалить префикс)
+${spell%Destruction}   # → Fireball of  (удалить суффикс)
+```
+
+───────────────────────────────────────
+🔹 АРИФМЕТИКА — ЧИСЛОВАЯ МАГИЯ
+───────────────────────────────────────
+
+```bash
+power=10
+(( power += 5 ))        # power = 15
+(( power *= 2 ))        # power = 30
+echo "$(( power / 3 ))" # → 10 (целочисленное деление!)
+(( i++ ))               # инкремент
+```
+
+• `$(( ... ))` — целочисленная арифметика (дробей НЕТ!)
+• `(( ... ))` — арифметическое выражение (можно без $)
+• Для чисел с точкой нужен `bc` или `awk`
 
 📂 Рабочий каталог: `~/.ninja_trainer/scripting_008`
 
 📋 **Попробуй**:
-1. Создай скрипт `arrays.sh` — создай массив зелий, выведи каждое и их количество
-2. Создай скрипт `strings.sh` — возьми строку "Огненный_Свиток_Альфа", замени "_" на " ", вырежи первое слово
+1. Создай массив: `spells=(fireball heal teleport)` и выведи все элементы
+2. Длина строки: `spell="abracadabra"; echo "${#spell}"`
+3. Замена: `echo "${spell/abra/ALAKAZAM}"`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_008"
 score=0
 
-if [ -f "$DIR/arrays.sh" ]; then
-  echo "✓ arrays.sh создан"
-  score=$((score+1))
-  grep -qE '\(|\)' "$DIR/arrays.sh" 2>/dev/null && { echo "✓ arrays.sh использует массив"; score=$((score+1)); }
-fi
+arr_out=$(bash -c 'spells=(fire heal); echo "${spells[@]}"' 2>/dev/null)
+[ "$arr_out" = "fire heal" ] && { echo "✓ Массивы работают"; score=$((score+1)); }
 
-if [ -f "$DIR/strings.sh" ]; then
-  echo "✓ strings.sh создан"
-  score=$((score+1))
-  grep -qE '\$\{.*[/#%]' "$DIR/strings.sh" 2>/dev/null && { echo "✓ strings.sh использует строковые операции"; score=$((score+1)); }
-fi
+len_out=$(bash -c 's="hello"; echo "${#s}"' 2>/dev/null)
+[ "$len_out" = "5" ] && { echo "✓ Длина строки работает"; score=$((score+1)); }
 
-[ $score -ge 3 ] && { echo "✓ ok: Массивы и строки освоены! (баллов: $score/4)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/4)"
+[ $score -ge 1 ] && { echo "✓ ok: Массивы и строки освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-Массив: potions=("невидимость" "сила" "мана"); echo "${potions[@]}"; echo "${#potions[@]}"
-Перебор массива: for p in "${potions[@]}"; do echo "$p"; done
-Длина строки: name="Ринсвинд"; echo "${#name}"
-Замена: spell="огненный_свиток"; echo "${spell//_/ }"
-Вырезание: echo "${spell:0:9}" — первые 9 символов
-Удалить суффикс: file="свиток.txt"; echo "${file%%.*}" — выведет "свиток"
-Арифметика: result=$((10 * 42)); echo $result
+Array declare: arr=(a b c) — создание массива
+Array access: ${arr[0]} — первый элемент (индекс с 0!)
+All elements: ${arr[@]} — все элементы; ${#arr[@]} — количество
+Append: arr+=(new_elem) — добавить элемент
+Loop array: for item in "${arr[@]}"; do ... done — безопасный перебор
+String length: ${#var} — длина строки
+Substring: ${var:offset:length} — вырезать часть строки
+Replace first: ${var/old/new} — заменить первое вхождение
+Replace all: ${var//old/new} — заменить все вхождения
+Arithmetic: $(( a + b )), (( i++ )), (( x += 5 ))

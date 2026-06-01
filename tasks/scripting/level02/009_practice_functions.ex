@@ -5,47 +5,86 @@ META
 # Level: 2
 # Type: practice
 # Difficulty: medium
-# TimeLimitMin: 20
+# TimeLimitMin: 25
 # XP: 25
 
 SETUP
 #!/bin/bash
 DIR="$HOME/.ninja_trainer/scripting_009"
 rm -rf "$DIR" 2>/dev/null
-mkdir -p "$DIR/данные"
-cat > "$DIR/данные/студенты.csv" << 'EOF'
-Ринсвинд,2,78
-Коэн,3,95
-Маграт,1,88
-Нанна,2,91
-Грита,1,65
-Ветинари,4,99
-EOF
+mkdir -p "$DIR/logs"
+for i in $(seq 1 10); do
+  types=("CAST" "CAST" "CAST" "FAIL" "WARN")
+  t=${types[$((RANDOM % ${#types[@]}))]}
+  echo "[$(date +%H:%M:%S)] $t spell_$i power=$((RANDOM%100))" >> "$DIR/logs/magic.log"
+done
 
 TASK
-🔮 **Ритуалы и ловушки**
+⚗️ ПРАКТИКУМ #009: Ритуалы и ловушки
 
-Каждый ритуал в Университете требует подготовки и очистки. Создал временный файл — удали. Перехватил сигнал — обработай. Это основы надёжного скриптинга.
+Декан Чартер вызвал тебя в лабораторию:
+«Ринсвинд! Астрологи жалуются — их заклинания ломаются,
+потому что никто не убирает за собой временные файлы.
+И функции! Никто не пишет функции! Всё копипастят!
+Напиши ПРАВИЛЬНЫЙ скрипт с функциями, trap и local.»
 
 📋 **Задания**:
-1. Создай скрипт `ritual.sh` с `set -euo pipefail` который:
-   - Определяет функцию `cleanup()`, которая удаляет временные файлы
-   - Устанавливает `trap cleanup EXIT` — гарантия очистки при любом выходе
-   - Создаёт временный файл через `mktemp`
-   - Записывает туда данные
-   - Определяет функцию `parse_students()`:
-     - Читает `данные/студенты.csv`
-     - Использует `local` для всех переменных
-     - Возвращает количество студентов через `echo`
-   - Вызывает функцию и выводит результат
 
-2. Добавь отладку:
-   - Временно добавь `set -x` для трассировки
-   - Установи `PS4='+ ${BASH_SOURCE}:${LINENO} '` для улучшенного трейса
+1. **Напиши `log_parser.sh`** с функциями:
+   ```bash
+   #!/bin/bash
+   set -euo pipefail
+   
+   # Функция логирования
+   log_info()  { printf "[INFO]  %s\n" "$1"; }
+   log_error() { printf "[ERROR] %s\n" "$1" >&2; }  # Ошибки на stderr!
+   
+   # Функция парсинга логов
+   parse_log() {
+       local file="$1"        # local — только внутри функции!
+       local count=0
+       
+       if [[ ! -f "$file" ]]; then
+           log_error "Log file not found: $file"
+           return 1           # return для функций (не exit!)
+       fi
+       
+       while IFS= read -r line; do
+           if [[ "$line" == *"FAIL"* ]]; then
+               log_error "Failure detected: $line"
+               ((count++))
+           fi
+       done < "$file"
+       
+       echo "$count"          # Возврат значения через echo
+   }
+   
+   # Главная функция
+   main() {
+       local logfile="${1:-logs/magic.log}"
+       log_info "Parsing $logfile..."
+       
+       local failures
+       failures=$(parse_log "$logfile")   # Захват вывода функции
+       
+       log_info "Found $failures failure(s)"
+   }
+   
+   main "$@"
+   ```
 
-3. Подключи внешний файл:
-   - Создай `lib.sh` с функцией `hello()`, которая выводит "Hello from lib!"
-   - В `ritual.sh` добавь проверку перед source: `if [[ -f lib.sh ]]; then source lib.sh; fi`
+2. **Добавь trap для очистки**:
+   ```bash
+   tempfile=$(mktemp)
+   
+   cleanup() {
+       rm -f "$tempfile"
+       log_info "Cleanup complete"
+   }
+   trap cleanup EXIT
+   ```
+
+3. **Запусти**: `chmod +x log_parser.sh && ./log_parser.sh`
 
 📂 Рабочий каталог: `~/.ninja_trainer/scripting_009`
 
@@ -54,29 +93,24 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/scripting_009"
 score=0
 
-if [ -f "$DIR/ritual.sh" ]; then
-  echo "✓ ritual.sh создан"
-  score=$((score+1))
-  grep -q 'set -e' "$DIR/ritual.sh" && { echo "✓ set -e используется"; score=$((score+1)); }
-  grep -q 'trap' "$DIR/ritual.sh" && { echo "✓ trap установлен"; score=$((score+1)); }
-  grep -q 'mktemp' "$DIR/ritual.sh" && { echo "✓ mktemp используется"; score=$((score+1)); }
-  grep -qE '^[a-zA-Z_]+\(\)' "$DIR/ritual.sh" && { echo "✓ Функция определена"; score=$((score+1)); }
+if [ -f "$DIR/log_parser.sh" ]; then
+  head -1 "$DIR/log_parser.sh" | grep -q '^#!' && { echo "✓ Шебанг есть"; score=$((score+1)); }
+  
+  grep -q 'set -euo\|set -e' "$DIR/log_parser.sh" && { echo "✓ set -e используется"; score=$((score+1)); }
+  
+  grep -q 'local ' "$DIR/log_parser.sh" && { echo "✓ local переменные есть"; score=$((score+1)); }
 fi
 
-if [ -f "$DIR/lib.sh" ]; then
-  echo "✓ lib.sh создан"
-  score=$((score+1))
-fi
-
-[ $score -ge 5 ] && { echo "✓ ok: Ритуалы и ловушки освоены! (баллов: $score/6)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/6)"
+[ $score -ge 2 ] && { echo "✓ ok: Функции и trap освоены! (баллов: $score/3)"; exit 0; }
+echo "✗ Напиши log_parser.sh с функциями (баллов: $score/3)"
 exit 1
 
 HINTS
-Функция cleanup: cleanup() { rm -f "$tmpfile"; }
-trap: trap cleanup EXIT — вызовет cleanup при выходе из скрипта
-mktemp: tmpfile=$(mktemp) — безопасное временное имя файла
-local: parse_data() { local count=0; local line=""; ... }
-source: if [[ -f "lib.sh" ]]; then source lib.sh; fi
-Отладка: set -x включает трассировку, set +x выключает
-PS4: export PS4='+ ${BASH_SOURCE}:${LINENO} '
+Функция: myfunc() { ... } — определение функции
+local: local var="$1" — переменная видна только внутри функции
+return N: вернуть код из функции (не exit — он завершит весь скрипт!)
+Возврат строки: echo "value" в функции → result=$(myfunc) для захвата
+stderr: echo "error" >&2 — ошибки на stderr, не на stdout!
+trap cleanup EXIT: функция выполнится при любом выходе из скрипта
+mktemp: создать безопасный временный файл
+set -euo pipefail: священная троица в начале каждого скрипта
