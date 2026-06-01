@@ -1,11 +1,11 @@
 META
 # Track: docker
-# Title: Наблюдение за сосудами
+# Title: Записи и духи сосудов
 # Number: 002
 # Level: 1
 # Type: theory
 # Difficulty: easy
-# TimeLimitMin: 10
+# TimeLimitMin: 15
 # XP: 10
 
 SETUP
@@ -15,60 +15,90 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Наблюдение за сосудами**
+📜 СВИТОК ЗНАНИЙ #002: Записи и духи сосудов
 
-Запустить сосуд — полдела. Нужно уметь заглядывать внутрь, читать показания и выполнять команды.
+Декан Чартер заглянул в подвал:
+«Ринсвинд! Сосуд работает — но ЧТО внутри? Какие записи он ведёт?
+Какой демон там обитает? Научись читать записи сосудов
+и проникать внутрь — или будешь гадать по звуку.
+А звуки в подвалах... они обманчивы.»
 
-📖 **Логи контейнера**:
-• `docker logs <name>` — все логи с начала работы
-• `docker logs -f <name>` — следить за логами (как tail -f)
-• `docker logs --tail 20 <name>` — последние 20 строк
-• `docker logs --since 5m <name>` — логи за последние 5 минут
-• `docker logs --until 2024-01-01T00:00:00 <name>` — до указанного времени
+───────────────────────────────────────
+🔹 ЗАПИСИ СОСУДА (docker logs)
+───────────────────────────────────────
 
-📖 **Выполнение команд внутри**:
-• `docker exec -it <name> bash` — зайти в оболочку контейнера
-• `docker exec -it <name> sh` — если нет bash (alpine)
-• `docker exec <name> cat /etc/hostname` — выполнить команду без входа
+```bash
+docker logs web                  # Все записи сосуда
+docker logs -f web               # Следить за записями (как tail -f)
+docker logs --tail 20 web        # Последние 20 строк
+docker logs --since 5m web      # Записи за последние 5 минут
+```
 
-📖 **Образы**:
-• `docker pull nginx:alpine` — скачать образ
-• `docker images` — список локальных образов
-• `docker rmi nginx:alpine` — удалить образ
-• `docker image prune` — удалить неиспользуемые образы
+• Каждый сосуд ведёт хронологию событий
+• `-f` — следить в реальном времени (Ctrl+C для выхода)
+• Записи сохраняются даже после остановки сосуда!
 
-📖 **Проброс портов**:
-• `-p 8080:80` — порт хоста 8080 → порт контейнера 80
-• `-p 127.0.0.1:8080:80` — только localhost
-• `-P` — пробросить все EXPOSE порты на случайные
+───────────────────────────────────────
+🔹 ПРОНИКНОВЕНИЕ В СОСУД (docker exec)
+───────────────────────────────────────
+
+```bash
+docker exec web ls /             # Выполнить команду внутри сосуда
+docker exec -it web bash         # Открыть оболочку внутри!
+docker exec web cat /etc/hosts   # Прочитать файл внутри сосуда
+```
+
+• `exec` — запустить команду ВНУТРИ работающего сосуда
+• `-it` — интерактивный режим (нужен терминал)
+• Это как войти в сосуд и оглядеться!
+
+───────────────────────────────────────
+🔹 ОБРАЗЫ — РЕЦЕПТЫ СОСУДОВ
+───────────────────────────────────────
+
+```bash
+docker pull nginx:latest         # Скачать рецепт из Хранилища
+docker images                    # Список скачанных рецептов
+docker rmi nginx:latest          # Удалить рецепт
+```
+
+• Образ (image) = рецепт, по которому создаётся сосуд
+• Сосуд (container) = воплощённый образ
+• Один образ → много сосудов!
 
 📂 Рабочий каталог: `~/.ninja_trainer/docker_002`
 
 📋 **Попробуй**:
-1. Запусти: `docker run -d --name web -p 8080:80 nginx`
-2. Логи: `docker logs web`
-3. Следи: `docker logs -f --tail 5 web` (Ctrl+C для выхода)
-4. Зайди внутрь: `docker exec -it web bash`
-5. Внутри: `cat /etc/hostname && exit`
+1. `docker run -d --name web nginx`
+2. `docker logs web` — что пишет сосуд?
+3. `docker exec web ls /usr/share/nginx/html` — файлы внутри
+4. `docker exec -it web bash` — войти внутрь! (`exit` для выхода)
+5. `docker stop web && docker rm web`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-if command -v docker &>/dev/null && docker info &>/dev/null; then
-  echo "✓ Docker работает"
-  score=$((score+1))
-fi
+docker run -d --name ninja_test_logs nginx &>/dev/null && sleep 2
 
-[ $score -ge 1 ] && { echo "✓ ok: Наблюдение освоено! (баллов: $score/1)"; exit 0; }
-echo "✗ Нужен работающий Docker"
+logs=$(docker logs ninja_test_logs 2>&1 | head -3)
+[ -n "$logs" ] && { echo "✓ Записи прочитаны"; score=$((score+1)); }
+
+exec_out=$(docker exec ninja_test_logs ls / 2>&1 | head -3)
+[ -n "$exec_out" ] && { echo "✓ exec работает"; score=$((score+1)); }
+
+docker stop ninja_test_logs &>/dev/null; docker rm ninja_test_logs &>/dev/null
+
+[ $score -ge 1 ] && { echo "✓ ok: Записи и exec освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики (баллов: $score/2)"
 exit 1
 
 HINTS
-Logs: docker logs <container> — весь вывод stdout/stderr
-Follow: docker logs -f <container> — как tail -f
-Tail N: docker logs --tail 50 <container> — последние N строк
-Since: docker logs --since 10m <container> — за последние 10 минут
-Exec bash: docker exec -it <container> bash — интерактивный вход
-Exec command: docker exec <container> ls /app — одна команда
-Pull: docker pull nginx:alpine — скачать без запуска
+Logs: docker logs <name> — прочитать записи сосуда
+Follow logs: docker logs -f <name> — следить в реальном времени
+Tail logs: docker logs --tail N <name> — последние N строк
+Exec: docker exec <name> command — выполнить команду внутри сосуда
+Shell inside: docker exec -it <name> bash — открыть оболочку внутри
+Pull image: docker pull nginx:latest — скачать рецепт из хранилища
+List images: docker images — список скачанных рецептов
+Remove image: docker rmi <image> — удалить рецепт

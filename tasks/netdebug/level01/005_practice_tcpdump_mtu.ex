@@ -1,6 +1,6 @@
 META
 # Track: netdebug
-# Title: Прослушивание сети и MTU
+# Title: Подслушивание потоков
 # Number: 005
 # Level: 1
 # Type: practice
@@ -15,46 +15,42 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📡 **Прослушивание сети и MTU**
+⚗️ ПРАКТИКУМ #005: Подслушивание потоков
 
-tcpdump — «рентген» сети. Видит каждый пакет. А MTU-проблемы — частая причина загадочных тормозов.
-
-📖 **tcpdump — основы**:
-• `sudo tcpdump -i en0 -c 10` — захватить 10 пакетов на интерфейсе en0
-• `-i any` — все интерфейсы
-• `-c N` — только N пакетов
-• `-nn` — не резолвить IP и порты (быстрее)
-• `host 8.8.8.8` — фильтр по хосту
-• `port 443` — фильтр по порту
-• `tcpdump -i en0 -c 5 -w capture.pcap` — сохранить в файл (для Wireshark)
+Библиотекарь жестом подозвал тебя к стене:
+«Ууук!» — и приложил палец к камню. Через стену были слышны голоса.
+«tcpdump — это уши Башни. Ты слышишь ВСЕ пакеты, что проходят мимо.
+Каждый крик, каждый шёпот. Но будь осторожен — в потоке данных
+легко утонуть. Научись фильтровать.»
 
 📋 **Задания**:
 
-1. **Определи свой интерфейс**: `ip addr | grep -E "^[0-9]" | awk -F: '{print $2}'`
-   На macOS обычно `en0`, на Linux — `eth0`
+1. **Базовый захват пакетов** (нужен sudo):
+   ```bash
+   sudo tcpdump -c 10              # Захватить 10 пакетов
+   sudo tcpdump -c 10 -nn          # Без резолва имён (быстрее!)
+   sudo tcpdump -c 10 -i any       # Все интерфейсы
+   ```
 
-2. **Захвати несколько пакетов** (нужен sudo):
-   `sudo tcpdump -i any -c 10 -nn`
+2. **Фильтры захвата** (BPF):
+   ```bash
+   sudo tcpdump -c 10 port 443           # Только HTTPS
+   sudo tcpdump -c 10 host google.com    # Только к/от google.com
+   sudo tcpdump -c 10 icmp               # Только ping!
+   ```
 
-3. **Сгенерируй трафик в другом терминале**:
-   `ping -c 4 google.com` или `curl https://google.com`
+3. **Сохранение в файл**:
+   ```bash
+   sudo tcpdump -c 50 -w "$DIR/capture.pcap"    # Записать в pcap
+   sudo tcpdump -r "$DIR/capture.pcap" -nn       # Прочитать из файла
+   ```
 
-4. **Фильтр по порту DNS**:
-   `sudo tcpdump -i any -c 5 -nn port 53`
-
-5. **Фильтр по HTTP**:
-   `sudo tcpdump -i any -c 5 -nn port 80`
-
-6. **Проверь MTU**:
-   `ping -c 4 -s 1472 -M do google.com` (Linux)
-   `ping -c 4 -D -s 1472 google.com` (macOS)
-   Если не проходит — уменьшай размер до работающего
-
-7. **Найди путь MTU**:
-   `tracepath google.com` (Linux, показывает MTU каждого хопа)
-
-8. **Сохраняй в pcap для Wireshark**:
-   `sudo tcpdump -i any -c 50 -w "$HOME/.ninja_trainer/netdebug_005/capture.pcap"`
+4. **MTU — размер заклинания**:
+   ```bash
+   # Проверить MTU (максимальный размер пакета)
+   ping -c 3 -s 1472 -M do google.com     # 1472+28=1500 (стандартный MTU)
+   # Если не проходит → проблема с MTU!
+   ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_005`
 
@@ -62,26 +58,20 @@ VALIDATION
 #!/bin/bash
 score=0
 
-if command -v tcpdump &>/dev/null; then
-  echo "✓ tcpdump установлен"; score=$((score+1))
-else
-  echo "✗ tcpdump не найден"
-fi
+which tcpdump &>/dev/null && { echo "✓ tcpdump установлен"; score=$((score+1)); }
 
-iface=$(ip addr 2>/dev/null | grep -E "^[0-9]+" | grep -v lo | head -1 | awk -F: '{print $2}' | tr -d ' ')
-[ -n "$iface" ] && { echo "✓ Интерфейс найден: $iface"; score=$((score+1)); }
+mtu=$(ping -c 1 -s 1472 -M do google.com 2>&1 | grep "time=")
+[ -n "$mtu" ] && { echo "✓ MTU проверка работает"; score=$((score+1)); }
 
-[ $score -ge 1 ] && { echo "✓ ok: Основы tcpdump освоены! (баллов: $score/2)"; exit 0; }
-echo "✗ Установи tcpdump"
+[ $score -ge 1 ] && { echo "✓ ok: tcpdump и MTU освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-Capture packets: sudo tcpdump -i any -c 10 -nn
-Specific interface: sudo tcpdump -i en0 -c 10 (macOS) или eth0 (Linux)
-No resolve: -nn — не резолвить IP и порты (быстрее)
-Filter by port: sudo tcpdump -i any port 53 (DNS) или port 80 (HTTP)
-Filter by host: sudo tcpdump -i any host 8.8.8.8
-Save to file: sudo tcpdump -i any -c 50 -w file.pcap
-MTU test Linux: ping -c 4 -s 1472 -M do host (DF bit set)
-MTU test macOS: ping -D -s 1472 host
-tracepath: tracepath host — показывает MTU пути
+tcpdump basic: sudo tcpdump -c N -nn — захватить N пакетов без резолва
+Filter port: sudo tcpdump port 443 — только HTTPS трафик
+Filter host: sudo tcpdump host X.X.X.X — только к/от конкретного хоста
+Save pcap: sudo tcpdump -w file.pcap — записать в файл для анализа
+Read pcap: sudo tcpdump -r file.pcap -nn — прочитать сохранённый файл
+ICMP only: sudo tcpdump icmp — только ping пакеты
+MTU test: ping -s 1472 -M do host — проверить что большие пакеты проходят

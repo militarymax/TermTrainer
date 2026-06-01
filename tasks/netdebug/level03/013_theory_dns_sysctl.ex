@@ -1,6 +1,6 @@
 META
 # Track: netdebug
-# Title: Продвинутый DNS и тюнинг ядра
+# Title: Глубокие тайны DNS и ядра
 # Number: 013
 # Level: 3
 # Type: theory
@@ -15,64 +15,77 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Продвинутый DNS и тюнинг ядра**
+📜 СВИТОК ЗНАНИЙ #013: Глубокие тайны DNS и ядра
 
-DNS — не просто dig. А параметры ядра влияют на производительность TCP больше, чем вы думаете.
+В Тайной Комнате Архиканцлер открыл потайную дверь:
+«Ринсвинд! DNS — не просто dig. Можно отследить ВЕСЬ путь резолвинга,
+проверить цифровые подписи, запросить полную зону.
+А параметры ядра влияют на TCP больше, чем ты думаешь.
+Последний, кто трогал tcp_tw_reuse без понимания...
+ну, его до сих пор находят в логах.»
 
-📖 **Продвинутые DNS-запросы**:
-• `dig +trace google.com` — рекурсивный поиск от корневых серверов
-• `dig +dnssec google.com` — проверить DNSSEC-подписи
-• `dig AXFR domain.com @ns1.domain.com` — полная зона (если разрешено)
-• `dig -x 8.8.8.8` — обратный DNS (IP → имя)
-• `dig google.com ANY` — все записи (многие серверы не отвечают)
+───────────────────────────────────────
+🔹 ПРОДВИНУТЫЕ DNS-ЗАПРОСЫ
+───────────────────────────────────────
 
-📖 **sysctl — параметры TCP/IP ядра** (Linux):
-• `sysctl net.ipv4.tcp_congestion_control` — алгоритм контроля перегрузки
-• `sysctl net.ipv4.tcp_rmem` — буфер приёма TCP (min/default/max)
-• `sysctl net.ipv4.tcp_wmem` — буфер отправки TCP
-• `sysctl net.core.somaxconn` — максимальная очередь listen
-• `sysctl net.ipv4.tcp_max_syn_backlog` — очередь SYN
-• `sysctl net.ipv4.tcp_tw_reuse` — переиспользование TIME-WAIT
+```bash
+dig +trace google.com          # Рекурсивный поиск от корневых серверов!
+dig +dnssec google.com         # Проверить DNSSEC-подписи
+dig AXFR domain.com @ns1      # Полная зона (если разрешено!)
+dig -x 8.8.8.8                # Обратный DNS (IP → имя)
+```
 
-📖 **netstat -s / nstat — глобальные счётчики**:
-• `netstat -s | grep -i retrans` — повторные передачи
-• `nstat -az | grep Tcp` — счётчики TCP (Linux)
-• Смотрите на: retransmits, failed connections, reset connections
+📖 **DNS trace** показывает весь путь:
+`корневой → .com → google.com NS → google.com A`
+Если обрывается на шаге N — проблема на том сервере!
 
-📖 **ethtool — статистика сетевой карты** (Linux):
-• `ethtool -S eth0` — счётчики ошибок на интерфейсе
-• `ethtool -g eth0` — размеры кольцевых буферов
-• `ethtool -k eth0` — offloading настройки
-• Важно: checksum offloading может показывать «битые» контрольные суммы в pcap!
+───────────────────────────────────────
+🔹 SYSCTL — ПАРАМЕТРЫ TCP/IP ЯДРА (Linux)
+───────────────────────────────────────
+
+```bash
+sysctl net.ipv4.tcp_congestion_control   # Алгоритм контроля перегрузки
+sysctl net.ipv4.tcp_rmem                 # Буфер приёма TCP (min/default/max)
+sysctl net.ipv4.tcp_wmem                 # Буфер отправки TCP
+sysctl net.core.somaxconn               # Максимальная очередь listen
+sysctl net.ipv4.tcp_max_syn_backlog      # Очередь SYN
+sysctl net.ipv4.tcp_tw_reuse             # Переиспользование TIME-WAIT
+```
+
+⚠️ На macOS вместо sysctl используется `sysctl` с другими ключами!
+
+───────────────────────────────────────
+🔹 СТАТИСТИКА И ОШИБКИ
+───────────────────────────────────────
+
+```bash
+netstat -s | grep -i retrans     # Повторные передачи (Linux)
+ss -ti                           # RTT/CWND/retransmits per socket
+```
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_013`
 
 📋 **Попробуй**:
-1. DNS trace: `dig +trace google.com | head -30`
-2. Обратный DNS: `dig -x 8.8.8.8 +short`
-3. DNSSEC: `dig +dnssec google.com | grep -E "RRSIG|flags"`
-4. sysctl: `sysctl -a 2>/dev/null | grep tcp | head -20`
+1. `dig +trace google.com | head -30`
+2. `dig -x 8.8.8.8 +short`
+3. `sysctl -a 2>/dev/null | grep tcp | head -10`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-trace=$(dig +trace google.com +short 2>/dev/null | head -1)
-[ -n "$trace" ] && { echo "✓ DNS trace работает"; score=$((score+1)); }
-
 rdns=$(dig -x 8.8.8.8 +short 2>/dev/null | head -1)
 [ -n "$rdns" ] && { echo "✓ Обратный DNS: $rdns"; score=$((score+1)); }
 
-[ $score -ge 1 ] && { echo "✓ ok: Продвинутый DNS и тюнинг освоены! (баллов: $score/2)"; exit 0; }
+[ $score -ge 1 ] && { echo "✓ ok: Продвинутый DNS освоен! (баллов: $score/1)"; exit 0; }
 echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
 DNS trace: dig +trace domain — рекурсивный путь от корневых серверов
 Reverse DNS: dig -x IP +short — IP → доменное имя
-DNSSEC: dig +dnssec domain — проверить цифровые подписи DNS
+DNSSEC: dig +dnssec domain — проверить цифровые подписи
 AXFR zone: dig AXFR domain @nameserver — полная зона (если разрешено)
-sysctl TCP: sysctl net.ipv4.tcp_* — параметры TCP/IP ядра
+sysctl TCP: sysctl net.ipv4.tcp_* — параметры TCP/IP ядра Linux
 TCP buffers: sysctl net.ipv4.tcp_rmem / tcp_wmem — размеры буферов
-netstat counters: netstat -s | grep retrans — глобальные повторные передачи
-ethtool stats: ethtool -S eth0 — ошибки на уровне сетевой карты
+Retransmits: netstat -s | grep retrans или ss -ti — повторные передачи

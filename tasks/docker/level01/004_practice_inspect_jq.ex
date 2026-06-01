@@ -1,6 +1,6 @@
 META
 # Track: docker
-# Title: Инспекция сосудов через jq
+# Title: Тайны сосудов
 # Number: 004
 # Level: 1
 # Type: practice
@@ -13,85 +13,82 @@ SETUP
 DIR="$HOME/.ninja_trainer/docker_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
-docker rm -f ninja-inspect 2>/dev/null
 
 TASK
-🔍 **Инспекция сосудов через jq**
+⚗️ ПРАКТИКУМ #004: Тайны сосудов
 
-`docker inspect` выдаёт огромный JSON. С помощью jq ты можешь извлечь любую крупицу информации — IP-адрес, переменные окружения, порты, тома.
+Библиотекарь жестом указал на ряд сосудов:
+«Ууук!» — это означало: «Каждый сосуд хранит тайну.
+IP-адрес, переменные окружения, подключённые тома.
+Всё это можно извлечь через inspect. Но вывод огромный.
+Используй jq — как фильтр для магических знаний.»
 
 📋 **Задания**:
 
-1. **Запусти контейнер** с переменными и портом:
-   `docker run -d --name ninja-inspect -p 9091:80 -e APP_ENV=production nginx`
+1. **Запусти сосуд с секретами**:
+   ```bash
+   docker run -d --name secret_vault \
+     -e MAGIC_WORD=palindrome \
+     -e TOWER_FLOOR=7 \
+     -p 9090:80 \
+     nginx
+   ```
 
-2. **Полный inspect** (огромный JSON!):
-   `docker inspect ninja-inspect`
+2. **Извлеки IP-адрес через jq**:
+   ```bash
+   docker inspect secret_vault | jq '.[0].NetworkSettings.IPAddress'
+   ```
 
-3. **IP-адрес контейнера** через jq:
-   `docker inspect ninja-inspect | jq '.[0].NetworkSettings.IPAddress'`
+3. **Извлеки переменные окружения**:
+   ```bash
+   docker inspect secret_vault | jq '.[0].Config.Env'
+   ```
 
-4. **Проброшенные порты**:
-   `docker inspect ninja-inspect | jq '.[0].NetworkSettings.Ports'`
+4. **Извлеки проброшенные порты**:
+   ```bash
+   docker inspect secret_vault | jq '.[0].NetworkSettings.Ports'
+   ```
 
-5. **Переменные окружения**:
-   `docker inspect ninja-inspect | jq '.[0].Config.Env'`
+5. **Сохрини отчёт** в `$DIR/vault_report.txt`:
+   ```bash
+   {
+     echo "=== Vault Report ==="
+     echo "IP: $(docker inspect secret_vault | jq -r '.[0].NetworkSettings.IPAddress')"
+     echo "Env: $(docker inspect secret_vault | jq -r '.[0].Config.Env[]')"
+     echo "Ports: $(docker inspect secret_vault | jq -r '.[0].NetworkSettings.Ports | keys[]')"
+   } > "$DIR/vault_report.txt"
+   cat "$DIR/vault_report.txt"
+   ```
 
-6. **Имя образа**:
-   `docker inspect ninja-inspect | jq '.[0].Config.Image'`
-
-7. **Тома (монтирования)**:
-   `docker inspect ninja-inspect | jq '.[0].Mounts'`
-
-8. **Используй --format** (альтернатива jq):
-   `docker inspect --format '{{.NetworkSettings.IPAddress}}' ninja-inspect`
-   `docker inspect --format '{{range .Config.Env}}{{println .}}{{end}}' ninja-inspect`
-
-9. **Bind mount — подключи каталог хоста**:
-   `docker run -d --name ninja-mount -v "$HOME/.ninja_trainer/docker_004:/data" alpine sleep 300`
-   `docker exec ninja-mount ls /data`
-   `echo "hello from host" > "$HOME/.ninja_trainer/docker_004/test.txt"`
-   `docker exec ninja-mount cat /data/test.txt`
-
-10. **Именованные тома**:
-    `docker volume create ninja-vol`
-    `docker volume ls`
-    `docker volume inspect ninja-vol | jq '.[0].Mountpoint'`
-
-💡 **Кросс-навыки (jq-yq)**:
-• `docker inspect | jq '.[0].State.Status'` — статус контейнера
-• `docker inspect | jq '.[0] | {IP: .NetworkSettings.IPAddress, Image: .Config.Image}'` — собрать объект
+6. Очистка: `docker stop secret_vault && docker rm secret_vault`
 
 📂 Рабочий каталог: `~/.ninja_trainer/docker_004`
 
 VALIDATION
 #!/bin/bash
+DIR="$HOME/.ninja_trainer/docker_004"
 score=0
 
-if command -v docker &>/dev/null && docker info &>/dev/null; then
-  echo "✓ Docker работает"
-  score=$((score+1))
-fi
+docker run -d --name ninja_inspect -e SECRET=magic -p 19090:80 nginx &>/dev/null && sleep 2
 
-running=$(docker ps --filter name=ninja-inspect --format '{{.Names}}' 2>/dev/null)
-if [ "$running" = "ninja-inspect" ]; then
-  ip=$(docker inspect ninja-inspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
-  [ -n "$ip" ] && { echo "✓ Контейнер запущен, IP=$ip"; score=$((score+1)); }
-fi
+ip=$(docker inspect ninja_inspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
+[ -n "$ip" ] && { echo "✓ IP извлечён: $ip"; score=$((score+1)); }
 
-env=$(docker inspect ninja-inspect | jq -r '.[0].Config.Env[] | select(startswith("APP_ENV"))' 2>/dev/null)
-[ "$env" = "APP_ENV=production" ] && { echo "✓ Переменная найдена через jq"; score=$((score+1)); }
+env=$(docker inspect ninja_inspect | jq -r '.[0].Config.Env[]' 2>/dev/null | grep SECRET)
+[ -n "$env" ] && { echo "✓ Env извлечён: $env"; score=$((score+1)); }
 
-[ $score -ge 2 ] && { echo "✓ ok: Инспекция + jq освоены! (баллов: $score/3)"; exit 0; }
-echo "✗ Запусти контейнер ninja-inspect (баллов: $score/3)"
+docker stop ninja_inspect &>/dev/null; docker rm ninja_inspect &>/dev/null
+
+[ $score -ge 1 ] && { echo "✓ ok: Inspect+jq освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики (баллов: $score/2)"
 exit 1
 
 HINTS
-Inspect JSON: docker inspect <container> — полный JSON с метаданными
-IP через jq: docker inspect <c> | jq '.[0].NetworkSettings.IPAddress'
-Env через jq: docker inspect <c> | jq '.[0].Config.Env'
-Ports через jq: docker inspect <c> | jq '.[0].NetworkSettings.Ports'
---format: docker inspect --format '{{.NetworkSettings.IPAddress}}' <container>
-Bind mount: docker run -v /host/path:/container/path image
-Named volume: docker volume create myvol && docker run -v myvol:/data image
-Volume inspect: docker volume inspect myvol | jq '.[0].Mountpoint'
+Inspect: docker inspect <name> — полная информация о сосуде в JSON
+IP address: docker inspect X | jq '.[0].NetworkSettings.IPAddress'
+Environment: docker inspect X | jq '.[0].Config.Env'
+Ports: docker inspect X | jq '.[0].NetworkSettings.Ports'
+Volumes: docker inspect X | jq '.[0].Mounts'
+jq -r: вывести без кавычек (raw output)
+jq keys[]: получить ключи объекта
+Save report: перенаправить вывод > file.txt

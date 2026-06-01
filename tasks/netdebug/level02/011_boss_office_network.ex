@@ -1,6 +1,6 @@
 META
 # Track: netdebug
-# Title: Проблемы в офисной сети
+# Title: Офисная сеть Башни
 # Number: 011
 # Level: 2
 # Type: boss
@@ -15,51 +15,70 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-🐉 **Проблемы в офисной сети** (БОСС)
+🐉 БОСС #011: Офисная сеть Башни
 
-Коллеги жалуются: «Сайт грузится минутами!» Расследуй проблему от начала до конца, используя mtr, ss, tcpdump, dig, curl.
+Архиканцлер вызвал тебя в кабинет:
+«Ринсвинд! В офисе Башни — ЧП. Кто-то не может зайти на сервер,
+у кого-то тормозит интернет, а у кого-то вообще ничего не работает.
+Проведи ПОЛНОЕ расследование и напиши отчёт.
+Используй ВСЁ: ping, dig, curl, ss, nc, traceroute.»
 
 📋 **Боевые задания**:
 
-1. **Базовая связность**: `ping -c 10 google.com`
-   Запиши min/avg/max RTT и потери.
+Напиши `$DIR/office_report.sh`:
 
-2. **mtr — где потери?**: `mtr -r -c 10 google.com` (или traceroute если нет mtr)
-   На каком хопе начинаются проблемы?
+```bash
+#!/bin/bash
+set -euo pipefail
 
-3. **DNS — медленный резолвинг?**:
-   ```bash
-   for dns in 8.8.8.8 1.1.1.1 $(grep nameserver /etc/resolv.conf | head -1 | awk '{print $2}'); do
-     time=$(dig @$dns google.com +stats 2>/dev/null | grep "Query time" | awk '{print $4}')
-     echo "$dns: ${time}ms"
-   done
-   ```
+echo "═══════════════════════════════════"
+echo "   Tower Office Network Report"
+echo "═══════════════════════════════════"
+echo "Date: $(date)"
+echo ""
 
-4. **HTTP-тайминг разбивка**:
-   ```bash
-   curl -s -o /dev/null -w "DNS:%{time_namelookup}s TCP:%{time_connect}s TLS:%{time_appconnect}s TTFB:%{time_starttransfer}s Total:%{time_total}s\n" https://google.com
-   ```
-   Какая фаза занимает больше всего времени?
+echo "── 1. Interfaces ──"
+ip addr 2>/dev/null | grep "inet " | grep -v 127.0.0.1 || ifconfig 2>/dev/null | grep "inet " | grep -v 127.0.0.1
 
-5. **TCP-состояния — есть ли аномалии?**:
-   `ss -t -a | awk 'NR>1{print $1}' | sort | uniq -c | sort -rn`
+echo ""
+echo "── 2. Gateway & Route ──"
+GW=$(ip route 2>/dev/null | grep default | awk '{print $3}' || netstat -rn 2>/dev/null | grep default | awk '{print $2}' | head -1)
+echo "Gateway: ${GW:-NOT FOUND}"
+traceroute -m 5 google.com 2>&1 | head -8 || echo "(traceroute unavailable)"
 
-6. **Захвати трафик для анализа**:
-   `sudo tcpdump -i any -c 100 -nn -w "$DIR/capture.pcap"`
-   (В другом терминале сгенерируй трафик: curl, ping)
+echo ""
+echo "── 3. DNS ──"
+for domain in google.com github.com; do
+  ip=$(dig "$domain" +short 2>/dev/null | head -1)
+  echo "$domain → ${ip:-FAILED}"
+done
 
-7. **Проверь MTU**:
-   `ping -c 3 -s 1472 -M do google.com` (Linux)
-   `ping -c 3 -D -s 1472 google.com` (macOS)
+echo ""
+echo "── 4. HTTP Health ──"
+for url in https://google.com https://github.com; do
+  code=$(curl -s -o /dev/null -w "%{http_code}" "$url" --connect-timeout 5 2>/dev/null)
+  time=$(curl -s -o /dev/null -w "%{time_total}" "$url" --connect-timeout 5 2>/dev/null)
+  printf "%-25s code=%-5s time=%ss\n" "$url" "${code:-N/A}" "${time:-N/A}"
+done
 
-8. **Скрипт полного отчёта на bash + jq**:
-   Напиши `report.sh` который собирает:
-   - IP и шлюз
-   - Ping статистику (RTT, loss)
-   - DNS timing
-   - HTTP timing breakdown
-   - TCP state summary
-   И выводит всё как JSON через jq
+echo ""
+echo "── 5. TCP States ──"
+ss -t -a 2>/dev/null | awk 'NR>1{print $1}' | sort | uniq -c | sort -rn | head -5
+
+echo ""
+echo "── 6. Listening Ports ──"
+ss -tlnp 2>/dev/null | head -10
+
+echo ""
+echo "── 7. External IP (NAT check) ──"
+EXT=$(curl -s --connect-timeout 5 https://ifconfig.me 2>/dev/null)
+echo "External IP: ${EXT:-UNREACHABLE}"
+
+echo ""
+echo "═══════════════════════════════════"
+```
+
+Запусти: `chmod +x office_report.sh && ./office_report.sh > $DIR/report.txt`
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_011`
 
@@ -68,31 +87,21 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/netdebug_011"
 score=0
 
-rtt=$(ping -c 3 google.com 2>/dev/null | tail -1)
-[ -n "$rtt" ] && { echo "✓ Ping работает"; score=$((score+1)); }
-
-dns=$(dig @8.8.8.8 google.com +short 2>/dev/null | head -1)
-[ -n "$dns" ] && { echo "✓ DNS работает"; score=$((score+1)); }
-
-timing=$(curl -s -o /dev/null -w "%{time_total}" https://google.com --connect-timeout 5 2>/dev/null)
-[ -n "$timing" ] && { echo "✓ HTTP timing: ${timing}s"; score=$((score+1)); }
-
-if [ -f "$DIR/report.sh" ]; then
-  chmod +x "$DIR/report.sh"
-  out=$(bash "$DIR/report.sh" 2>&1 | head -10)
-  [ -n "$out" ] && { echo "✓ Скрипт отчёта работает"; score=$((score+1)); }
+if [ -f "$DIR/office_report.sh" ]; then
+  chmod +x "$DIR/office_report.sh"
+  out=$(bash "$DIR/office_report.sh" 2>&1)
+  echo "$out" | grep -q "Interface\|Gateway\|DNS\|HTTP\|TCP\|Report" && { echo "✓ office_report.sh работает"; score=$((score+1)); }
 fi
 
-[ $score -ge 3 ] && { echo "✓ ok: БОСС пройден! Офисная сеть расследована! (баллов: $score/4)"; exit 0; }
-echo "✗ Проведи полное расследование (баллов: $score/4)"
+[ $score -ge 1 ] && { echo "✓ ok: БОСС пройден! Офисная сеть обследована! (баллов: $score/1)"; exit 0; }
+echo "✗ Напиши office_report.sh (баллов: $score/1)"
 exit 1
 
 HINTS
-Ping stats: ping -c 10 host | tail -2 — RTT и потери
-MTR report: mtr -r -c 10 host — потери по хопам
-DNS compare: for d in 8.8.8.8 1.1.1.1; do dig @$d domain | grep Query; done
-Curl timing: curl -o /dev/null -w "DNS:%{time_namelookup} TCP:%{time_connect} TLS:%{time_appconnect} TTFB:%{time_starttransfer} Total:%{time_total}\n" URL
-TCP states: ss -t -a | awk 'NR>1{print $1}' | sort | uniq -c
-tcpdump save: sudo tcpdump -i any -c 100 -nn -w file.pcap
-MTU test: ping -s 1472 -M do host (Linux) или ping -D -s 1472 host (macOS)
-Report script: собрать все проверки → JSON → jq для анализа
+Interfaces: ip addr или ifconfig — свои адреса
+Gateway+Route: ip route + traceroute — путь до внешнего мира
+DNS: dig domain +short для каждого проверяемого домена
+HTTP health: curl -w "%{http_code} %{time_total}" URL — код + время
+TCP states: ss -t -a | awk | sort | uniq -c — подсчёт состояний
+Listening ports: ss -tlnp — кто слушает
+NAT check: curl ifconfig.me vs ip addr — внутренний vs внешний IP

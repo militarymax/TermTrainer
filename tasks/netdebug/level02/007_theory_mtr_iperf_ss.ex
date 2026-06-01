@@ -1,11 +1,11 @@
 META
 # Track: netdebug
-# Title: Продвинутые инструменты
+# Title: Глубокое зрение
 # Number: 007
 # Level: 2
 # Type: theory
 # Difficulty: medium
-# TimeLimitMin: 10
+# TimeLimitMin: 15
 # XP: 15
 
 SETUP
@@ -15,68 +15,89 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Продвинутые инструменты**
+📜 СВИТОК ЗНАНИЙ #007: Глубокое зрение
 
-ping и traceroute — хорошо, но mtr лучше. iperf3 измеряет скорость. ss показывает детали TCP.
+Астролог подвёл тебя к телескопу:
+«Ринсвинд! Ping показывает только ДОСТУПНОСТЬ. Но где именно
+теряются пакеты? Насколько быстрым должен быть канал?
+Какие TCP-соединения живы? Для этого нужны другие инструменты —
+mtr, iperf3 и ss. Это как телескоп, спектрограф и микроскоп.»
 
-📖 **mtr — ping + traceroute вместе**:
-• `mtr google.com` — интерактивный вид (обновляется в реальном времени)
-• `mtr -r -c 10 google.com` — отчёт за 10 циклов (для скриптов!)
-• `mtr -rw -c 10 google.com` — широкий отчёт
-• Показывает потери и RTT на каждом хопе
+───────────────────────────────────────
+🔹 MTR — КАРТА ПОТЕРЬ ПО ХОПАМ
+───────────────────────────────────────
 
-📖 **iperf3 — измерение пропускной способности**:
-• Сервер: `iperf3 -s` (на одной машине)
-• Клиент: `iperf3 -c server_ip` (на другой)
+```bash
+mtr -r -c 10 google.com       # Отчёт: 10 пакетов на каждый хоп
+traceroute google.com          # Альтернатива (проще)
+```
+
+• Каждый хоп — маршрутизатор на пути пакета
+• `Loss%` — процент потерь на хопе
+• `Avg` — средняя задержка
+• Если потери начинаются с хопа N → проблема между N-1 и N!
+
+───────────────────────────────────────
+🔹 IPERF3 — ИЗМЕРЕНИЕ ПРОПУСКНОЙ СПОСОБНОСТИ
+───────────────────────────────────────
+
+```bash
+# На сервере:
+iperf3 -s                      # Запустить сервер
+
+# На клиенте:
+iperf3 -c server_ip            # Тест скорости
+iperf3 -c server_ip -u -b 100M # UDP тест с полосой 100 Мбит/с
+```
+
+• `-t 30` — длительность теста в секундах
 • `-P 4` — 4 параллельных потока
-• `-R` — обратное направление (сервер → клиент)
-• `-u -b 100M` — UDP-тест со скоростью 100 Мбит/с
+• Показывает: bandwidth, jitter, packet loss
 
-📖 **ss — продвинутый netstat**:
-• `ss -t -a` — все TCP-соединения
-• `ss -t state established` — установленные соединения
-• `ss -t state time-wait` — TIME_WAIT сокеты
-• `ss -t -o` — с таймерами (keepalive, retransmit)
-• `ss -ti` — детальная статистика: rtt, cwnd, retrans
-• `ss -s` — сводка по состояниям
+───────────────────────────────────────
+🔹 SS — СОСТОЯНИЕ TCP-СОЕДИНЕНИЙ
+───────────────────────────────────────
+
+```bash
+ss -t                         # Все TCP-соединения
+ss -tl                        # Listening порты
+ss -s                         # Статистика по состояниям
+ss -ti                        # Детали: RTT, CWND, retransmits!
+```
 
 📖 **TCP-состояния**:
-• SYN-SENT — пытаемся подключиться
-• ESTABLISHED — соединение активно
-• FIN-WAIT — закрываем соединение
-• TIME-WAIT — ждём после закрытия
-• CLOSE-WAIT — удалённая сторона закрыла, мы ещё нет
+• `ESTAB` — активное соединение
+• `TIME-WAIT` — закрытое, но ждёт очистки (много = проблема!)
+• `CLOSE-WAIT` — удалённая сторона закрыла, локальная — нет (утечка!)
+• `SYN-SENT` — пытаемся подключиться (если висит → firewall?)
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_007`
 
 📋 **Попробуй**:
-1. mtr отчёт: `mtr -r -c 5 google.com`
-2. TCP-соединения: `ss -t -a | head -20`
-3. Сводка: `ss -s`
+1. `traceroute google.com` или `mtr -r -c 5 google.com`
+2. `ss -s` — статистика TCP
+3. `ss -tl` — слушающие порты
 
 VALIDATION
 #!/bin/bash
 score=0
 
-if command -v mtr &>/dev/null || command -v mtr-packet &>/dev/null; then
-  echo "✓ mtr установлен"; score=$((score+1))
-else
-  echo "ℹ mtr не установлен (brew install mtr)"
-fi
+trace=$(traceroute google.com 2>&1 | head -5 || mtr -r -c 1 google.com 2>&1 | head -5)
+[ -n "$trace" ] && { echo "✓ Traceroute/mtr работает"; score=$((score+1)); }
 
-ss_out=$(ss -s 2>/dev/null)
+ss_out=$(ss -s 2>/dev/null | head -3)
 [ -n "$ss_out" ] && { echo "✓ ss работает"; score=$((score+1)); }
 
-[ $score -ge 1 ] && { echo "✓ ok: Продвинутые инструменты освоены! (баллов: $score/2)"; exit 0; }
-echo "✗ Установи mtr или используй ss"
+[ $score -ge 1 ] && { echo "✓ ok: Глубокое зрение освоено! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-MTR report: mtr -r -c 10 host — отчёт за N циклов
-MTR interactive: mtr host — обновляется в реальном времени
-iperf3 server: iperf3 -s — запустить сервер
-iperf3 client: iperf3 -c server_ip — тест скорости
-iperf3 parallel: iperf3 -c server -P 4 — 4 параллельных потока
-SS all TCP: ss -t -a — все TCP-соединения
-SS with timers: ss -t -o — таймеры keepalive/retransmit
-SS detail: ss -ti — RTT, CWND, retransmissions per socket
+MTR report: mtr -r -c 10 host — потери и задержка по каждому хопу
+Traceroute: traceroute host — путь пакетов до хоста
+Loss% in mtr: если потери начинаются с хопа N → проблема там!
+iperf3 server: iperf3 -s — запустить сервер для теста скорости
+iperf3 client: iperf3 -c host — измерить пропускную способность
+SS connections: ss -t — все TCP-соединения
+SS listening: ss -tl — какие порты слушают
+SS states: ss -s — статистика по ESTAB/TIME-WAIT/CLOSE-WAIT

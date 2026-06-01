@@ -1,11 +1,11 @@
 META
 # Track: netdebug
-# Title: Нет интернета!
+# Title: Алгоритм расследования
 # Number: 003
 # Level: 1
 # Type: practice
 # Difficulty: easy
-# TimeLimitMin: 15
+# TimeLimitMin: 20
 # XP: 15
 
 SETUP
@@ -15,70 +15,76 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-🔌 **Нет интернета!**
+⚗️ ПРАКТИКУМ #003: Алгоритм расследования
 
-Классический сценарий: «у меня нет интернета». Расследуй шаг за шагом, используя правильный порядок диагностики.
+Декан Чартер влетел в комнату:
+«Ринсвинд! "У меня нет интернета!" — это НЕ диагноз!
+Это СИМПТОМ! Нужно расследовать ПОШАГОВО:
+от себя → до шлюза → до DNS → до сервера.
+Каждый шаг — проверка. Где обрыв? Там и копай!»
 
-📋 **Задания** (выполняй по порядку!):
+📋 **Задания**:
 
-1. **Проверь свой IP**: `ip addr | grep "inet "`
-   Есть ли IP-адрес? Если нет — проблема на уровне интерфейса.
+1. **Шаг 1: Проверь себя**:
+   ```bash
+   ping -c 2 127.0.0.1       # Loopback работает?
+   ip addr | grep "inet "    # Есть IP-адрес?
+   ```
 
-2. **Проверь маршрут**: `ip route | grep default`
-   Есть ли шлюз по умолчанию?
+2. **Шаг 2: Проверь шлюз**:
+   ```bash
+   GW=$(ip route 2>/dev/null | grep default | awk '{print $3}' || netstat -rn 2>/dev/null | grep default | awk '{print $2}')
+   echo "Gateway: $GW"
+   ping -c 2 "$GW"
+   ```
 
-3. **Пинг шлюза**: `ping -c 4 <gateway_ip>`
-   Шлюз доступен? Если нет — проблема в локальной сети.
+3. **Шаг 3: Проверь внешний IP**:
+   ```bash
+   ping -c 2 8.8.8.8         # Google DNS
+   ```
 
-4. **Пинг внешнего IP**: `ping -c 4 8.8.8.8`
-   Внешний IP доступен? Если да, но DNS не работает — проблема в DNS.
+4. **Шаг 4: Проверь DNS**:
+   ```bash
+   dig google.com +short     # Имя → IP?
+   ping -c 2 google.com      # По имени?
+   ```
 
-5. **Проверь DNS**: `dig google.com +short`
-   DNS резолвится? Если нет — попробуй другой DNS:
-   `dig @8.8.8.8 google.com +short`
+5. **Напиши скрипт-диагностик** `$DIR/diagnose.sh`:
+   ```bash
+   #!/bin/bash
+   echo "═══ Network Diagnosis ═══"
+   
+   echo -n "Loopback: "; ping -c 1 -W 2 127.0.0.1 &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
+   echo -n "Gateway:  "; GW=$(ip route 2>/dev/null | grep default | awk '{print $3}'); [ -n "$GW" ] && ping -c 1 -W 2 "$GW" &>/dev/null && echo "✓ OK ($GW)" || echo "✗ FAIL"
+   echo -n "Internet: "; ping -c 1 -W 2 8.8.8.8 &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
+   echo -n "DNS:      "; dig google.com +short &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
+   echo "═══ End of Diagnosis ═══"
+   ```
 
-6. **Проверь HTTP**: `curl -sI https://google.com | head -3`
-   HTTP работает? Какой код ответа?
-
-7. **Трассировка маршрута**: `traceroute google.com` или `tracepath google.com`
-   Где обрывается путь?
-
-8. **Проверь порт через nc**: `nc -zv google.com 443 -w 3`
-
-💡 **Алгоритм «нет интернета»**:
-```
-IP есть? → Шлюз пингуется? → Внешний IP пингуется?
-→ DNS работает? → HTTP/HTTPS доступен?
-```
+6. Запусти: `chmod +x diagnose.sh && ./diagnose.sh`
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_003`
 
 VALIDATION
 #!/bin/bash
+DIR="$HOME/.ninja_trainer/netdebug_003"
 score=0
 
-ip=$(ip addr 2>/dev/null | grep -c "inet ")
-[ "$ip" -ge 1 ] && { echo "✓ IP-адрес есть"; score=$((score+1)); }
+if [ -f "$DIR/diagnose.sh" ]; then
+  chmod +x "$DIR/diagnose.sh"
+  out=$(bash "$DIR/diagnose.sh" 2>&1)
+  echo "$out" | grep -q "OK\|FAIL\|Diagnosis" && { echo "✓ diagnose.sh работает"; score=$((score+1)); }
+fi
 
-gw=$(ip route 2>/dev/null | grep -c default)
-[ "$gw" -ge 1 ] && { echo "✓ Шлюз по умолчанию есть"; score=$((score+1)); }
-
-dns=$(dig google.com +short 2>/dev/null | head -1)
-[ -n "$dns" ] && { echo "✓ DNS работает"; score=$((score+1)); }
-
-http_code=$(curl -sI -o /dev/null -w "%{http_code}" https://google.com 2>/dev/null)
-[ "$http_code" = "200" ] || [ "$http_code" = "301" ] || [ "$http_code" = "302" ] && { echo "✓ HTTP работает ($http_code)"; score=$((score+1)); }
-
-[ $score -ge 2 ] && { echo "✓ ok: Диагностика связности освоена! (баллов: $score/4)"; exit 0; }
-echo "✗ Проверь сетевую связность (баллов: $score/4)"
+[ $score -ge 1 ] && { echo "✓ ok: Алгоритм расследования освоен! (баллов: $score/1)"; exit 0; }
+echo "✗ Напиши diagnose.sh (баллов: $score/1)"
 exit 1
 
 HINTS
-Step 1 — IP: ip addr — если нет IP, проблема в интерфейсе/DHCP
-Step 2 — Gateway: ip route | grep default — если нет шлюза, никуда не уйдёшь
-Step 3 — Ping gateway: ping <gateway> — если шлюз не отвечает, проблема в LAN
-Step 4 — Ping external: ping 8.8.8.8 — если внешний IP доступен, но сайты нет → DNS
-Step 5 — DNS: dig domain +short или dig @8.8.8.8 domain +short (альтернативный DNS)
-Step 6 — HTTP: curl -I URL — проверить код ответа и заголовки
-Step 7 — Traceroute: traceroute host или tracepath host — где обрывается путь
-Step 8 — Port check: nc -zv host port -w 3 — открыт ли конкретный порт
+Step 1: ping 127.0.0.1 — проверить что сетевой стек работает
+Step 2: найти шлюз (ip route | grep default) и пингануть его
+Step 3: ping 8.8.8.8 — доступен ли внешний мир по IP?
+Step 4: dig/ping по имени — работает ли DNS?
+Если IP ок но имя нет → DNS проблема
+Если шлюз ок но внешний нет → провайдер проблема
+Если loopback не ок → сломан сетевой стек

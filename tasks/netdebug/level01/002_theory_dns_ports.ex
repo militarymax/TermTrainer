@@ -1,11 +1,11 @@
 META
 # Track: netdebug
-# Title: DNS и порты
+# Title: Имена и порталы
 # Number: 002
 # Level: 1
 # Type: theory
 # Difficulty: easy
-# TimeLimitMin: 10
+# TimeLimitMin: 15
 # XP: 10
 
 SETUP
@@ -15,42 +15,59 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **DNS и порты**
+📜 СВИТОК ЗНАНИЙ #002: Имена и порталы
 
-«Нет интернета» — чаще всего проблема в DNS или закрытых портах. Научись проверять и то, и другое.
+Библиотекарь положил перед тобой два свитка:
+один с именами, другой с номерами порталов.
+«Ууук!» — это означало: «DNS превращает имена в адреса.
+Порты — это номера комнат в Башне.
+Не знаешь имени — не найдёшь адрес.
+Не знаешь порт — не попадёшь в нужную дверь.»
 
-📖 **DNS-записи**:
-• A-запись: `dig example.com A` — IPv4-адрес
-• CNAME: `dig www.google.com CNAME` — алиас (псевдоним)
-• MX: `dig gmail.com MX` — почтовые серверы
-• NS: `dig google.com NS` — авторитетные DNS-серверы
-• `dig +short google.com` — только IP без лишнего
-• `dig +trace google.com` — полный путь от корневых серверов
+───────────────────────────────────────
+🔹 DNS — КНИГА ИМЁН
+───────────────────────────────────────
 
-📖 **Проверка открытых портов**:
-• `nc -zv host port` — проверить TCP-порт (netcat)
-• `nc -zv google.com 443` — открыт ли HTTPS?
-• `nc -zv -u host port` — проверить UDP-порт
-• `telnet host port` — классический способ (устаревший)
+```bash
+dig google.com +short       # → 142.250.XX.XX (только IP)
+dig google.com ANY          # Все записи
+nslookup google.com         # Альтернатива (проще)
+host google.com             # Ещё альтернатива
 
-📖 **Слушающие порты на своей машине**:
-• `ss -tulpn` — все слушающие TCP/UDP порты с процессами
-• `ss -tlnp | grep :80` — кто слушает на порту 80?
-• `lsof -i :8080` — какой процесс на порту 8080?
+dig @8.8.8.8 google.com     # Спросить конкретный DNS-сервер
+```
 
-📖 **HTTP-запросы вручную**:
-• `curl -v http://example.com` — подробный вывод с заголовками
-• `curl -sI http://example.com` — только заголовки ответа
-• `curl -o /dev/null -w "HTTP %{http_code}, Time: %{time_total}s\n"` — код + время
+📖 **Типы записей**:
+• `A` — IPv4 адрес (google.com → 142.250.XX.XX)
+• `AAAA` — IPv6 адрес
+• `CNAME` — псевдоним (www.google.com → google.com)
+• `MX` — почтовый сервер
+• `NS` — DNS-сервер домена
+
+───────────────────────────────────────
+🔹 ПОРТЫ — НОМЕРА КОМНАТ
+───────────────────────────────────────
+
+```bash
+nc -zv google.com 443       # Открыт ли порт? (timeout -W 3)
+nc -zv google.com 80        # HTTP
+nc -zv google.com 22        # SSH
+```
+
+📖 **Стандартные порты**:
+• `22` — SSH (удалённый доступ)
+• `80` — HTTP (веб без шифрования)
+• `443` — HTTPS (веб с шифрованием)
+• `53` — DNS (разрешение имён)
+• `3306` — MySQL, `5432` — PostgreSQL
+• `6379` — Redis, `8080` — часто для приложений
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_002`
 
 📋 **Попробуй**:
-1. DNS A-запись: `dig google.com +short`
-2. MX-запись: `dig gmail.com MX +short`
-3. Проверь порт: `nc -zv google.com 443 && echo "OPEN"`
-4. Слушающие порты: `ss -tlnp | head -10`
-5. HTTP-ответ: `curl -sI https://google.com | head -5`
+1. `dig google.com +short` — IP по имени
+2. `nslookup github.com` — ещё один способ
+3. `nc -zv google.com 443` — открыт ли HTTPS?
 
 VALIDATION
 #!/bin/bash
@@ -59,19 +76,19 @@ score=0
 dns=$(dig google.com +short 2>/dev/null | head -1)
 [ -n "$dns" ] && { echo "✓ DNS работает: $dns"; score=$((score+1)); }
 
-ports=$(ss -tlnp 2>/dev/null | wc -l)
-[ "$ports" -ge 2 ] && { echo "✓ ss работает ($ports строк)"; score=$((score+1)); }
+ns=$(nslookup google.com 2>/dev/null | grep "Address" | tail -1)
+[ -n "$ns" ] && { echo "✓ nslookup работает"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: DNS и порты освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-A record: dig domain.com +short — IP-адрес домена
-MX record: dig domain.com MX — почтовые серверы
-CNAME: dig alias.domain.com CNAME — псевдоним
-Check port: nc -zv host port — открыт ли TCP-порт
-Listening ports: ss -tulpn — все слушающие порты
-Who listens: ss -tlnp | grep :PORT или lsof -i :PORT
-Curl verbose: curl -v URL — заголовки запроса и ответа
-Curl headers only: curl -sI URL — только заголовки ответа
+Dig short: dig domain +short — только IP-адрес
+Dig any: dig domain ANY — все типы записей
+Nslookup: nslookup domain — простой запрос DNS
+Specific DNS: dig @8.8.8.8 domain — спросить конкретный сервер
+Netcat check: nc -zv host port — открыт ли порт?
+Common ports: 22=SSH, 80=HTTP, 443=HTTPS, 53=DNS
+A record: IPv4 адрес домена
+CNAME: псевдоним (алиас) для другого домена

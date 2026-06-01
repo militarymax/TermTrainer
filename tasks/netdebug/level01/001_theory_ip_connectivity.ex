@@ -1,11 +1,11 @@
 META
 # Track: netdebug
-# Title: Карта сети
+# Title: Карта магических потоков
 # Number: 001
 # Level: 1
 # Type: theory
 # Difficulty: easy
-# TimeLimitMin: 10
+# TimeLimitMin: 15
 # XP: 10
 
 SETUP
@@ -15,67 +15,81 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Карта сети**
+📜 СВИТОК ЗНАНИЙ #001: Карта магических потоков
 
-Прежде чем расследовать проблемы — нужно понимать карту: свой IP, шлюз, DNS. Это основа любого сетевого расследования.
+Архиканцлер развернул на столе карту Башни:
+«Ринсвинд! Магические потоки пронизывают весь Плоский мир.
+Ты должен знать СВОЙ адрес, свой шлюз, свой путь к остальному миру.
+Иначе как ты отправишь заклинание? Как получишь ответ?
+Последний студент, который не знал свой IP, три дня звал на помощь.
+Помощь пришла. Из другого измерения.»
 
-📖 **IP-адреса и интерфейсы**:
-• `ip addr` или `ifconfig` — все IP-адреса и интерфейсы
-• `ip addr show eth0` — конкретный интерфейс
-• IPv4 адрес: `192.168.1.5`, маска: `/24` (255.255.255.0)
-• Loopback: `127.0.0.1` — локальный интерфейс
+───────────────────────────────────────
+🔹 IP-АДРЕСА И ИНТЕРФЕЙСЫ
+───────────────────────────────────────
 
-📖 **Маршрутизация**:
-• `ip route` или `route -n` — таблица маршрутизации
-• Шлюз по умолчанию (default gateway): куда идут пакеты за пределы сети
-• `default via 192.168.1.1 dev eth0`
+```bash
+ip addr                    # Все IP-адреса и интерфейсы (Linux)
+ifconfig                   # То же самое на macOS/BSD
+ip addr show en0           # Конкретный интерфейс
+```
 
-📖 **Проверка связности**:
-• `ping -c 4 8.8.8.8` — проверить связь с внешним IP
-• `ping -c 4 192.168.1.1` — проверить связь со шлюзом
-• RTT = Round Trip Time (время туда-обратно)
-• Потери пакетов = packet loss (%)
+• IPv4 адрес: `192.168.1.5` — твой уникальный адрес в сети
+• Маска подсети: `/24` = `255.255.255.0` — кто «рядом» с тобой
+• Loopback: `127.0.0.1` — ты сам! Всегда доступен.
 
-📖 **DNS**:
-• `/etc/resolv.conf` — какие DNS-серверы используются
-• `dig google.com` — запрос A-записи
-• `nslookup google.com` — простой DNS-запрос
-• `host google.com` — ещё один вариант
+───────────────────────────────────────
+🔹 МАРШРУТИЗАЦИЯ — КУДА ИДУТ ЗАКЛИНАНИЯ
+───────────────────────────────────────
 
-📖 **Порты TCP/UDP**:
-• Общеизвестные порты: 22 (SSH), 80 (HTTP), 443 (HTTPS), 53 (DNS)
-• `ss -tulpn` — слушающие порты на вашей машине
-• `netstat -tulpn` — альтернатива (устаревшая)
+```bash
+ip route                   # Таблица маршрутизации (Linux)
+netstat -rn                # Альтернатива (macOS/Linux)
+```
+
+• Шлюз по умолчанию (default gateway): куда идут пакеты за пределы твоей сети
+• Если шлюз недоступен — ВНЕШНИЙ мир недоступен!
+
+───────────────────────────────────────
+🔹 PING — ПРОВЕРКА СВЯЗИ
+───────────────────────────────────────
+
+```bash
+ping -c 4 127.0.0.1       # Себя (всегда должно работать!)
+ping -c 4 192.168.1.1     # Шлюз (роутер)
+ping -c 4 8.8.8.8         # Внешний мир (Google DNS)
+ping -c 4 google.com      # По имени (проверка DNS!)
+```
+
+• `ping` работает на ICMP — если заблокирован, хост может быть доступен через HTTP!
+• `time=XX ms` — задержка (RTT). Чем меньше — тем быстрее.
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_001`
 
 📋 **Попробуй**:
-1. Свой IP: `ip addr | grep "inet "`
-2. Шлюз: `ip route | grep default`
-3. DNS: `cat /etc/resolv.conf`
-4. Пинг шлюза: `ping -c 4 $(ip route | grep default | awk '{print $3}')`
-5. Пинг внешнего: `ping -c 4 8.8.8.8`
-6. DNS-запрос: `dig google.com +short`
+1. `ip addr | grep "inet "` или `ifconfig | grep "inet "` — свои IP
+2. `netstat -rn | grep default` — шлюз
+3. `ping -c 3 google.com` — проверить связь с миром
 
 VALIDATION
 #!/bin/bash
 score=0
 
-ip_addr=$(ip addr 2>/dev/null | grep -c "inet ")
-[ "$ip_addr" -ge 1 ] && { echo "✓ IP-адреса найдены"; score=$((score+1)); }
+ips=$(ip addr 2>/dev/null | grep -c "inet " || ifconfig 2>/dev/null | grep -c "inet ")
+[ "$ips" -ge 1 ] && { echo "✓ IP-адреса найдены"; score=$((score+1)); }
 
-def_route=$(ip route 2>/dev/null | grep -c default)
-[ "$def_route" -ge 1 ] && { echo "✓ Маршрут по умолчанию есть"; score=$((score+1)); }
+gw=$(netstat -rn 2>/dev/null | grep default | head -1 || ip route 2>/dev/null | grep default | head -1)
+[ -n "$gw" ] && { echo "✓ Шлюз определён"; score=$((score+1)); }
 
-[ $score -ge 1 ] && { echo "✓ ok: Карта сети освоена! (баллов: $score/2)"; exit 0; }
+[ $score -ge 1 ] && { echo "✓ ok: Карта потоков освоена! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-IP addresses: ip addr или ifconfig — все интерфейсы и IP
-Default route: ip route | grep default — шлюз по умолчанию
-Ping gateway: ping -c 4 <gateway_ip> — связность со шлюзом
-Ping external: ping -c 4 8.8.8.8 — связность с интернетом
-DNS servers: cat /etc/resolv.conf — какие DNS используются
-DNS query: dig google.com или nslookup google.com
-Listening ports: ss -tulpn — какие порты открыты на машине
+IP addresses: ip addr (Linux) или ifconfig (macOS) — свои адреса
+Default gateway: ip route | grep default или netstat -rn | grep default
+Ping self: ping 127.0.0.1 — всегда должно работать!
+Ping gateway: ping <gateway_IP> — доступен ли роутер?
+Ping external: ping 8.8.8.8 — доступен ли внешний мир?
+Ping by name: ping google.com — работает ли DNS?
+ICMP blocked: если ping не отвечает — может быть firewall, а не обрыв

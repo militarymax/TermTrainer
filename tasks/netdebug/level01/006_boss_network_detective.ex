@@ -15,54 +15,58 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-🐉 **Сетевой детектив** (БОСС)
+🐉 БОСС #006: Сетевой детектив
 
-Архиканцлер сообщил: «Что-то не так с сетью!» Расследуй проблему от начала до конца, используя все инструменты.
+Архиканцлер вызвал тебя в кабинет:
+«Ринсвинд! Студенты жалуются — "всё сломалось".
+Но ЧТО именно? Не знают. Ты должен провести ПОЛНОЕ расследование:
+от IP-адреса до HTTP-ответа. Собери ВСЮ информацию в один отчёт.
+Если пропустишь хоть один шаг — демон ускользнёт.
+А демоны в сети... они хитрые.»
 
 📋 **Боевые задания**:
 
-1. **Определи свой IP и интерфейс**: `ip addr | grep "inet "`
-   Запиши свой IP и маску подсети.
+Напиши `$DIR/full_diagnose.sh` который проверяет ВСЁ:
 
-2. **Найди шлюз**: `ip route | grep default`
-   Какой шлюз по умолчанию?
+```bash
+#!/bin/bash
+echo "═══════════════════════════════════"
+echo "   Network Detective Report"
+echo "═══════════════════════════════════"
+echo "Date: $(date)"
+echo ""
 
-3. **Пинг шлюза**: `ping -c 4 <gateway>`
+echo "── Step 1: Interfaces ──"
+ip addr 2>/dev/null | grep "inet " | grep -v 127.0.0.1 || ifconfig 2>/dev/null | grep "inet " | grep -v 127.0.0.1
 
-4. **Пинг внешний IP**: `ping -c 4 8.8.8.8`
+echo ""
+echo "── Step 2: Gateway ──"
+GW=$(ip route 2>/dev/null | grep default | awk '{print $3}' || netstat -rn 2>/dev/null | grep default | awk '{print $2}' | head -1)
+echo "Gateway: ${GW:-NOT FOUND}"
 
-5. **Пинг по имени**: `ping -c 4 google.com`
-   Если IP пингуется, а имя нет — проблема в DNS!
+echo ""
+echo "── Step 3: Connectivity ──"
+echo -n "Loopback: "; ping -c 1 -W 2 127.0.0.1 &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
+echo -n "Gateway:  "; [ -n "$GW" ] && ping -c 1 -W 2 "$GW" &>/dev/null && echo "✓ OK" || echo "✗ FAIL/N/A"
+echo -n "Internet: "; ping -c 1 -W 2 8.8.8.8 &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
 
-6. **Проверь DNS через dig**: `dig google.com +short`
+echo ""
+echo "── Step 4: DNS ──"
+DNS_IP=$(dig google.com +short 2>/dev/null | head -1)
+echo "google.com → ${DNS_IP:-FAILED}"
+echo -n "By name:  "; ping -c 1 -W 2 google.com &>/dev/null && echo "✓ OK" || echo "✗ FAIL"
 
-7. **Альтернативный DNS**: `dig @1.1.1.1 google.com +short`
+echo ""
+echo "── Step 5: HTTP ──"
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://google.com --connect-timeout 5 2>/dev/null)
+HTTP_TIME=$(curl -s -o /dev/null -w "%{time_total}" https://google.com --connect-timeout 5 2>/dev/null)
+echo "HTTPS google.com: code=${HTTP_CODE:-N/A} time=${HTTP_TIME:-N/A}s"
 
-8. **Трассировка**: `traceroute google.com` или `tracepath google.com`
+echo ""
+echo "═══════════════════════════════════"
+```
 
-9. **Проверь HTTPS-порт**: `nc -zv google.com 443 -w 3`
-
-10. **HTTP-запрос с таймингом**:
-    `curl -s -o /dev/null -w "DNS:%{time_namelookup}s Connect:%{time_connect}s TLS:%{time_appconnect}s Total:%{time_total}s HTTP:%{http_code}\n" https://google.com`
-
-11. **Скрипт быстрой диагностики на bash**:
-    ```bash
-    #!/bin/bash
-    echo "=== IP ==="
-    ip addr | grep "inet " | grep -v 127.0.0.1
-    echo "=== GATEWAY ==="
-    ip route | grep default
-    echo "=== PING GW ==="
-    ping -c 2 $(ip route | grep default | awk '{print $3}') 2>&1 | tail -2
-    echo "=== PING 8.8.8.8 ==="
-    ping -c 2 8.8.8.8 2>&1 | tail -2
-    echo "=== DNS ==="
-    dig google.com +short 2>/dev/null || echo "FAIL"
-    echo "=== HTTP ==="
-    curl -sI -o /dev/null -w "%{http_code} %{time_total}s\n" https://google.com --connect-timeout 5
-    ```
-
-12. **Сохрани скрипт**: запиши его в `$HOME/.ninja_trainer/netdebug_006/diag.sh`
+Запусти и сохрани: `chmod +x full_diagnose.sh && ./full_diagnose.sh > $DIR/report.txt`
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_006`
 
@@ -71,33 +75,20 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/netdebug_006"
 score=0
 
-ip=$(ip addr 2>/dev/null | grep -c "inet ")
-[ "$ip" -ge 1 ] && { echo "✓ IP определён"; score=$((score+1)); }
-
-gw=$(ip route 2>/dev/null | grep -c default)
-[ "$gw" -ge 1 ] && { echo "✓ Шлюз найден"; score=$((score+1)); }
-
-dns=$(dig google.com +short 2>/dev/null | head -1)
-[ -n "$dns" ] && { echo "✓ DNS работает"; score=$((score+1)); }
-
-if [ -f "$DIR/diag.sh" ]; then
-  chmod +x "$DIR/diag.sh"
-  output=$(bash "$DIR/diag.sh" 2>&1 | head -20)
-  [ -n "$output" ] && { echo "✓ Скрипт диагностики работает"; score=$((score+1)); }
+if [ -f "$DIR/full_diagnose.sh" ]; then
+  chmod +x "$DIR/full_diagnose.sh"
+  out=$(bash "$DIR/full_diagnose.sh" 2>&1)
+  echo "$out" | grep -q "Step\|Interface\|Gateway\|Connectivity\|DNS\|HTTP" && { echo "✓ full_diagnose.sh работает"; score=$((score+1)); }
 fi
 
-[ $score -ge 3 ] && { echo "✓ ok: БОСС пройден! Ты — сетевой детектив! (баллов: $score/4)"; exit 0; }
-echo "✗ Нужно больше практики (баллов: $score/4)"
+[ $score -ge 1 ] && { echo "✓ ok: БОСС пройден! Сетевой детектив готов! (баллов: $score/1)"; exit 0; }
+echo "✗ Напиши full_diagnose.sh (баллов: $score/1)"
 exit 1
 
 HINTS
-IP address: ip addr | grep "inet " — свой IP и маска
+Interfaces: ip addr или ifconfig — свои адреса
 Gateway: ip route | grep default — шлюз по умолчанию
-Ping gateway: ping -c 4 <gw_ip> — связность со шлюзом
-Ping external: ping -c 4 8.8.8.8 — связность с интернетом
-DNS check: dig domain +short — работает ли DNS
-Alt DNS: dig @1.1.1.1 domain +short — попробовать другой DNS сервер
-Traceroute: traceroute host или tracepath host — путь до хоста
-Port check: nc -zv host port -w 3 — открыт ли порт
-Curl timing: curl -o /dev/null -w "DNS:%{time_namelookup} Total:%{time_total}\n" URL
-Diag script: собрать все проверки в один bash-скрипт
+Ping loopback → gateway → internet — пошаговая проверка связности
+DNS: dig domain +short — разрешение имён
+HTTP: curl -w "%{http_code}" URL — код ответа сервера
+Report: собрать все шаги в один скрипт, перенаправить вывод > report.txt

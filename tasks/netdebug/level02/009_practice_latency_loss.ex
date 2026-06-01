@@ -1,10 +1,10 @@
 META
 # Track: netdebug
-# Title: Потери и задержки
+# Title: Охота на потери
 # Number: 009
 # Level: 2
 # Type: practice
-# Difficulty: medium
+# Difficulty: hard
 # TimeLimitMin: 25
 # XP: 25
 
@@ -15,52 +15,56 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📊 **Потери и задержки**
+⚗️ ПРАКТИКУМ #009: Охота на потери
 
-Сайт «тормозит» — но почему? Потеря пакетов? Высокий RTT? Проблема на каком-то хопе? Расследуй!
+Декан Чартер вызвал тебя в лабораторию:
+«Ринсвинд! Заклинания доходят с задержкой. Некоторые теряются.
+Нужно ТОЧНО измерить: где потери, какая задержка, сколько TIME-WAIT.
+Напиши скрипт мониторинга — и чтобы с jq для анализа!»
 
 📋 **Задания**:
 
-1. **Измерь RTT до разных точек**:
-   `ping -c 10 google.com | tail -2`
-   Обрати внимание на min/avg/max/stddev
-
-2. **mtr — потери по хопам** (если установлен):
-   `mtr -r -c 10 google.com`
-   Ищи хопы с потерями >5%
-
-3. **Проверь DNS-задержку через dig**:
-   `dig @8.8.8.8 google.com | grep "Query time"`
-   `dig @1.1.1.1 google.com | grep "Query time"`
-   Сравни время ответа разных DNS
-
-4. **HTTP-тайминг разбивка**:
+1. **Измерь RTT до нескольких хостов**:
    ```bash
-   curl -s -o /dev/null -w "DNS:%{time_namelookup}s TCP:%{time_connect}s TLS:%{time_appconnect}s Start:%{time_starttransfer}s Total:%{time_total}s\n" https://google.com
+   for host in google.com github.com cloudflare.com; do
+     rtt=$(ping -c 5 "$host" 2>/dev/null | tail -1 | awk -F/ '{print $5}')
+     echo "{\"host\":\"$host\",\"rtt_ms\":\"$rtt\"}"
+   done | jq -s '.'
    ```
-   Какая фаза самая долгая?
 
-5. **TCP-соединения и их состояние**:
-   `ss -t -a | awk '{print $1}' | sort | uniq -c | sort -rn`
-   Сколько ESTAB vs TIME-WAIT?
+2. **Подсчитай TCP-состояния**:
+   ```bash
+   ss -t -a 2>/dev/null | awk 'NR>1{print $1}' | sort | uniq -c | sort -rn
+   ```
 
-6. **Детали конкретного соединения**:
-   Найди соединение с google:
-   `ss -ti dst google.com`
-   Посмотри: rtt, cwnd, retrans
-
-7. **Скрипт мониторинга задержки на bash + jq**:
+3. **Напиши `net_monitor.sh`**:
    ```bash
    #!/bin/bash
-   for i in $(seq 1 10); do
-     rtt=$(ping -c 1 google.com 2>/dev/null | grep "time=" | sed 's/.*time=\([0-9.]*\).*/\1/')
-     ts=$(date +%H:%M:%S)
-     echo "{\"time\":\"$ts\",\"rtt_ms\":$rtt}"
+   echo "═══ Network Monitor ═══"
+   
+   # TCP states
+   echo ""
+   echo "── TCP States ──"
+   ss -t -a 2>/dev/null | awk 'NR>1{print $1}' | sort | uniq -c | sort -rn
+   
+   # Listening ports
+   echo ""
+   echo "── Listening Ports ──"
+   ss -tlnp 2>/dev/null | head -10
+   
+   # RTT check
+   echo ""
+   echo "── Latency Check ──"
+   for host in google.com github.com; do
+     rtt=$(ping -c 3 "$host" 2>/dev/null | tail -1 | awk -F/ '{print $5}')
+     printf "%-20s %s ms\n" "$host" "${rtt:-N/A}"
    done
+   
+   echo ""
+   echo "═══ End of Monitor ═══"
    ```
-   Запусти и перенаправь в файл, потом проанализируй через jq:
-   `bash monitor.sh > results.jsonl`
-   `cat results.jsonl | jq -s '[.[].rtt_ms] | {min: min, max: max, avg: (add/length)}'`
+
+4. Запусти и сохрани: `chmod +x net_monitor.sh && ./net_monitor.sh > $DIR/report.txt`
 
 📂 Рабочий каталог: `~/.ninja_trainer/netdebug_009`
 
@@ -69,25 +73,20 @@ VALIDATION
 DIR="$HOME/.ninja_trainer/netdebug_009"
 score=0
 
-rtt=$(ping -c 3 google.com 2>/dev/null | tail -1)
-[ -n "$rtt" ] && { echo "✓ Ping работает: $rtt"; score=$((score+1)); }
+if [ -f "$DIR/net_monitor.sh" ]; then
+  chmod +x "$DIR/net_monitor.sh"
+  out=$(bash "$DIR/net_monitor.sh" 2>&1)
+  echo "$out" | grep -q "TCP\|Latency\|google\|github" && { echo "✓ net_monitor.sh работает"; score=$((score+1)); }
+fi
 
-dns_time=$(dig @8.8.8.8 google.com 2>/dev/null | grep "Query time")
-[ -n "$dns_time" ] && { echo "✓ DNS timing: $dns_time"; score=$((score+1)); }
-
-http_timing=$(curl -s -o /dev/null -w "%{time_total}" https://google.com --connect-timeout 5 2>/dev/null)
-[ -n "$http_timing" ] && { echo "✓ HTTP total time: ${http_timing}s"; score=$((score+1)); }
-
-[ $score -ge 2 ] && { echo "✓ ok: Диагностика потерь и задержек освоена! (баллов: $score/3)"; exit 0; }
-echo "✗ Проверь сетевую связность (баллов: $score/3)"
+[ $score -ge 1 ] && { echo "✓ ok: Мониторинг освоен! (баллов: $score/1)"; exit 0; }
+echo "✗ Напиши net_monitor.sh (баллов: $score/1)"
 exit 1
 
 HINTS
-Ping stats: ping -c 10 host | tail -2 — min/avg/max/stddev RTT
-MTR report: mtr -r -c 10 host — потери и RTT по каждому хопу
-DNS timing: dig @server domain | grep Query time — скорость DNS-ответа
-Curl timing: curl -o /dev/null -w "DNS:%{time_namelookup} Total:%{time_total}\n" URL
-SS states: ss -t -a | awk '{print $1}' | sort | uniq -c — распределение состояний
-SS detail: ss -ti dst host — RTT, CWND, retrans для конкретного соединения
-Monitor script: цикл ping → JSON → анализ через jq
-JQ stats: cat data.jsonl | jq -s '[.[].field] | {min,max,avg:(add/length)}'
+Ping stats: ping -c N host | tail -1 — мин/сред/макс RTT
+RTT extract: awk -F/ '{print $5}' — вырезать среднее из строки rtt min/avg/max
+TCP states: ss -t -a | awk '{print $1}' | sort | uniq -c — подсчёт состояний
+Listening ports: ss -tlnp — кто слушает на каких портах
+JSON output: echo '{"key":"val"}' | jq -s '.' — собрать в JSON массив
+Monitor script: объединить несколько проверок в один отчёт

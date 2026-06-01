@@ -5,7 +5,7 @@ META
 # Level: 1
 # Type: theory
 # Difficulty: easy
-# TimeLimitMin: 10
+# TimeLimitMin: 15
 # XP: 10
 
 SETUP
@@ -15,75 +15,86 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Первые сосуды**
+📜 СВИТОК ЗНАНИЙ #001: Первые сосуды
 
-В Башне Алхимика контейнеры — магические сосуды, в которых варятся сервисы. Каждый сосуд изолирован от внешнего мира, но может общаться через специальные каналы. Научись управлять сосудами!
+Архиканцлер провёл тебя в подвалы Башни Алхимика:
+«Ринсвинд! Видишь эти сосуды? Каждый — изолированный мир.
+В одном варится зелье, в другом живёт демон, в третьем —
+целый сервер. И ни один не знает о существовании других.
+Пока мы не откроем канал. Научись управлять сосудами —
+или последний сосуд, который ты случайно разбил,
+потребует ещё трёх месяцев ремонта.»
 
-📖 **Установка и проверка**:
+───────────────────────────────────────
+🔹 УСТАНОВКА И ПРОВЕРКА
+───────────────────────────────────────
+
 • **macOS**: `brew install --cask docker` (Docker Desktop)
 • **Linux**: `curl -fsSL https://get.docker.com | sh && sudo usermod -aG docker $USER`
 • Проверка: `docker version` и `docker info`
 
-📖 **Жизненный цикл контейнера**:
-• `docker run` — создать и запустить контейнер
-• `docker ps` — работающие контейнеры (`-a` — все, включая остановленные)
-• `docker stop <id>` — остановить (SIGTERM → SIGKILL)
-• `docker start <id>` — запустить остановленный
-• `docker restart <id>` — перезапустить
-• `docker rm <id>` — удалить остановленный контейнер
-• `docker kill <id>` — убить немедленно (SIGKILL)
+───────────────────────────────────────
+🔹 ЖИЗНЕННЫЙ ЦИКЛ СОСУДА
+───────────────────────────────────────
 
-📖 **Ключевые флаги docker run**:
-• `-d` — запустить в фоне (detached)
-• `-it` — интерактивный режим (с терминалом)
-• `--name myapp` — дать имя контейнеру
-• `--rm` — удалить после остановки
-• `-p 8080:80` — проброс порта (хост:контейнер)
-
-📖 **Примеры**:
 ```bash
-docker run -d --name web -p 8080:80 nginx    # nginx на порту 8080
-docker ps                                      # посмотреть работающие
-docker logs web                                # логи контейнера
-docker stop web                                # остановить
-docker rm web                                  # удалить
+docker run nginx              # Создать и запустить сосуд
+docker ps                     # Работающие сосуды (-a — все)
+docker stop <id>              # Остановить (SIGTERM → SIGKILL)
+docker start <id>             # Запустить остановленный
+docker restart <id>           # Перезапустить
+docker rm <id>                # Уничтожить остановленный сосуд
+docker kill <id>              # Убить немедленно (SIGKILL)
+```
+
+⚠️ `stop` даёт процессу время на завершение. `kill` — мгновенная смерть!
+
+───────────────────────────────────────
+🔹 КЛЮЧЕВЫЕ ФЛАГИ docker run
+───────────────────────────────────────
+
+• `-d` — запустить в фоне (detached) — сосуд работает сам по себе
+• `-it` — интерактивный режим (с терминалом)
+• `--name myapp` — дать сосуду имя (иначе случайный хекс)
+• `--rm` — уничтожить после остановки (одноразовый сосуд)
+• `-p 8080:80` — проброс порта (внешний:внутренний)
+
+```bash
+docker run -d --name web -p 8080:80 nginx   # Nginx на порту 8080
+docker logs web                              # Прочитать записи сосуда
+docker stop web && docker rm web             # Остановить и уничтожить
 ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/docker_001`
 
 📋 **Попробуй**:
-1. Проверь установку: `docker version`
-2. Запусти: `docker run -d --name hello -p 8080:80 nginx`
-3. Посмотри: `docker ps`
-4. Останови: `docker stop hello && docker rm hello`
+1. `docker version` — проверить установку
+2. `docker run -d --name hello nginx` — запустить первый сосуд
+3. `docker ps` — увидеть работающий сосуд
+4. `docker logs hello` — прочитать записи
+5. `docker stop hello && docker rm hello` — очистить
 
 VALIDATION
 #!/bin/bash
 score=0
 
-if command -v docker &>/dev/null; then
-  echo "✓ docker установлен"
-  score=$((score+1))
-else
-  echo "✗ docker не установлен"
-fi
+docker version &>/dev/null && { echo "✓ Docker установлен"; score=$((score+1)); }
 
-if docker info &>/dev/null; then
-  echo "✓ Docker daemon работает"
-  score=$((score+1))
-else
-  echo "✗ Docker daemon не запущен"
-fi
+docker run -d --name ninja_test_hello nginx &>/dev/null && { echo "✓ Сосуд запущен"; score=$((score+1)); }
+sleep 2
+docker ps | grep -q ninja_test_hello 2>/dev/null && { echo "✓ Сосуд работает"; score=$((score+1)); }
+docker stop ninja_test_hello &>/dev/null; docker rm ninja_test_hello &>/dev/null
 
-[ $score -ge 1 ] && { echo "✓ ok: Первые сосуды готовы! (баллов: $score/2)"; exit 0; }
-echo "✗ Нужно установить Docker"
+[ $score -ge 2 ] && { echo "✓ ok: Первые сосуды освоены! (баллов: $score/3)"; exit 0; }
+echo "✗ Нужно больше практики (баллов: $score/3)"
 exit 1
 
 HINTS
-Установка macOS: brew install --cask docker или скачай с docker.com
-Установка Linux: curl -fsSL https://get.docker.com | sh
-Добавить себя в группу: sudo usermod -aG docker $USER (Linux)
-Проверка: docker version — клиент + сервер
-Daemon не работает? macOS: открой Docker Desktop. Linux: sudo systemctl start docker
-Run detached: docker run -d --name myapp nginx
-Stop + remove: docker stop myapp && docker rm myapp
+Install macOS: brew install --cask docker → запустить Docker Desktop
+Install Linux: curl -fsSL https://get.docker.com | sh
+Check: docker version — проверить что Docker работает
+Run: docker run -d --name myapp nginx — запустить сосуд в фоне
+List: docker ps — работающие, docker ps -a — все
+Logs: docker logs <name> — прочитать записи сосуда
+Stop+Remove: docker stop <name> && docker rm <name>
+Port mapping: -p 8080:80 — проброс порта хост→контейнер

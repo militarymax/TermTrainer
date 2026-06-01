@@ -1,6 +1,6 @@
 META
 # Track: docker
-# Title: Безопасность и оркестрация
+# Title: Рой и щиты сосудов
 # Number: 013
 # Level: 3
 # Type: theory
@@ -15,75 +15,88 @@ rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
 TASK
-📜 **Безопасность и оркестрация**
+📜 СВИТОК ЗНАНИЙ #013: Рой и щиты сосудов
 
-Production-контейнеры должны быть безопасными. А для масштабирования нужна оркестрация.
+Архиканцлер повёл тебя на крышу Башни:
+«Ринсвинд! Видишь эти сосуды внизу? Их СОТНИ. Управлять
+каждым вручную — безумие. Нужен РОЙ — чтобы они сами
+распределялись, лечились и масштабировались.
+И ЩИТЫ — чтобы демоны не выбрались из сосудов.»
 
-📖 **Безопасность контейнеров**:
-• `USER nobody` в Dockerfile — не запускать от root!
-• `--read-only` — корневая файловая система только для чтения
-• `--cap-drop=ALL --cap-add=NET_BIND_SERVICE` — минимальные Linux capabilities
-• `--security-opt no-new-privileges` — запретить повышение привилегий
-• Избегать `--privileged` — это даёт доступ ко ВСЕМУ хосту!
+───────────────────────────────────────
+🔹 DOCKER SWARM — РОЙ СОСУДОВ
+───────────────────────────────────────
 
-📖 **Сканирование уязвимостей**:
-• `docker scout cves <image>` — встроенное сканирование (Docker Desktop)
-• `trivy image <image>` — Trivy (от Aqua Security, бесплатный)
-• Интеграция в CI: сканирование при каждой сборке
-
-📖 **Docker Swarm** (базовая оркестрация):
-• `docker swarm init` — инициализировать кластер
-• `docker service create --name web -p 8080:80 --replicas 3 nginx`
-• `docker service ls` — список сервисов
-• `docker service scale web=5` — масштабировать
-• `docker stack deploy -c compose.yaml mystack` — деплой стека
-• `docker node ls` — узлы кластера
-
-📖 **Секреты**:
-• В Swarm: `echo "secret" | docker secret create db_password -`
-• Использование: `docker service create --secret db_password image`
-• В Compose: `secrets:` секция
-• ❌ Не храните секреты в переменных окружения! (видно в inspect)
-
-📖 **Полезные проверки безопасности через jq**:
 ```bash
-# Контейнеры с root-доступом
-docker ps -q | xargs docker inspect | \
-  jq '.[] | select(.Config.User == "" or .Config.User == "root") | .Name'
+docker swarm init                              # Создать рой
+docker node ls                                 # Узлы роя
+docker service create --name web --replicas 3 nginx   # 3 копии!
+docker service ls                              # Сервисы роя
+docker service scale web=5                     # Масштабировать!
+docker service rm web                          # Удалить сервис
+docker swarm leave                             # Выйти из роя
+```
 
-# Контейнеры с privileged
-docker ps -q | xargs docker inspect | \
-  jq '.[] | select(.HostConfig.Privileged == true) | .Name'
+• `service` — декларативное описание (сколько реплик нужно)
+• Swarm сам решит ГДЕ запустить, перезапустит при падении
+• Rolling update: `docker service update --image nginx:1.25 web`
 
-# Все проброшенные порты
-docker ps -q | xargs docker inspect | \
-  jq '.[] | {Name, Ports: .HostConfig.PortBindings}'
+───────────────────────────────────────
+🔹 БЕЗОПАСНОСТЬ — ЩИТЫ СОСУДА
+───────────────────────────────────────
+
+📖 **Capabilities** — что МОЖЕТ процесс внутри:
+```bash
+docker run --rm --cap-drop ALL --cap-add NET_BIND_SERVICE nginx
+# Убрать ВСЕ capabilities, добавить только нужные!
+```
+
+📖 **Read-only filesystem**:
+```bash
+docker run --rm --read-only nginx    # Файловая система ТОЛЬКО для чтения!
+```
+
+📖 **Security options**:
+```bash
+docker run --rm --security-opt no-new-privileges nginx
+# Запретить повышение привилегий!
+```
+
+📖 **Trivy** — сканирование уязвимостей:
+```bash
+trivy image nginx:latest             # Найти CVE в образе!
+trivy image --severity HIGH,CRITICAL nginx:latest
 ```
 
 📂 Рабочий каталог: `~/.ninja_trainer/docker_013`
 
 📋 **Попробуй**:
-1. Сканирование: `trivy image python:3.12-alpine` (если установлен trivy)
-2. Проверь root-контейнеры: скрипт из примеров выше
+1. `docker info | grep Swarm` — статус роя
+2. `trivy image alpine:3.19` — сканирование образа (если установлен)
 
 VALIDATION
 #!/bin/bash
 score=0
 
-if command -v docker &>/dev/null && docker info &>/dev/null; then
-  echo "✓ Docker работает"; score=$((score+1))
+swarm=$(docker info 2>/dev/null | grep "Swarm" | head -1)
+[ -n "$swarm" ] && { echo "✓ Docker info работает: $swarm"; score=$((score+1)); }
+
+if command -v trivy &>/dev/null; then
+  trivy image --severity HIGH,CRITICAL alpine:3.19 &>/dev/null && { echo "✓ Trivy сканирует"; score=$((score+1)); }
+else
+  echo "⚠ trivy не установлен (brew install trivy)"; score=$((score+1));
 fi
 
-[ $score -ge 1 ] && { echo "✓ ok: Безопасность и Swarm освоены! (баллов: $score/1)"; exit 0; }
-echo "✗ Нужен работающий Docker"
+[ $score -ge 1 ] && { echo "✓ ok: Swarm и безопасность освоены! (баллов: $score/2)"; exit 0; }
+echo "✗ Нужно больше практики"
 exit 1
 
 HINTS
-Non-root: USER nobody в Dockerfile — никогда от root!
-Read-only FS: docker run --read-only image — защита файловой системы
-Drop caps: docker run --cap-drop=ALL --cap-add=NET_BIND_SERVICE image
-No new privs: docker run --security-opt no-new-privileges image
-Avoid privileged: --privileged = полный доступ к хосту, ОПАСНО!
-Trivy scan: trivy image <name> — CVE уязвимости в образе
-Swarm init: docker swarm init — создать кластер
-Secrets: echo "pass" | docker secret create my_secret - — секреты в Swarm
+Swarm init: docker swarm init — создать рой на этой машине
+Service create: docker service create --replicas N — запустить N копий
+Service scale: docker service scale name=N — масштабировать
+Security caps: --cap-drop ALL --cap-add SPECIFIC — минимальные привилегии
+Read-only FS: --read-only — файловая система только для чтения
+No new privs: --security-opt no-new-privileges — запретить повышение привилегий
+Trivy scan: trivy image <image> — найти уязвимости в образе
+Trivy filter: --severity HIGH,CRITICAL — только серьёзные уязвимости
