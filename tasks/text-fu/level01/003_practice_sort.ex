@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_003"
+DIR="$HOME/.termtrainer/textfu_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 # Создаём перемешанный список зелий с дубликатами
@@ -59,11 +59,11 @@ TASK
 6. Отсортируй измерения **по возрастанию** (числовая сортировка)
 7. Сохрани результат инвентаризации в файл `отчёт.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_003`
+📂 Рабочий каталог: `~/.termtrainer/textfu_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_003"
+DIR="$HOME/.termtrainer/textfu_003"
 score=0
 errors=0
 
@@ -94,10 +94,10 @@ echo "✓ ok: Инвентаризация завершена (баллов: $sc
 exit 0
 
 HINTS
-Строки: wc -l ~/.ninja_trainer/textfu_003/зелья.txt
-Уникальные: sort ~/.ninja_trainer/textfu_003/зелья.txt | uniq
-Частота (по убыванию): sort ~/.ninja_trainer/textfu_003/зелья.txt | uniq -c | sort -rn
-Первые 5 логов: head -n 5 ~/.ninja_trainer/textfu_003/лог_варки.txt
-Последние 10 логов: tail -n 10 ~/.ninja_trainer/textfu_003/лог_варки.txt
-Числовая сортировка: sort -n ~/.ninja_trainer/textfu_003/измерения.txt
-Сохрани в отчёт: echo "=== Инвентаризация ===" > ~/.ninja_trainer/textfu_003/отчёт.txt
+Строки: wc -l ~/.termtrainer/textfu_003/зелья.txt
+Уникальные: sort ~/.termtrainer/textfu_003/зелья.txt | uniq
+Частота (по убыванию): sort ~/.termtrainer/textfu_003/зелья.txt | uniq -c | sort -rn
+Первые 5 логов: head -n 5 ~/.termtrainer/textfu_003/лог_варки.txt
+Последние 10 логов: tail -n 10 ~/.termtrainer/textfu_003/лог_варки.txt
+Числовая сортировка: sort -n ~/.termtrainer/textfu_003/измерения.txt
+Сохрани в отчёт: echo "=== Инвентаризация ===" > ~/.termtrainer/textfu_003/отчёт.txt

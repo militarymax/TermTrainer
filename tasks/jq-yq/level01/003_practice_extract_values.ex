@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_003"
+DIR="$HOME/.termtrainer/jqyq_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/registry.json" << 'EOF'
@@ -44,11 +44,11 @@ TASK
 6. Построй новый объект: `jq '{отдел, год, поставщик: .поставщик.имя}' registry.json`
 7. Все названия зелий: `jq -r '.зелья[] | .название' registry.json`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_003`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_003"
+DIR="$HOME/.termtrainer/jqyq_003"
 score=0
 
 result1=$(jq -r '.отдел' "$DIR/registry.json" 2>/dev/null)

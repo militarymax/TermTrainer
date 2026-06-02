@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_009"
+DIR="$HOME/.termtrainer/terraform_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -76,11 +76,11 @@ TASK
    terraform plan
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_009`
+📂 Рабочий каталог: `~/.termtrainer/terraform_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_009"
+DIR="$HOME/.termtrainer/terraform_009"
 score=0
 
 [ -f "$DIR/main.tf" ] && grep -q "for_each\|locals\|workspace" "$DIR/main.tf" && { echo "✓ main.tf с for_each создан"; score=$((score+1)); }

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_001"
+DIR="$HOME/.termtrainer/netdebug_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -64,7 +64,7 @@ ping -c 4 google.com      # По имени (проверка DNS!)
 • `ping` работает на ICMP — если заблокирован, хост может быть доступен через HTTP!
 • `time=XX ms` — задержка (RTT). Чем меньше — тем быстрее.
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_001`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_001`
 
 📋 **Попробуй**:
 1. `ip addr | grep "inet "` или `ifconfig | grep "inet "` — свои IP

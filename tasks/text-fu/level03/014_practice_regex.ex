@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_014"
+DIR="$HOME/.termtrainer/textfu_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/логи_сервера.txt" << 'EOF'
@@ -71,7 +71,7 @@ TASK
 6. Создай `временные_метки.txt`: вырежи только дату и время (первые 19 символов) из `логи_сервера.txt` с помощью `cut -c1-19`
 7. Найди все строки в `стихи.txt`, начинающиеся с заглавной буквы — сохрани в `заглавные_строки.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_014`
+📂 Рабочий каталог: `~/.termtrainer/textfu_014`
 
 ⚡ Подсказки по regex:
 • `ERROR|WARNING` — ИЛИ
@@ -83,7 +83,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_014"
+DIR="$HOME/.termtrainer/textfu_014"
 score=0
 
 if [ ! -f "$DIR/логи_сервера.txt" ]; then

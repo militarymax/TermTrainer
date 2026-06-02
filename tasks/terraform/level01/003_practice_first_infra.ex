@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_003"
+DIR="$HOME/.termtrainer/terraform_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -68,11 +68,11 @@ TASK
    terraform destroy -auto-approve
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_003`
+📂 Рабочий каталог: `~/.termtrainer/terraform_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_003"
+DIR="$HOME/.termtrainer/terraform_003"
 score=0
 
 which terraform &>/dev/null && { echo "✓ terraform установлен"; score=$((score+1)); }

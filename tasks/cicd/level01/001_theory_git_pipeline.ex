@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_001"
+DIR="$HOME/.termtrainer/cicd_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -71,7 +71,7 @@ jobs:
         make test
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_001`
+📂 Рабочий каталог: `~/.termtrainer/cicd_001`
 
 📋 **Попробуй**:
 1. `git log --oneline | head -5` — история коммитов этого проекта
@@ -83,7 +83,7 @@ score=0
 
 which git &>/dev/null && { echo "✓ git установлен"; score=$((score+1)); }
 
-log=$(git -C /Users/militarymax/ninja-trainer log --oneline 2>/dev/null | head -3)
+log=$(git -C $HOME/termtrainer log --oneline 2>/dev/null | head -3)
 [ -n "$log" ] && { echo "✓ Git работает"; score=$((score+1)); }
 
 [ $score -ge 1 ] && { echo "✓ ok: Git и CI/CD основы освоены! (баллов: $score/2)"; exit 0; }

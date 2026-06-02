@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_016"
+DIR="$HOME/.termtrainer/jqyq_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/university.json" << 'EOF'
@@ -93,11 +93,11 @@ TASK
     - Обновляет YAML: `yq -i ".spec.template.spec.containers[0].image = \"uu/api:v"$(jq -r '.год' university.json)"\"" deploy.yaml`
     - Проверяет результат: `yq '.spec.template.spec.containers[0].image' deploy.yaml`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_016`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_016"
+DIR="$HOME/.termtrainer/jqyq_016"
 score=0
 max=8
 

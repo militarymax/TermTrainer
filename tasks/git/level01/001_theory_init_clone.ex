@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_001"
+DIR="$HOME/.termtrainer/git_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -39,16 +39,16 @@ TASK
 2. **Staging area (индекс)** — подготовленные к коммиту изменения (`git add`)
 3. **Репозиторий** — сохранённые коммиты (`.git/`)
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_001`
+📂 Рабочий каталог: `~/.termtrainer/git_001`
 
 📋 **Попробуй**:
-1. Выполни `cd ~/.ninja_trainer/git_001 && git init`
+1. Выполни `cd ~/.termtrainer/git_001 && git init`
 2. Посмотри содержимое `.git/`: `ls -la .git/`
 3. Проверь статус: `git status`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_001"
+DIR="$HOME/.termtrainer/git_001"
 score=0
 
 if [ -d "$DIR/.git" ]; then
@@ -68,7 +68,7 @@ echo "✗ Нужно выполнить git init"
 exit 1
 
 HINTS
-Инициализация: cd ~/.ninja_trainer/git_001 && git init
+Инициализация: cd ~/.termtrainer/git_001 && git init
 Проверка: git status — покажет "On branch main" и "nothing to commit"
 Содержимое .git: ls -la .git/
 HEAD указывает на текущую ветку: cat .git/HEAD

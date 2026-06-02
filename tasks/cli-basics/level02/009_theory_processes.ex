@@ -8,10 +8,10 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/proclab
+mkdir -p /tmp/termtrainer_lab/proclab
 # Запускаем фоновый процесс
-(while true; do echo "tick" >> /tmp/ninja_training/proclab/timer.log; sleep 60; done) &
-echo $! > /tmp/ninja_training/proclab/bg_pid.txt
+(while true; do echo "tick" >> /tmp/termtrainer_lab/proclab/timer.log; sleep 60; done) &
+echo $! > /tmp/termtrainer_lab/proclab/bg_pid.txt
 # Ещё один процесс
 (sleep 300 &)
 echo "Демоны призваны. Начинаем урок."
@@ -134,7 +134,7 @@ TASK
 2. Посмотри информацию о нём через ps
 3. Заверши этот процесс командой kill
 4. Проверь что процесс завершён (ещё раз ps)
-5. Запиши результат kill в /tmp/ninja_training/kill_result.txt (используй $? для кода возврата)
+5. Запиши результат kill в /tmp/termtrainer_lab/kill_result.txt (используй $? для кода возврата)
 
 Нажми [V] — Библиотекарь проверит, не осталось ли призраков.
 
@@ -142,11 +142,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/kill_result.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/kill_result.txt ]; then
     echo "✗ kill_result.txt не создан"
     errors=$((errors+1))
 else
-    result=$(cat /tmp/ninja_training/kill_result.txt | tr -d '[:space:]')
+    result=$(cat /tmp/termtrainer_lab/kill_result.txt | tr -d '[:space:]')
     if [ "$result" = "0" ]; then
         echo "✓ Процесс успешно изгнан!"
     else
@@ -156,8 +156,8 @@ else
 fi
 
 # Проверяем, что фоновый процесс действительно мёртв
-if [ -f /tmp/ninja_training/proclab/bg_pid.txt ]; then
-    old_pid=$(cat /tmp/ninja_training/proclab/bg_pid.txt | tr -d '[:space:]')
+if [ -f /tmp/termtrainer_lab/proclab/bg_pid.txt ]; then
+    old_pid=$(cat /tmp/termtrainer_lab/proclab/bg_pid.txt | tr -d '[:space:]')
     if [ -n "$old_pid" ] && kill -0 "$old_pid" 2>/dev/null; then
         echo "✗ Призрак всё ещё здесь! Используй kill, чтобы изгнать его."
         errors=$((errors+1))
@@ -173,8 +173,8 @@ fi
 exit $errors
 
 HINTS
-PID процесса: cat /tmp/ninja_training/proclab/bg_pid.txt
-ps aux | grep $(cat /tmp/ninja_training/proclab/bg_pid.txt)
-Завершение: kill $(cat /tmp/ninja_training/proclab/bg_pid.txt)
-Код возврата: echo $? > /tmp/ninja_training/kill_result.txt
+PID процесса: cat /tmp/termtrainer_lab/proclab/bg_pid.txt
+ps aux | grep $(cat /tmp/termtrainer_lab/proclab/bg_pid.txt)
+Завершение: kill $(cat /tmp/termtrainer_lab/proclab/bg_pid.txt)
+Код возврата: echo $? > /tmp/termtrainer_lab/kill_result.txt
 $? — код возврата последней команды (0 = успех)

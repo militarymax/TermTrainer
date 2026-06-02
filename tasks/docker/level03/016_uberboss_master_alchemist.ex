@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_016"
+DIR="$HOME/.termtrainer/docker_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/app" "$DIR/reports"
 
@@ -113,11 +113,11 @@ echo "═══ End of Investigation ═══"
 📋 **БЛОК 5 — Очистка**:
 `docker compose down -v`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_016`
+📂 Рабочий каталог: `~/.termtrainer/docker_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_016"
+DIR="$HOME/.termtrainer/docker_016"
 score=0
 max=5
 

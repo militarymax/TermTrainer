@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_009"
+DIR="$HOME/.termtrainer/jqyq_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/deploy.yaml" << 'EOF'
@@ -48,11 +48,11 @@ TASK
 • `strenv(VAR)` — подставить переменную окружения
 • `yq -n '.'` — создать новый документ с нуля
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_009`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_009"
+DIR="$HOME/.termtrainer/jqyq_009"
 score=0
 
 replicas=$(yq '.spec.replicas' "$DIR/deploy.yaml" 2>/dev/null)

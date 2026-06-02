@@ -8,11 +8,11 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/filelab/{src,backup,temp}
-echo "function main() { return 0; }" > /tmp/ninja_training/filelab/src/main.c
-echo "# TODO: написать заклинание Левитации" > /tmp/ninja_training/filelab/src/test.c
-echo "config=debug" > /tmp/ninja_training/filelab/config.ini
-echo "остатки прошлого эксперимента" > /tmp/ninja_training/filelab/temp/cache.tmp
+mkdir -p /tmp/termtrainer_lab/filelab/{src,backup,temp}
+echo "function main() { return 0; }" > /tmp/termtrainer_lab/filelab/src/main.c
+echo "# TODO: написать заклинание Левитации" > /tmp/termtrainer_lab/filelab/src/test.c
+echo "config=debug" > /tmp/termtrainer_lab/filelab/config.ini
+echo "остатки прошлого эксперимента" > /tmp/termtrainer_lab/filelab/temp/cache.tmp
 
 TASK
 ⚗️ ЛАБОРАТОРНАЯ #005: Наведение порядка в лаборатории
@@ -37,7 +37,7 @@ TASK
   └── config.ini    ← важная конфигурация!
 
 🎯 ЗАДАНИЕ:
-1. Перейди в /tmp/ninja_training/filelab
+1. Перейди в /tmp/termtrainer_lab/filelab
 2. Создай файл src/Makefile с содержимым "all: build"
 3. Скопируй config.ini в backup/ (резервная копия!)
 4. Перемести temp/cache.tmp в backup/
@@ -49,11 +49,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/filelab/src/Makefile ]; then
+if [ ! -f /tmp/termtrainer_lab/filelab/src/Makefile ]; then
     echo "✗ Файл src/Makefile не создан"
     errors=$((errors+1))
 else
-    content=$(cat /tmp/ninja_training/filelab/src/Makefile)
+    content=$(cat /tmp/termtrainer_lab/filelab/src/Makefile)
     if [ "$content" = "all: build" ]; then
         echo "✓ Makefile создан правильно!"
     else
@@ -62,21 +62,21 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/filelab/backup/config.ini ]; then
+if [ ! -f /tmp/termtrainer_lab/filelab/backup/config.ini ]; then
     echo "✗ config.ini не скопирован в backup/"
     errors=$((errors+1))
 else
     echo "✓ Конфигурация в резервной копии!"
 fi
 
-if [ ! -f /tmp/ninja_training/filelab/backup/cache.tmp ]; then
+if [ ! -f /tmp/termtrainer_lab/filelab/backup/cache.tmp ]; then
     echo "✗ cache.tmp не перемещён в backup/"
     errors=$((errors+1))
 else
     echo "✓ Остатки эксперимента перемещены!"
 fi
 
-if [ -d /tmp/ninja_training/filelab/temp ]; then
+if [ -d /tmp/termtrainer_lab/filelab/temp ]; then
     echo "✗ Директория temp/ всё ещё здесь! Удали её."
     errors=$((errors+1))
 else

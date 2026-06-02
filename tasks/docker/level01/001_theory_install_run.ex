@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_001"
+DIR="$HOME/.termtrainer/docker_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -65,7 +65,7 @@ docker logs web                              # Прочитать записи �
 docker stop web && docker rm web             # Остановить и уничтожить
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_001`
+📂 Рабочий каталог: `~/.termtrainer/docker_001`
 
 📋 **Попробуй**:
 1. `docker version` — проверить установку
@@ -80,10 +80,10 @@ score=0
 
 docker version &>/dev/null && { echo "✓ Docker установлен"; score=$((score+1)); }
 
-docker run -d --name ninja_test_hello nginx &>/dev/null && { echo "✓ Сосуд запущен"; score=$((score+1)); }
+docker run -d --name tower_test_hello nginx &>/dev/null && { echo "✓ Сосуд запущен"; score=$((score+1)); }
 sleep 2
-docker ps | grep -q ninja_test_hello 2>/dev/null && { echo "✓ Сосуд работает"; score=$((score+1)); }
-docker stop ninja_test_hello &>/dev/null; docker rm ninja_test_hello &>/dev/null
+docker ps | grep -q tower_test_hello 2>/dev/null && { echo "✓ Сосуд работает"; score=$((score+1)); }
+docker stop tower_test_hello &>/dev/null; docker rm tower_test_hello &>/dev/null
 
 [ $score -ge 2 ] && { echo "✓ ok: Первые сосуды освоены! (баллов: $score/3)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/3)"

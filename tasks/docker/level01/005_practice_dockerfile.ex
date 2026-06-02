@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_005"
+DIR="$HOME/.termtrainer/docker_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/app"
 cat > "$DIR/app/hello.sh" << 'SCRIPT'
@@ -51,7 +51,7 @@ TASK
 
 2. **Собери образ**:
    ```bash
-   cd ~/.ninja_trainer/docker_005
+   cd ~/.termtrainer/docker_005
    docker build -t university-app .
    ```
 
@@ -66,19 +66,19 @@ TASK
    docker run --rm university-app whoami    # → appuser
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_005`
+📂 Рабочий каталог: `~/.termtrainer/docker_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_005"
+DIR="$HOME/.termtrainer/docker_005"
 score=0
 
 if [ -f "$DIR/Dockerfile" ]; then
   grep -qi "FROM\|COPY\|CMD\|RUN" "$DIR/Dockerfile" && { echo "✓ Dockerfile создан"; score=$((score+1)); }
   
-  cd "$DIR" && docker build -t ninja_test_app . &>/dev/null && { echo "✓ Образ собран"; score=$((score+1)); }
+  cd "$DIR" && docker build -t tower_test_app . &>/dev/null && { echo "✓ Образ собран"; score=$((score+1)); }
   
-  out=$(docker run --rm ninja_test_app 2>&1)
+  out=$(docker run --rm tower_test_app 2>&1)
   echo "$out" | grep -q "University\|Tower\|Floor" && { echo "✓ Приложение работает"; score=$((score+1)); }
 fi
 

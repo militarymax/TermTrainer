@@ -8,15 +8,15 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/crimescene/{evidence,witnesses,suspects}
-echo "Отпечатки пальцев на окне" > /tmp/ninja_training/crimescene/evidence/fingerprints.txt
-echo "Кровь типа A+" > /tmp/ninja_training/crimescene/evidence/blood.txt
-echo "Волосы рыжего цвета" > /tmp/ninja_training/crimescene/evidence/hair.txt
-echo "Я видел человека в чёрном около 22:00" > /tmp/ninja_training/crimescene/witnesses/witness1.txt
-echo "Слышала шум со стороны склада" > /tmp/ninja_training/crimescene/witnesses/witness2.txt
-echo "Иванов Сергей 35 лет рыжий кровь A+" > /tmp/ninja_training/crimescene/suspects/suspect1.txt
-echo "Петров Алексей 28 лет брюнет кровь B+" > /tmp/ninja_training/crimescene/suspects/suspect2.txt
-echo "Сидоров Дмитрий 42 лет шатен кровь O+" > /tmp/ninja_training/crimescene/suspects/suspect3.txt
+mkdir -p /tmp/termtrainer_lab/crimescene/{evidence,witnesses,suspects}
+echo "Отпечатки пальцев на окне" > /tmp/termtrainer_lab/crimescene/evidence/fingerprints.txt
+echo "Кровь типа A+" > /tmp/termtrainer_lab/crimescene/evidence/blood.txt
+echo "Волосы рыжего цвета" > /tmp/termtrainer_lab/crimescene/evidence/hair.txt
+echo "Я видел человека в чёрном около 22:00" > /tmp/termtrainer_lab/crimescene/witnesses/witness1.txt
+echo "Слышала шум со стороны склада" > /tmp/termtrainer_lab/crimescene/witnesses/witness2.txt
+echo "Иванов Сергей 35 лет рыжий кровь A+" > /tmp/termtrainer_lab/crimescene/suspects/suspect1.txt
+echo "Петров Алексей 28 лет брюнет кровь B+" > /tmp/termtrainer_lab/crimescene/suspects/suspect2.txt
+echo "Сидоров Дмитрий 42 лет шатен кровь O+" > /tmp/termtrainer_lab/crimescene/suspects/suspect3.txt
 
 TASK
 ⚗️ ЛАБОРАТОРНАЯ #013: Расследование в Анк-Морпорке
@@ -41,7 +41,7 @@ TASK
 1. Прочитай все улики в evidence/
 2. Прочитай показания свидетелей в witnesses/
 3. Сопоставь улики с данными подозреваемых (grep!)
-4. Создай файл /tmp/ninja_training/guilty.txt с фамилией виновного
+4. Создай файл /tmp/termtrainer_lab/guilty.txt с фамилией виновного
 
 Подсказка: ищи совпадения по цвету волос и группе крови.
 
@@ -49,11 +49,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/guilty.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/guilty.txt ]; then
     echo "✗ guilty.txt не создан"
     errors=$((errors+1))
 else
-    content=$(cat /tmp/ninja_training/guilty.txt)
+    content=$(cat /tmp/termtrainer_lab/guilty.txt)
     if echo "$content" | grep -qi "иванов"; then
         echo "✓ Преступник найден! Это Иванов!"
     else
@@ -70,5 +70,5 @@ exit $errors
 
 HINTS
 Улики: рыжие волосы и кровь A+. Проверь suspects/.
-grep "рыж" /tmp/ninja_training/crimescene/suspects/*.txt
-grep "A+" /tmp/ninja_training/crimescene/suspects/*.txt
+grep "рыж" /tmp/termtrainer_lab/crimescene/suspects/*.txt
+grep "A+" /tmp/termtrainer_lab/crimescene/suspects/*.txt

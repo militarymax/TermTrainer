@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_005"
+DIR="$HOME/.termtrainer/netdebug_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -52,7 +52,7 @@ TASK
    # Если не проходит → проблема с MTU!
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_005`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_005`
 
 VALIDATION
 #!/bin/bash

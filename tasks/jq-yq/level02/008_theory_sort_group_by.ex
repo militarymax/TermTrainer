@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_008"
+DIR="$HOME/.termtrainer/jqyq_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/potions.json" << 'EOF'
@@ -51,7 +51,7 @@ TASK
 📖 **Переменные**:
 • `--arg name value` — передать переменную: `jq --arg n "магия" '.[] | select(.тип == $n)' файл`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_008`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_008`
 
 📋 **Попробуй**:
 1. По цене: `jq '.склад | sort_by(.цена)' potions.json`
@@ -61,7 +61,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_008"
+DIR="$HOME/.termtrainer/jqyq_008"
 score=0
 
 r1=$(jq '.склад | sort_by(.цена) | .[0].имя' "$DIR/potions.json" 2>/dev/null)

@@ -8,15 +8,15 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/artifacts/{scrolls,grimoires,misc}
-echo "#!/bin/bash" > /tmp/ninja_training/artifacts/misc/summon.sh
-echo "echo 'Boo!'" >> /tmp/ninja_training/artifacts/misc/summon.sh
-chmod +x /tmp/ninja_training/artifacts/misc/summon.sh
-echo "Это обычный текст" > /tmp/ninja_training/artifacts/scrolls/readable.txt
-printf '\x89PNG\r\n\x1a\n' > /tmp/ninja_training/artifacts/misc/mysterious.bin
-echo "В Незримом Университете водятся драконы. Много драконов. Слишком много драконов. Однажды дракон съел весь факультет Зоологии. Но зоологи не заметили разницы." > /tmp/ninja_training/artifacts/grimoires/long_tale.txt
-echo "port=8080" > /tmp/ninja_training/artifacts/grimoires/config.conf
-ln -s /tmp/ninja_training/artifacts/scrolls/readable.txt /tmp/ninja_training/artifacts/portal_link.txt
+mkdir -p /tmp/termtrainer_lab/artifacts/{scrolls,grimoires,misc}
+echo "#!/bin/bash" > /tmp/termtrainer_lab/artifacts/misc/summon.sh
+echo "echo 'Boo!'" >> /tmp/termtrainer_lab/artifacts/misc/summon.sh
+chmod +x /tmp/termtrainer_lab/artifacts/misc/summon.sh
+echo "Это обычный текст" > /tmp/termtrainer_lab/artifacts/scrolls/readable.txt
+printf '\x89PNG\r\n\x1a\n' > /tmp/termtrainer_lab/artifacts/misc/mysterious.bin
+echo "В Незримом Университете водятся драконы. Много драконов. Слишком много драконов. Однажды дракон съел весь факультет Зоологии. Но зоологи не заметили разницы." > /tmp/termtrainer_lab/artifacts/grimoires/long_tale.txt
+echo "port=8080" > /tmp/termtrainer_lab/artifacts/grimoires/config.conf
+ln -s /tmp/termtrainer_lab/artifacts/scrolls/readable.txt /tmp/termtrainer_lab/artifacts/portal_link.txt
 
 TASK
 📜 СВИТОК ЗНАНИЙ #003: Свитки, гримуары и их природа
@@ -116,7 +116,7 @@ TASK
 3. Узнай природу команды cd (type)
 4. Открой длинный свиток long_tale.txt через less (просто попробуй!)
 5. Посмотри справку по команде ls (man ls или ls --help)
-6. Запиши результат file mysterious.bin в /tmp/ninja_training/file_result.txt
+6. Запиши результат file mysterious.bin в /tmp/termtrainer_lab/file_result.txt
 
 Нажми [V] когда выполнишь — Стиббонс проверит.
 
@@ -124,11 +124,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/file_result.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/file_result.txt ]; then
     echo "✗ file_result.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "PNG\|data\|image" /tmp/ninja_training/file_result.txt; then
+    if grep -q "PNG\|data\|image" /tmp/termtrainer_lab/file_result.txt; then
         echo "✓ Природа mysterious.bin раскрыта! Это не текст!"
     else
         echo "✗ Результат file неверный (ожидалось что-то про PNG/image data)"
@@ -143,9 +143,9 @@ fi
 exit $errors
 
 HINTS
-file /tmp/ninja_training/artifacts/misc/mysterious.bin
+file /tmp/termtrainer_lab/artifacts/misc/mysterious.bin
 which bash
 type cd
-less /tmp/ninja_training/artifacts/grimoires/long_tale.txt
+less /tmp/termtrainer_lab/artifacts/grimoires/long_tale.txt
 man ls (или ls --help)
-file /tmp/ninja_training/artifacts/misc/mysterious.bin > /tmp/ninja_training/file_result.txt
+file /tmp/termtrainer_lab/artifacts/misc/mysterious.bin > /tmp/termtrainer_lab/file_result.txt

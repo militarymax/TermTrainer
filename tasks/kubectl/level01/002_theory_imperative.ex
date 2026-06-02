@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_002"
+DIR="$HOME/.termtrainer/kubectl_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -74,12 +74,12 @@ kubectl explain pod.spec.containers          # Контейнеры внутри
 kubectl explain deploy.spec.strategy         # Стратегия обновления
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_002`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_002`
 
 📋 **Попробуй**:
 1. `kubectl create deployment test --image=nginx --dry-run=client -o yaml | head -20`
 2. `kubectl explain pod.spec.containers | head -20`
-3. `kubectl create ns ninja-test && kubectl get ns ninja-test && kubectl delete ns ninja-test`
+3. `kubectl create ns tower-test && kubectl get ns tower-test && kubectl delete ns tower-test`
 
 VALIDATION
 #!/bin/bash

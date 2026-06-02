@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_008"
+DIR="$HOME/.termtrainer/cicd_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -62,11 +62,11 @@ TASK
            path: ./tower-app
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_008`
+📂 Рабочий каталог: `~/.termtrainer/cicd_008`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_008"
+DIR="$HOME/.termtrainer/cicd_008"
 score=0
 
 [ -f "$DIR/.github/workflows/build.yml" ] && grep -q "matrix\|artifact\|cache" "$DIR/.github/workflows/build.yml" && { echo "✓ build.yml создан"; score=$((score+1)); }

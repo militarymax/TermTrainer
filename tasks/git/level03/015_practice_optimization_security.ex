@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_015"
+DIR="$HOME/.termtrainer/git_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -43,11 +43,11 @@ TASK
    - Найди когда добавили строку: `git log -S "Версия 3" --oneline`
    - Найди во всех коммитах: `git grep "Архив" $(git rev-list --all)`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_015`
+📂 Рабочий каталог: `~/.termtrainer/git_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_015"
+DIR="$HOME/.termtrainer/git_015"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

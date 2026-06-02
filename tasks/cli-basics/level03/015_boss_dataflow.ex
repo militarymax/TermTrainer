@@ -8,8 +8,8 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/pipeline/{raw,processed,output}
-cat > /tmp/ninja_training/pipeline/raw/employees.csv << 'CSV'
+mkdir -p /tmp/termtrainer_lab/pipeline/{raw,processed,output}
+cat > /tmp/termtrainer_lab/pipeline/raw/employees.csv << 'CSV'
 id,name,department,salary,city
 1,Алиса,Engineering,150000,Москва
 2,Борис,Marketing,120000,СПб
@@ -23,7 +23,7 @@ id,name,department,salary,city
 10,Катя,HR,100000,Казань
 CSV
 
-cat > /tmp/ninja_training/pipeline/raw/sales.csv << 'CSV'
+cat > /tmp/termtrainer_lab/pipeline/raw/sales.csv << 'CSV'
 product,amount,city,date
 WidgetA,5000,Москва,2024-01-15
 WidgetB,3000,СПб,2024-01-15
@@ -62,11 +62,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/pipeline/processed/engineering.csv ]; then
+if [ ! -f /tmp/termtrainer_lab/pipeline/processed/engineering.csv ]; then
     echo "✗ engineering.csv не создан"
     errors=$((errors+1))
 else
-    eng_count=$(tail -n +2 /tmp/ninja_training/pipeline/processed/engineering.csv | wc -l | tr -d ' ')
+    eng_count=$(tail -n +2 /tmp/termtrainer_lab/pipeline/processed/engineering.csv | wc -l | tr -d ' ')
     if [ "$eng_count" = "4" ]; then
         echo "✓ Инженеры отфильтрованы!"
     else
@@ -75,20 +75,20 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/pipeline/output/avg_salary.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/pipeline/output/avg_salary.txt ]; then
     echo "✗ avg_salary.txt не создан"
     errors=$((errors+1))
 else
     echo "✓ Средняя зарплата посчитана!"
 fi
 
-if [ ! -f /tmp/ninja_training/pipeline/output/summary.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/pipeline/output/summary.txt ]; then
     echo "✗ summary.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "Инженеров:" /tmp/ninja_training/pipeline/output/summary.txt && \
-       grep -q "Средняя ЗП:" /tmp/ninja_training/pipeline/output/summary.txt && \
-       grep -q "Продажи Москва:" /tmp/ninja_training/pipeline/output/summary.txt; then
+    if grep -q "Инженеров:" /tmp/termtrainer_lab/pipeline/output/summary.txt && \
+       grep -q "Средняя ЗП:" /tmp/termtrainer_lab/pipeline/output/summary.txt && \
+       grep -q "Продажи Москва:" /tmp/termtrainer_lab/pipeline/output/summary.txt; then
         echo "✓ Итоговый отчёт корректен!"
     else
         echo "✗ summary.txt не содержит нужных строк"

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_010"
+DIR="$HOME/.termtrainer/jqyq_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/spells.json" << 'EOF'
@@ -54,11 +54,11 @@ TASK
 • `..` — обойти все уровни вложенности
 • `.. | .ключ?` — найти все значения ключа на любой глубине
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_010`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_010"
+DIR="$HOME/.termtrainer/jqyq_010"
 score=0
 
 r1=$(jq '[.заклинания[] | select(.сила > 80)] | length' "$DIR/spells.json" 2>/dev/null)

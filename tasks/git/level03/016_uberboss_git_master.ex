@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_016"
+DIR="$HOME/.termtrainer/git_016"
 rm -rf "$DIR" /tmp/git_016_bare.git /tmp/git_016_worktree 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -61,11 +61,11 @@ TASK
     - Проверяй каждый коммит и отмечай good/bad
     - Или автоматизируй: `git bisect run bash -c 'git log -1 --format=%s | grep -q БАГ && exit 1 || exit 0'`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_016`
+📂 Рабочий каталог: `~/.termtrainer/git_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_016"
+DIR="$HOME/.termtrainer/git_016"
 score=0
 max=8
 

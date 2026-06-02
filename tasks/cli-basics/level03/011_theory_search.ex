@@ -8,14 +8,14 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/searchlab/{src,docs,config}
-echo "function hello() { return 'Hello'; }" > /tmp/ninja_training/searchlab/src/app.js
-echo "function world() { return 'World'; }" > /tmp/ninja_training/searchlab/src/utils.js
-echo "# Application Config" > /tmp/ninja_training/searchlab/config/app.conf
-echo "debug=true" >> /tmp/ninja_training/searchlab/config/app.conf
-echo "port=8080" >> /tmp/ninja_training/searchlab/config/app.conf
-echo "API Documentation" > /tmp/ninja_training/searchlab/docs/api.md
-echo "TODO: fix bug in hello()" > /tmp/ninja_training/searchlab/docs/todo.txt
+mkdir -p /tmp/termtrainer_lab/searchlab/{src,docs,config}
+echo "function hello() { return 'Hello'; }" > /tmp/termtrainer_lab/searchlab/src/app.js
+echo "function world() { return 'World'; }" > /tmp/termtrainer_lab/searchlab/src/utils.js
+echo "# Application Config" > /tmp/termtrainer_lab/searchlab/config/app.conf
+echo "debug=true" >> /tmp/termtrainer_lab/searchlab/config/app.conf
+echo "port=8080" >> /tmp/termtrainer_lab/searchlab/config/app.conf
+echo "API Documentation" > /tmp/termtrainer_lab/searchlab/docs/api.md
+echo "TODO: fix bug in hello()" > /tmp/termtrainer_lab/searchlab/docs/todo.txt
 
 TASK
 📜 СВИТОК ЗНАНИЙ #011: Магическое Зрение
@@ -74,7 +74,7 @@ TASK
 2. Найди все .conf файлы
 3. Найди в каком файле есть слово "bug"
 4. Найди строку с "port=" в config/
-5. Запиши результат поиска "bug" в /tmp/ninja_training/found_bug.txt
+5. Запиши результат поиска "bug" в /tmp/termtrainer_lab/found_bug.txt
 
 Нажми [V] когда выполнишь.
 
@@ -82,11 +82,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/found_bug.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/found_bug.txt ]; then
     echo "✗ Файл found_bug.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "bug" /tmp/ninja_training/found_bug.txt; then
+    if grep -q "bug" /tmp/termtrainer_lab/found_bug.txt; then
         echo "✓ Баг найден и записан!"
     else
         echo "✗ В found_bug.txt нет слова bug"
@@ -101,6 +101,6 @@ fi
 exit $errors
 
 HINTS
-find /tmp/ninja_training/searchlab -name "*.js"
-grep -r "bug" /tmp/ninja_training/searchlab > /tmp/ninja_training/found_bug.txt
-grep "port=" /tmp/ninja_training/searchlab/config/app.conf
+find /tmp/termtrainer_lab/searchlab -name "*.js"
+grep -r "bug" /tmp/termtrainer_lab/searchlab > /tmp/termtrainer_lab/found_bug.txt
+grep "port=" /tmp/termtrainer_lab/searchlab/config/app.conf

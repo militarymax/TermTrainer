@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_010"
+DIR="$HOME/.termtrainer/netdebug_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -65,11 +65,11 @@ Proxy притворяется тобой. Нужно уметь отличат�
    curl --socks5 host:1080 https://google.com       # Через SOCKS5
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_010`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_010"
+DIR="$HOME/.termtrainer/netdebug_010"
 score=0
 
 ext_ip=$(curl -s --connect-timeout 5 https://ifconfig.me 2>/dev/null)

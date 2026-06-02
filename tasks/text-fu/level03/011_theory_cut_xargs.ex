@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_011"
+DIR="$HOME/.termtrainer/textfu_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/учёт.csv" << 'EOF'
@@ -63,13 +63,13 @@ TASK
 • `xargs команда` — читает stdin и передаёт аргументы команде
 • `команда | xargs -I{} другая_команда {}` — подстановка каждого элемента
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_011`
+📂 Рабочий каталог: `~/.termtrainer/textfu_011`
 
 ⚡ **Зачем нужен xargs**: некоторые команды (например, `rm`, `cp`, `kill`) не читают stdin. `xargs` преобразует stdin в аргументы. Без xargs: `echo "file.txt" | rm` — не сработает. С xargs: `echo "file.txt" | xargs rm` — удалит.
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_011"
+DIR="$HOME/.termtrainer/textfu_011"
 score=0
 
 if [ ! -f "$DIR/учёт.csv" ]; then

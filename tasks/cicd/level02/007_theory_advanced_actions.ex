@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_007"
+DIR="$HOME/.termtrainer/cicd_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -78,7 +78,7 @@ jobs:
     uses: ./.github/workflows/test.yml
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_007`
+📂 Рабочий каталог: `~/.termtrainer/cicd_007`
 
 VALIDATION
 #!/bin/bash

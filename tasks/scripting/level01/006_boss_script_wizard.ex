@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_006"
+DIR="$HOME/.termtrainer/scripting_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/configs"
 cat > "$DIR/configs/university.conf" << 'EOF'
@@ -70,11 +70,11 @@ TASK
    Total: 8 settings loaded from 2 files.
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_006`
+📂 Рабочий каталог: `~/.termtrainer/scripting_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_006"
+DIR="$HOME/.termtrainer/scripting_006"
 score=0
 
 if [ -f "$DIR/configure.sh" ]; then

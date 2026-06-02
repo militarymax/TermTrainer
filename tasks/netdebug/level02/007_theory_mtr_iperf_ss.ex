@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_007"
+DIR="$HOME/.termtrainer/netdebug_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -71,7 +71,7 @@ ss -ti                        # Детали: RTT, CWND, retransmits!
 • `CLOSE-WAIT` — удалённая сторона закрыла, локальная — нет (утечка!)
 • `SYN-SENT` — пытаемся подключиться (если висит → firewall?)
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_007`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_007`
 
 📋 **Попробуй**:
 1. `traceroute google.com` или `mtr -r -c 5 google.com`

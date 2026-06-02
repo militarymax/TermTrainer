@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_008"
+DIR="$HOME/.termtrainer/kubectl_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -72,7 +72,7 @@ kubectl auth can-i get pods --as=system:serviceaccount:default:tower-wizard
 kubectl auth can-i delete pods --as=system:serviceaccount:default:tower-wizard
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_008`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_008`
 
 📋 **Попробуй**:
 1. `kubectl create sa test-sa && kubectl create role test-role --verb=get,list --resource=pods`
@@ -84,17 +84,17 @@ VALIDATION
 #!/bin/bash
 score=0
 
-kubectl create serviceaccount ninja-sa &>/dev/null
-kubectl create role ninja-role --verb=get,list --resource=pods &>/dev/null
-kubectl create rolebinding ninja-rb --role=ninja-role --serviceaccount=ninja-sa &>/dev/null
+kubectl create serviceaccount tower-sa &>/dev/null
+kubectl create role tower-role --verb=get,list --resource=pods &>/dev/null
+kubectl create rolebinding tower-rb --role=tower-role --serviceaccount=tower-sa &>/dev/null
 
-can=$(kubectl auth can-i get pods --as=system:serviceaccount:default:ninja-sa 2>/dev/null)
+can=$(kubectl auth can-i get pods --as=system:serviceaccount:default:tower-sa 2>/dev/null)
 [ "$can" = "yes" ] && { echo "✓ RBAC работает: can get pods"; score=$((score+1)); }
 
-cannot=$(kubectl auth can-i delete pods --as=system:serviceaccount:default:ninja-sa 2>/dev/null)
+cannot=$(kubectl auth can-i delete pods --as=system:serviceaccount:default:tower-sa 2>/dev/null)
 [ "$cannot" = "no" ] && { echo "✓ RBAC ограничивает: cannot delete pods"; score=$((score+1)); }
 
-kubectl delete sa ninja-sa &>/dev/null; kubectl delete role ninja-role &>/dev/null; kubectl delete rolebinding ninja-rb &>/dev/null
+kubectl delete sa tower-sa &>/dev/null; kubectl delete role tower-role &>/dev/null; kubectl delete rolebinding tower-rb &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: RBAC освоен! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

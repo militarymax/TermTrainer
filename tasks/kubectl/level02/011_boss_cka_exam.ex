@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_011"
+DIR="$HOME/.termtrainer/kubectl_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -83,26 +83,26 @@ ServiceAccount с правами только на чтение подов.
 
 7. **Очисти**: `kubectl delete ns tower-app`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_011`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_011"
+DIR="$HOME/.termtrainer/kubectl_011"
 score=0
 
-kubectl create ns ninja-cka &>/dev/null || true
-kubectl create configmap n-cm -n ninja-cka --from-literal=k=v &>/dev/null
-kubectl create secret generic n-sec -n ninja-cka --from-literal=pw=x &>/dev/null
-kubectl create deployment n-dep --image=nginx -n ninja-cka &>/dev/null && sleep 3
+kubectl create ns tower-cka &>/dev/null || true
+kubectl create configmap n-cm -n tower-cka --from-literal=k=v &>/dev/null
+kubectl create secret generic n-sec -n tower-cka --from-literal=pw=x &>/dev/null
+kubectl create deployment n-dep --image=nginx -n tower-cka &>/dev/null && sleep 3
 
-pods=$(kubectl get pods -n ninja-cka --no-headers 2>/dev/null | grep -c Running || echo "0")
+pods=$(kubectl get pods -n tower-cka --no-headers 2>/dev/null | grep -c Running || echo "0")
 [ "$pods" -ge 1 ] && { echo "✓ Деплоймент работает"; score=$((score+1)); }
 
-kubectl expose deployment n-dep --port=80 -n ninja-cka &>/dev/null
-svc=$(kubectl get svc -n ninja-cka 2>/dev/null | grep -v NAME)
+kubectl expose deployment n-dep --port=80 -n tower-cka &>/dev/null
+svc=$(kubectl get svc -n tower-cka 2>/dev/null | grep -v NAME)
 [ -n "$svc" ] && { echo "✓ Сервис создан"; score=$((score+1)); }
 
-kubectl delete ns ninja-cka &>/dev/null
+kubectl delete ns tower-cka &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: БОСС пройден! Экзамен Мастера сдан! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/2)"

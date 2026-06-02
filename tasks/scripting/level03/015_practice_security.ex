@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_015"
+DIR="$HOME/.termtrainer/scripting_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/configs"
 cat > "$DIR/configs/tower.conf" << 'EOF'
@@ -88,11 +88,11 @@ EVAL! Ты понимаешь, что это значит? Любой демон
    set +x                              # Выключить трассировку
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_015`
+📂 Рабочий каталог: `~/.termtrainer/scripting_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_015"
+DIR="$HOME/.termtrainer/scripting_015"
 score=0
 
 if [ -f "$DIR/safe_config.sh" ]; then

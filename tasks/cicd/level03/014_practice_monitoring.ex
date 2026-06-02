@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_014"
+DIR="$HOME/.termtrainer/cicd_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -81,11 +81,11 @@ TASK
 
 3. Запусти: `chmod +x pipeline_monitor.sh && ./pipeline_monitor.sh`
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_014`
+📂 Рабочий каталог: `~/.termtrainer/cicd_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_014"
+DIR="$HOME/.termtrainer/cicd_014"
 score=0
 
 if [ -f "$DIR/pipeline_monitor.sh" ]; then

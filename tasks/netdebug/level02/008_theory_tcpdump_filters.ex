@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_008"
+DIR="$HOME/.termtrainer/netdebug_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -62,7 +62,7 @@ sudo tcpdump 'tcp[tcpflags] == tcp-syn|tcp-ack' # SYN+ACK (ответ серве
 • Follow TCP Stream — увидеть весь разговор целиком!
 • Statistics → Conversations — кто с кем общается
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_008`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_008`
 
 📋 **Попробуй**:
 1. `sudo tcpdump -c 20 -nn port 443` — только HTTPS пакеты

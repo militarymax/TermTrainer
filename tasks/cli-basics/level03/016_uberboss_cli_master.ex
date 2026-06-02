@@ -8,10 +8,10 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/incident/{var/log,var/data,var/run,etc,home/admin,backup}
+mkdir -p /tmp/termtrainer_lab/incident/{var/log,var/data,var/run,etc,home/admin,backup}
 
 # Магический журнал инцидента
-cat > /tmp/ninja_training/incident/var/log/application.log << 'LOG'
+cat > /tmp/termtrainer_lab/incident/var/log/application.log << 'LOG'
 2024-01-15 06:00:00 INFO Магическая система v2.3.1 запущена
 2024-01-15 06:05:00 INFO Подключение к Источнику Магии prod-db-01
 2024-01-15 07:00:00 WARN Время отклика увеличено до 2500мс
@@ -31,28 +31,28 @@ cat > /tmp/ninja_training/incident/var/log/application.log << 'LOG'
 LOG
 
 # Данные клиентов магического банка
-echo "customer_id,name,balance,status" > /tmp/ninja_training/incident/var/data/customers.csv
-echo "1001,Alpha Corp,50000,active" >> /tmp/ninja_training/incident/var/data/customers.csv
-echo "1002,Beta Inc,30000,suspended" >> /tmp/ninja_training/incident/var/data/customers.csv
-echo "1003,Gamma LLC,75000,active" >> /tmp/ninja_training/incident/var/data/customers.csv
-echo "1004,Delta SA,12000,inactive" >> /tmp/ninja_training/incident/var/data/customers.csv
-echo "1005,Epsilon AG,45000,active" >> /tmp/ninja_training/incident/var/data/customers.csv
+echo "customer_id,name,balance,status" > /tmp/termtrainer_lab/incident/var/data/customers.csv
+echo "1001,Alpha Corp,50000,active" >> /tmp/termtrainer_lab/incident/var/data/customers.csv
+echo "1002,Beta Inc,30000,suspended" >> /tmp/termtrainer_lab/incident/var/data/customers.csv
+echo "1003,Gamma LLC,75000,active" >> /tmp/termtrainer_lab/incident/var/data/customers.csv
+echo "1004,Delta SA,12000,inactive" >> /tmp/termtrainer_lab/incident/var/data/customers.csv
+echo "1005,Epsilon AG,45000,active" >> /tmp/termtrainer_lab/incident/var/data/customers.csv
 
 # Конфиг с неправильными правами
-echo "DB_HOST=prod-db-01" > /tmp/ninja_training/incident/etc/database.conf
-echo "DB_PORT=5432" >> /tmp/ninja_training/incident/etc/database.conf
-echo "DB_USER=admin" >> /tmp/ninja_training/incident/etc/database.conf
-echo "DB_PASS=supersecret123" >> /tmp/ninja_training/incident/etc/database.conf
-chmod 666 /tmp/ninja_training/incident/etc/database.conf
+echo "DB_HOST=prod-db-01" > /tmp/termtrainer_lab/incident/etc/database.conf
+echo "DB_PORT=5432" >> /tmp/termtrainer_lab/incident/etc/database.conf
+echo "DB_USER=admin" >> /tmp/termtrainer_lab/incident/etc/database.conf
+echo "DB_PASS=supersecret123" >> /tmp/termtrainer_lab/incident/etc/database.conf
+chmod 666 /tmp/termtrainer_lab/incident/etc/database.conf
 
 # Два демона, пожирающих ресурсы
 (for i in $(seq 1 1000); do echo "memory leak $i" >> /dev/null; sleep 1; done) &
-echo $! > /tmp/ninja_training/incident/var/run/memory_hog.pid
+echo $! > /tmp/termtrainer_lab/incident/var/run/memory_hog.pid
 (for i in $(seq 1 1000); do echo "cpu waste $i" >> /dev/null; sleep 0.5; done) &
-echo $! > /tmp/ninja_training/incident/var/run/cpu_waster.pid
+echo $! > /tmp/termtrainer_lab/incident/var/run/cpu_waster.pid
 
 # Бэкап критических данных
-echo "backup_data_critical" > /tmp/ninja_training/incident/backup/critical.dat.bak
+echo "backup_data_critical" > /tmp/termtrainer_lab/incident/backup/critical.dat.bak
 
 TASK
 👑 УБЕР-БОСС #016: Вызов Архиканцлера
@@ -114,9 +114,9 @@ VALIDATION
 errors=0
 
 # Task 1: Logs
-if [ -f /tmp/ninja_training/incident/etc/incident_report.txt ]; then
-    if grep -q "total_errors:" /tmp/ninja_training/incident/etc/incident_report.txt && \
-       grep -q "top_error:" /tmp/ninja_training/incident/etc/incident_report.txt; then
+if [ -f /tmp/termtrainer_lab/incident/etc/incident_report.txt ]; then
+    if grep -q "total_errors:" /tmp/termtrainer_lab/incident/etc/incident_report.txt && \
+       grep -q "top_error:" /tmp/termtrainer_lab/incident/etc/incident_report.txt; then
         echo "✓ Задача 1: Магический журнал расследован!"
     else
         echo "✗ Задача 1: Отчёт неполный"
@@ -128,9 +128,9 @@ else
 fi
 
 # Task 2: Data rescue
-if [ -f /tmp/ninja_training/incident/etc/data_rescue.txt ]; then
-    if grep -q "active_customers:" /tmp/ninja_training/incident/etc/data_rescue.txt && \
-       grep -q "total_balance:" /tmp/ninja_training/incident/etc/data_rescue.txt; then
+if [ -f /tmp/termtrainer_lab/incident/etc/data_rescue.txt ]; then
+    if grep -q "active_customers:" /tmp/termtrainer_lab/incident/etc/data_rescue.txt && \
+       grep -q "total_balance:" /tmp/termtrainer_lab/incident/etc/data_rescue.txt; then
         echo "✓ Задача 2: Магический банк спасён!"
     else
         echo "✗ Задача 2: Отчёт неполный"
@@ -142,9 +142,9 @@ else
 fi
 
 # Task 3: Processes
-if [ -f /tmp/ninja_training/incident/etc/process_cleanup.txt ]; then
-    if grep -q "memory_hog.*terminated" /tmp/ninja_training/incident/etc/process_cleanup.txt && \
-       grep -q "cpu_waster.*terminated" /tmp/ninja_training/incident/etc/process_cleanup.txt; then
+if [ -f /tmp/termtrainer_lab/incident/etc/process_cleanup.txt ]; then
+    if grep -q "memory_hog.*terminated" /tmp/termtrainer_lab/incident/etc/process_cleanup.txt && \
+       grep -q "cpu_waster.*terminated" /tmp/termtrainer_lab/incident/etc/process_cleanup.txt; then
         echo "✓ Задача 3: Демоны изгнаны!"
     else
         echo "✗ Задача 3: Отчёт неполный"
@@ -156,7 +156,7 @@ else
 fi
 
 # Task 4: Security
-db_perm=$(stat -f "%Lp" /tmp/ninja_training/incident/etc/database.conf 2>/dev/null || stat -c "%a" /tmp/ninja_training/incident/etc/database.conf)
+db_perm=$(stat -f "%Lp" /tmp/termtrainer_lab/incident/etc/database.conf 2>/dev/null || stat -c "%a" /tmp/termtrainer_lab/incident/etc/database.conf)
 if [ "$db_perm" = "600" ]; then
     echo "✓ Задача 4: Конфиг защищён магией!"
 else
@@ -165,9 +165,9 @@ else
 fi
 
 # Task 5: Final report
-if [ -f /tmp/ninja_training/incident/etc/final_report.txt ]; then
-    if grep -q "INCIDENT RESPONSE REPORT" /tmp/ninja_training/incident/etc/final_report.txt && \
-       grep -q "RESOLVED" /tmp/ninja_training/incident/etc/final_report.txt; then
+if [ -f /tmp/termtrainer_lab/incident/etc/final_report.txt ]; then
+    if grep -q "INCIDENT RESPONSE REPORT" /tmp/termtrainer_lab/incident/etc/final_report.txt && \
+       grep -q "RESOLVED" /tmp/termtrainer_lab/incident/etc/final_report.txt; then
         echo "✓ Задача 5: Финальный отчёт готов для Архиканцлера!"
     else
         echo "✗ Задача 5: Финальный отчёт неполный"

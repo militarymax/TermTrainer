@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_001"
+DIR="$HOME/.termtrainer/textfu_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/свитки" "$DIR/черновики"
 cat > "$DIR/приветствие.txt" << 'EOF'
@@ -44,13 +44,13 @@ TASK
 • `команда 2> файл` — перенаправить stderr в файл
 • `команда > файл 2>&1` — перенаправить и stdout, и stderr в файл
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_001`
+📂 Рабочий каталог: `~/.termtrainer/textfu_001`
 
-Подсказка: начни с `cat ~/.ninja_trainer/textfu_001/приветствие.txt`
+Подсказка: начни с `cat ~/.termtrainer/textfu_001/приветствие.txt`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_001"
+DIR="$HOME/.termtrainer/textfu_001"
 errors=0
 
 # Проверка 1: пользователь прочитал приветствие (файл существует)
@@ -82,6 +82,6 @@ HINTS
 Команда cat выводит содержимое: cat имя_файла
 echo "текст" > файл — создаст или перезапишет файл
 echo "текст" >> файл — добавит строку в конец
-Попробуй: cat ~/.ninja_trainer/textfu_001/приветствие.txt
-Затем: echo "Мой первый свиток" > ~/.ninja_trainer/textfu_001/мой_свиток.txt
-И добавь запись: echo "Новая заметка" >> ~/.ninja_trainer/textfu_001/черновики/заметки.txt
+Попробуй: cat ~/.termtrainer/textfu_001/приветствие.txt
+Затем: echo "Мой первый свиток" > ~/.termtrainer/textfu_001/мой_свиток.txt
+И добавь запись: echo "Новая заметка" >> ~/.termtrainer/textfu_001/черновики/заметки.txt

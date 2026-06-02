@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_011"
+DIR="$HOME/.termtrainer/cicd_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -53,11 +53,11 @@ TASK
 
 4. **`deploy_check.sh`** — проверка здоровья деплоя
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_011`
+📂 Рабочий каталог: `~/.termtrainer/cicd_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_011"
+DIR="$HOME/.termtrainer/cicd_011"
 score=0
 
 [ -f "$DIR/.github/workflows/full-pipeline.yml" ] && grep -q "matrix\|cache\|artifact\|deploy\|security\|staging\|production" "$DIR/.github/workflows/full-pipeline.yml" && { echo "✓ full-pipeline.yml создан"; score=$((score+1)); }

@@ -514,7 +514,11 @@ func randomQuote() string {
 	return pratchettQuotes[seed]
 }
 
-// ==================== MAIN MENU ====================
+// ==================== VERSION ====================
+
+var version = "dev"
+
+// ==================== MAIN MENU (FACULTIES) ====================
 
 func beltName(level int) string {
 	names := map[int]string{
@@ -531,15 +535,15 @@ func beltName(level int) string {
 func trackName(track string) string {
 	names := map[string]string{
 		"cli-basics": "🏰 Основы Магии Терминала",
+		"text-fu":    "⚗️ Алхимия Текста",
 		"scripting":  "📜 Ритуальные Заклинания",
-		"docker":     "🧪 Магические Сосуды",
-		"kubectl":    "🔮 Управление Орбами",
-		"terraform":  "🌍 Создание Миров",
 		"git":        "⏳ Темпоральная Магия",
 		"jq-yq":      "🔎 Дешифровка Свитков",
-		"text-fu":    "⚗️ Алхимия Текста",
-		"cicd":       "⚙️ Автоматические Чудеса",
 		"netdebug":   "🌐 Магическая Связь",
+		"docker":     "🧪 Магические Сосуды",
+		"kubectl":    "🔮 Призыв Существ",
+		"cicd":       "⚙️ Автоматические Чудеса",
+		"terraform":  "🌍 Создание Миров",
 	}
 	if n, ok := names[track]; ok {
 		return n
@@ -547,87 +551,99 @@ func trackName(track string) string {
 	return track
 }
 
+func trackDescription(track string) string {
+	descs := map[string]string{
+		"cli-basics": "Навигация по Башне-Файловой-Системе: cd, ls, cp, find, grep, pipes",
+		"text-fu":    "Трансмутация текста в перегонных кубах: cat, sort, sed, awk, regex",
+		"scripting":  "Написание заклинаний-скриптов: bash, if/for, функции, trap, coproc",
+		"git":        "Путешествия по временным линиям: git, branches, merge, rebase, hooks",
+		"jq-yq":      "Чтение древних JSON/YAML свитков: jq, yq, map, select, reduce",
+		"netdebug":   "Карта магических потоков и Книга Имён: ip, dig, curl, tcpdump, tshark",
+		"docker":     "Сосуды для демонов и рецепты образов: docker, compose, Dockerfile, swarm",
+		"kubectl":    "Призыв подов-существ из Кластера: kubectl, RBAC, rollout, etcd, CKA",
+		"cicd":       "Конвейеры и Книга Заклинаний: CI/CD, Actions, GitOps, Helm, ArgoCD",
+		"terraform":  "Чертёж Башни и параллельные миры: terraform, modules, tfsec, Terragrunt",
+	}
+	if d, ok := descs[track]; ok {
+		return d
+	}
+	return "Магические искусства терминала"
+}
+
+func progressBar(completed, total, width int) string {
+	filled := 0
+	if total > 0 {
+		filled = completed * width / total
+	}
+	bar := strings.Repeat("█", filled) + strings.Repeat("░", width-filled)
+	pct := 0
+	if total > 0 {
+		pct = completed * 100 / total
+	}
+	return color(bar, Cyan) + " " + color(strconv.Itoa(pct)+"%", BrightCyan)
+}
+
+// groupByTrack groups tasks by track directory, preserving sorted order.
+func groupByTrack(tasks []*Task) []struct {
+	TrackDir string
+	Tasks    []*Task
+} {
+	var result []struct {
+		TrackDir string
+		Tasks    []*Task
+	}
+	seen := make(map[string]int)
+	for _, t := range tasks {
+		idx, ok := seen[t.TrackDir]
+		if !ok {
+			result = append(result, struct {
+				TrackDir string
+				Tasks    []*Task
+			}{TrackDir: t.TrackDir, Tasks: []*Task{t}})
+			seen[t.TrackDir] = len(result) - 1
+		} else {
+			result[idx].Tasks = append(result[idx].Tasks, t)
+		}
+	}
+	return result
+}
+
 func mainMenu(tasks []*Task, progress *Progress) {
 	clearScreen()
-	w := 72
+	w := 76
 
 	fmt.Println(centerText(color(Bold+"🏰 НЕЗРИМЫЙ УНИВЕРСИТЕТ ТЕРМИНАЛА 🏰", Cyan), w))
 	fmt.Println(centerText(color("\"In terminale veritas\"", Dim), w))
-	fmt.Println()
 
 	rank := rankForXP(progress.TotalXP)
 	fmt.Println(centerText(color(fmt.Sprintf("⚡ %s | %s | XP: %d", progress.WizardName, rank, progress.TotalXP), BrightCyan), w))
 	fmt.Println()
 
-	type levelGroup struct {
-		Level int
-		Tasks []*Task
-	}
-	type trackGroup struct {
-		Track  string
-		Levels []*levelGroup
-	}
+	groups := groupByTrack(tasks)
 
-	trackMap := make(map[string]*trackGroup)
-	var trackOrder []string
-
-	for _, t := range tasks {
-		tg, ok := trackMap[t.TrackDir]
-		if !ok {
-			tg = &trackGroup{Track: t.TrackDir}
-			trackMap[t.TrackDir] = tg
-			trackOrder = append(trackOrder, t.TrackDir)
-		}
-		found := false
-		for _, lg := range tg.Levels {
-			if lg.Level == t.Level {
-				lg.Tasks = append(lg.Tasks, t)
-				found = true
-				break
+	for i, g := range groups {
+		completed := 0
+		total := len(g.Tasks)
+		for _, t := range g.Tasks {
+			if taskProgress(progress, t).Completed {
+				completed++
 			}
 		}
-		if !found {
-			tg.Levels = append(tg.Levels, &levelGroup{
-				Level: t.Level,
-				Tasks: []*Task{t},
-			})
-		}
+
+		numStr := fmt.Sprintf("[%d]", i+1)
+		name := trackName(g.TrackDir)
+		desc := trackDescription(g.TrackDir)
+		bar := progressBar(completed, total, 10)
+		countStr := fmt.Sprintf("%d/%d", completed, total)
+
+		fmt.Printf("  %s %s\n",
+			color(fmt.Sprintf("%-4s", numStr), Yellow),
+			color(name, Bold+Cyan))
+		fmt.Printf("      %s\n",
+			color(desc, Dim))
+		fmt.Printf("      %s %s\n\n",
+			bar, color(countStr, Dim))
 	}
-
-	idx := 1
-	for _, trackKey := range trackOrder {
-		tg := trackMap[trackKey]
-		header := fmt.Sprintf("  %s %s %s",
-			color("━━┫", Blue), trackName(tg.Track), color("┣━━", Blue))
-		fmt.Println(padLine(header, w))
-
-		for _, lg := range tg.Levels {
-			beltHeader := fmt.Sprintf("    %s %s", color("▸", Dim), beltName(lg.Level))
-			fmt.Println(beltHeader)
-
-			for _, t := range lg.Tasks {
-				p := taskProgress(progress, t)
-				icon := statusIcon(p)
-				diff := difficultyBadge(t.Difficulty)
-				hints := ""
-				if p.HintsUsed > 0 {
-					hints = color(fmt.Sprintf(" (подсказок: %d)", p.HintsUsed), Dim)
-				}
-				xpStr := ""
-				if !p.Completed {
-					xpStr = color(fmt.Sprintf(" +%dXP", xpForDifficulty(t.Difficulty)), Dim)
-				}
-				line := fmt.Sprintf("      [%d] %s %s %-28s %s%s%s",
-					idx, icon, typeIcon(t.Type), t.Title, diff, hints, xpStr)
-				fmt.Println(padLine(line, w))
-				idx++
-			}
-			fmt.Println()
-		}
-	}
-
-	fmt.Println(color("└"+strings.Repeat("─", w-2)+"┘", Dim))
-	fmt.Println()
 
 	quote := randomQuote()
 	for _, ql := range wrapText(quote, w-8) {
@@ -636,15 +652,112 @@ func mainMenu(tasks []*Task, progress *Progress) {
 	fmt.Println()
 
 	fmt.Println(centerText(
-		color("[1-N] Квест  [P] Прогресс  [G] Инструкция  [A] Забыть всё  [Q] Выход", Yellow), w))
+		color("[1-N] Факультет  [P] Прогресс  [G] Инструкция  [A] Забыть всё  [Q] Выход", Yellow), w))
 	fmt.Println()
+}
+
+// ==================== TRACK MENU (TASKS WITHIN FACULTY) ====================
+
+func trackMenu(trackTasks []*Task, progress *Progress, allTasks []*Task) {
+	for {
+		clearScreen()
+		w := 76
+
+		if len(trackTasks) == 0 {
+			return
+		}
+		trackDir := trackTasks[0].TrackDir
+
+		fmt.Println(centerText(color("═══ "+trackName(trackDir)+" ═══", Bold+Cyan), w))
+		fmt.Println(centerText(color(trackDescription(trackDir), Dim), w))
+		fmt.Println()
+
+		type levelGroup struct {
+			Level int
+			Tasks []*Task
+		}
+		var levels []levelGroup
+		for _, t := range trackTasks {
+			found := false
+			for i := range levels {
+				if levels[i].Level == t.Level {
+					levels[i].Tasks = append(levels[i].Tasks, t)
+					found = true
+					break
+				}
+			}
+			if !found {
+				levels = append(levels, levelGroup{Level: t.Level, Tasks: []*Task{t}})
+			}
+		}
+
+		idx := 1
+		taskIndex := make(map[int]*Task)
+		for _, lg := range levels {
+			beltHeader := fmt.Sprintf("  %s %s", color("▸", Dim), beltName(lg.Level))
+			fmt.Println(beltHeader)
+
+			for _, t := range lg.Tasks {
+				p := taskProgress(progress, t)
+				icon := statusIcon(p)
+				diff := difficultyBadge(t.Difficulty)
+				hints := ""
+				if p.HintsUsed > 0 {
+					hints = color(fmt.Sprintf(" (шар: %d)", p.HintsUsed), Dim)
+				}
+				xpStr := ""
+				if !p.Completed {
+					xpStr = color(fmt.Sprintf(" +%dXP", xpForDifficulty(t.Difficulty)), Dim)
+				}
+				line := fmt.Sprintf("    [%d] %s %s %-30s %s%s%s",
+					idx, icon, typeIcon(t.Type), t.Title, diff, hints, xpStr)
+				fmt.Println(padLine(line, w))
+				taskIndex[idx] = t
+				idx++
+			}
+			fmt.Println()
+		}
+
+		fmt.Println(centerText(
+			color("[1-N] Квест  [M] Назад к факультетам  [P] Прогресс  [Q] Выход", Yellow), w))
+		fmt.Println()
+
+		input := readInput()
+		switch strings.ToUpper(input) {
+		case "M":
+			return
+		case "Q":
+			fmt.Println()
+			fmt.Println(color("  Библиотекарь машет тебе рукой: «Уук!»", Dim))
+			fmt.Println(color("  До встречи в Незримом Университете!", Dim))
+			os.Exit(0)
+		default:
+			if num, err := strconv.Atoi(input); err == nil {
+				if task, ok := taskIndex[num]; ok {
+					// Find global index for next navigation
+					globalIdx := 0
+					for i, t := range allTasks {
+						if t == task {
+							globalIdx = i
+							break
+						}
+					}
+					taskView(task, progress, allTasks, globalIdx)
+				} else {
+					fmt.Printf(color("\n  ❌ Свиток #%d не найден в каталоге\n", Red))
+					fmt.Println(color("  Нажми Enter...", Dim))
+					readInput()
+				}
+			}
+		}
+	}
 }
 
 // ==================== TASK VIEW ====================
 
 func spawnShell(task *Task) {
 	if task.Setup != "" {
-		_, _, _ = runBash("rm -rf /tmp/ninja_training 2>/dev/null; true")
+		_, _, _ = runBash("rm -rf /tmp/termtrainer_lab 2>/dev/null; true")
 		out, code, err := runBash(task.Setup)
 		if err != nil {
 			fmt.Printf("  %s✗ Заклинание подготовки дало осечку: %s%s\n", Red, err.Error(), Reset)
@@ -1097,10 +1210,7 @@ func main() {
 	}
 
 	progress := loadProgress()
-	taskIndex := make(map[int]*Task)
-	for i, t := range tasks {
-		taskIndex[i+1] = t
-	}
+	groups := groupByTrack(tasks)
 
 	for {
 		mainMenu(tasks, progress)
@@ -1118,17 +1228,13 @@ func main() {
 			resetProgress(tasks, progress)
 		case "G":
 			showGuide()
-		case "M":
-			// stay
 		default:
-			if num, err := strconv.Atoi(input); err == nil {
-				if task, ok := taskIndex[num]; ok {
-					taskView(task, progress, tasks, num-1)
-				} else {
-					fmt.Printf(color("\n  ❌ Свиток #%d не найден в каталоге\n", Red))
-					fmt.Println(color("  Нажми Enter...", Dim))
-					readInput()
-				}
+			if num, err := strconv.Atoi(input); err == nil && num >= 1 && num <= len(groups) {
+				trackMenu(groups[num-1].Tasks, progress, tasks)
+			} else if err == nil {
+				fmt.Printf(color("\n  ❌ Факультет #%d не найден (доступно: 1-%d)\n", Red), num, len(groups))
+				fmt.Println(color("  Нажми Enter...", Dim))
+				readInput()
 			}
 		}
 	}

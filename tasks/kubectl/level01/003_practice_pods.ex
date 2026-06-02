@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_003"
+DIR="$HOME/.termtrainer/kubectl_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -58,19 +58,19 @@ TASK
 
 6. **Очисти всё**: `kubectl delete pod web box api --force`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_003`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_003`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-kubectl run ninja-web --image=nginx &>/dev/null && sleep 5
-kubectl get pod ninja-web &>/dev/null && { echo "✓ Pod создан"; score=$((score+1)); }
+kubectl run tower-web --image=nginx &>/dev/null && sleep 5
+kubectl get pod tower-web &>/dev/null && { echo "✓ Pod создан"; score=$((score+1)); }
 
-logs=$(kubectl logs ninja-web 2>/dev/null | head -1)
+logs=$(kubectl logs tower-web 2>/dev/null | head -1)
 [ -n "$logs" ] && { echo "✓ Logs прочитаны"; score=$((score+1)); }
 
-kubectl delete pod ninja-web --force &>/dev/null
+kubectl delete pod tower-web --force &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Призыв существ освоен! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

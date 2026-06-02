@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_004"
+DIR="$HOME/.termtrainer/terraform_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -64,7 +64,7 @@ TASK
    ⚠️ Local state = .tfstate файл на диске → НЕ коммитить в Git!
    ⚠️ Remote state = S3/Consul/HTTP → безопасно для команды!
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_004`
+📂 Рабочий каталог: `~/.termtrainer/terraform_004`
 
 VALIDATION
 #!/bin/bash

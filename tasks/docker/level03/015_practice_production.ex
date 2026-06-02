@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_015"
+DIR="$HOME/.termtrainer/docker_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -83,11 +83,11 @@ deploy... Если сосуд упадёт — пользователи Башн
 
 4. **Запусти**: `chmod +x deploy.sh && ./deploy.sh blue`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_015`
+📂 Рабочий каталог: `~/.termtrainer/docker_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_015"
+DIR="$HOME/.termtrainer/docker_015"
 score=0
 
 df_out=$(docker system df 2>&1 | head -5)

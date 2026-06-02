@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_012"
+DIR="$HOME/.termtrainer/netdebug_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -73,7 +73,7 @@ openssl s_client -connect google.com:443 -servername google.com
 echo | openssl s_client -connect host:443 2>/dev/null | openssl x509 -noout -dates
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_012`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_012`
 
 📋 **Попробуй**:
 1. `openssl s_client -connect google.com:443 -servername google.com </dev/null 2>&1 | grep -E "Protocol|Cipher"`

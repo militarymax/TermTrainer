@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_006"
+DIR="$HOME/.termtrainer/netdebug_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -68,11 +68,11 @@ echo "════════════════════════�
 
 Запусти и сохрани: `chmod +x full_diagnose.sh && ./full_diagnose.sh > $DIR/report.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_006`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_006"
+DIR="$HOME/.termtrainer/netdebug_006"
 score=0
 
 if [ -f "$DIR/full_diagnose.sh" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_012"
+DIR="$HOME/.termtrainer/docker_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -74,24 +74,24 @@ docker exec web traceroute db             # Путь пакетов
 docker network connect tower_net isolated_vessel
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_012`
+📂 Рабочий каталог: `~/.termtrainer/docker_012`
 
 📋 **Попробуй**:
-1. `docker run -d --name test_cp nginx && docker cp test_cp:/etc/hostname /tmp/ninja_hostname`
-2. `cat /tmp/ninja_hostname && docker stop test_cp && docker rm test_cp`
+1. `docker run -d --name test_cp nginx && docker cp test_cp:/etc/hostname /tmp/tower_hostname`
+2. `cat /tmp/tower_hostname && docker stop test_cp && docker rm test_cp`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-docker run -d --name ninja_cp_test nginx &>/dev/null && sleep 2
+docker run -d --name tower_cp_test nginx &>/dev/null && sleep 2
 
-docker cp ninja_cp_test:/etc/hostname /tmp/ninja_cp_test_hostname &>/dev/null && { echo "✓ docker cp работает"; score=$((score+1)); }
+docker cp tower_cp_test:/etc/hostname /tmp/tower_cp_test_hostname &>/dev/null && { echo "✓ docker cp работает"; score=$((score+1)); }
 
-diff_out=$(docker diff ninja_cp_test 2>&1)
+diff_out=$(docker diff tower_cp_test 2>&1)
 [ -n "$diff_out" ] && { echo "✓ docker diff работает"; score=$((score+1)); }
 
-docker stop ninja_cp_test &>/dev/null; docker rm ninja_cp_test &>/dev/null
+docker stop tower_cp_test &>/dev/null; docker rm tower_cp_test &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Entrypoint и cp освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

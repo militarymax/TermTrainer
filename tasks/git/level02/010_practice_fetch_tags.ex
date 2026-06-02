@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_010"
+DIR="$HOME/.termtrainer/git_010"
 rm -rf "$DIR" /tmp/git_010_bare.git 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -38,11 +38,11 @@ TASK
 • `git pull` = `git fetch` + `git merge` — скачивает И применяет
 • `git pull --rebase` = `git fetch` + `git rebase` — линейная история
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_010`
+📂 Рабочий каталог: `~/.termtrainer/git_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_010"
+DIR="$HOME/.termtrainer/git_010"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

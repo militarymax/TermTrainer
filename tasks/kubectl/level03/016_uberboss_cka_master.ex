@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_016"
+DIR="$HOME/.termtrainer/kubectl_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -140,11 +140,11 @@ echo "═══ End of Audit ═══"
 
 Запусти: `chmod +x cluster_audit.sh && ./cluster_audit.sh > $DIR/full_audit.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_016`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_016"
+DIR="$HOME/.termtrainer/kubectl_016"
 score=0
 max=5
 

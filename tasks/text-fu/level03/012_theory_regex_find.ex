@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_012"
+DIR="$HOME/.termtrainer/textfu_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/архив_1" "$DIR/архив_2" "$DIR/архив_3"
 # Файлы с разными расширениями
@@ -57,11 +57,11 @@ TASK
 • `find каталог -name '*.txt' -exec wc -l {} \;` — подсчёт строк в каждом .txt
 • `find каталог -name '*.txt' -exec grep -l 'ошибка' {} \;` — найти .txt с «ошибка»
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_012`
+📂 Рабочий каталог: `~/.termtrainer/textfu_012`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_012"
+DIR="$HOME/.termtrainer/textfu_012"
 score=0
 
 if [ ! -d "$DIR/архив_1" ]; then
@@ -79,14 +79,14 @@ echo "✓ ok: regex + find освоены (баллов: $score)"
 exit 0
 
 HINTS
-Найти все .txt файлы: find ~/.ninja_trainer/textfu_012 -name '*.txt'
-Найти .txt и .log: find ~/.ninja_trainer/textfu_012 -name '*.txt' -o -name '*.log'
+Найти все .txt файлы: find ~/.termtrainer/textfu_012 -name '*.txt'
+Найти .txt и .log: find ~/.termtrainer/textfu_012 -name '*.txt' -o -name '*.log'
 grep с OR: grep -E 'ПРОКЛЯТЫЙ|ОШИБКА' файл.txt
 grep начало строки: grep -E '^Свиток' *.txt
 grep строки с числами: grep -E '[0-9]' файл.txt
 grep 3+ заглавных: grep -E '[A-ZА-Я]{3,}' файл.txt
-Рекурсивный grep: grep -r 'ПРОКЛЯТЫЙ' ~/.ninja_trainer/textfu_012
-Рекурсивный grep + имена файлов: grep -rl 'ПРОКЛЯТЫЙ' ~/.ninja_trainer/textfu_012
-find + exec (подсчёт строк): find ~/.ninja_trainer/textfu_012 -name '*.txt' -exec wc -l {} \;
-find + grep (пакетный поиск): find ~/.ninja_trainer/textfu_012 -name '*.txt' -exec grep -l 'свиток' {} \;
-Сохранить результаты: find ~/.ninja_trainer/textfu_012 -name '*.txt' -exec wc -l {} \; > ~/.ninja_trainer/textfu_012/результаты_поиска.txt
+Рекурсивный grep: grep -r 'ПРОКЛЯТЫЙ' ~/.termtrainer/textfu_012
+Рекурсивный grep + имена файлов: grep -rl 'ПРОКЛЯТЫЙ' ~/.termtrainer/textfu_012
+find + exec (подсчёт строк): find ~/.termtrainer/textfu_012 -name '*.txt' -exec wc -l {} \;
+find + grep (пакетный поиск): find ~/.termtrainer/textfu_012 -name '*.txt' -exec grep -l 'свиток' {} \;
+Сохранить результаты: find ~/.termtrainer/textfu_012 -name '*.txt' -exec wc -l {} \; > ~/.termtrainer/textfu_012/результаты_поиска.txt

@@ -8,14 +8,14 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/keystore/{public,private,shared,links}
-echo "Расписание лекций (публичное)" > /tmp/ninja_training/keystore/public/schedule.txt
-echo "Пароль от кабинета Архиканцлера: 'сосиска'" > /tmp/ninja_training/keystore/private/passwords.txt
-echo "Общий котёл знаний" > /tmp/ninja_training/keystore/shared/team.txt
-echo "#!/bin/bash\necho 'Магия активирована!'" > /tmp/ninja_training/keystore/public/cast.sh
-chmod 644 /tmp/ninja_training/keystore/public/schedule.txt
-chmod 600 /tmp/ninja_training/keystore/private/passwords.txt
-chmod 664 /tmp/ninja_training/keystore/shared/team.txt
+mkdir -p /tmp/termtrainer_lab/keystore/{public,private,shared,links}
+echo "Расписание лекций (публичное)" > /tmp/termtrainer_lab/keystore/public/schedule.txt
+echo "Пароль от кабинета Архиканцлера: 'сосиска'" > /tmp/termtrainer_lab/keystore/private/passwords.txt
+echo "Общий котёл знаний" > /tmp/termtrainer_lab/keystore/shared/team.txt
+echo "#!/bin/bash\necho 'Магия активирована!'" > /tmp/termtrainer_lab/keystore/public/cast.sh
+chmod 644 /tmp/termtrainer_lab/keystore/public/schedule.txt
+chmod 600 /tmp/termtrainer_lab/keystore/private/passwords.txt
+chmod 664 /tmp/termtrainer_lab/keystore/shared/team.txt
 
 TASK
 📜 СВИТОК ЗНАНИЙ #007: Ключи и замки Незримого Университета
@@ -74,9 +74,9 @@ TASK
    Ты стоишь в одном месте, а свиток лежит в другом.
    Но через портал ты его видишь и можешь читать.
    Пример:
-     ln -s /tmp/ninja_training/keystore/public/schedule.txt ~/schedule_link
+     ln -s /tmp/termtrainer_lab/keystore/public/schedule.txt ~/schedule_link
      → файл schedule.txt теперь «виден» из домашней башни
-   ls -la покажет: schedule_link -> /tmp/ninja_training/.../schedule.txt
+   ls -la покажет: schedule_link -> /tmp/termtrainer_lab/.../schedule.txt
 
 ───────────────────────────────────────
 🔹 ЗЕРКАЛО ЛИЧНОСТИ (whoami, id, sudo)
@@ -101,7 +101,7 @@ TASK
 ⚡ команда < файл — вдохнуть содержимое свитка в заклинание
    Как скормить ингредиенты магическому котлу.
    Пример:
-     wc -l < /tmp/ninja_training/keystore/public/schedule.txt
+     wc -l < /tmp/termtrainer_lab/keystore/public/schedule.txt
      → посчитать строки, подав файл на вход wc
 
    Разница:
@@ -123,12 +123,12 @@ TASK
 🎯 ЗАДАНИЕ: Освой магию прав доступа!
 
 1. Посмотри права файлов в keystore/ через ls -la
-2. Создай скрипт /tmp/ninja_training/keystore/hello.sh с "#!/bin/bash\necho hello"
+2. Создай скрипт /tmp/termtrainer_lab/keystore/hello.sh с "#!/bin/bash\necho hello"
 3. Сделай его исполняемым (chmod +x)
-4. Выполни его и запиши результат в /tmp/ninja_training/hello_result.txt
+4. Выполни его и запиши результат в /tmp/termtrainer_lab/hello_result.txt
 5. Закрой доступ к private/passwords.txt (chmod 600)
-6. Создай символическую ссылку /tmp/ninja_training/schedule_link на public/schedule.txt
-7. Узнай кто ты — запиши результат whoami в /tmp/ninja_training/whoami.txt
+6. Создай символическую ссылку /tmp/termtrainer_lab/schedule_link на public/schedule.txt
+7. Узнай кто ты — запиши результат whoami в /tmp/termtrainer_lab/whoami.txt
 
 Нажми [V] — Библиотекарь проверит замки.
 
@@ -136,8 +136,8 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ -f /tmp/ninja_training/hello_result.txt ]; then
-    content=$(cat /tmp/ninja_training/hello_result.txt | tr -d '[:space:]')
+if [ -f /tmp/termtrainer_lab/hello_result.txt ]; then
+    content=$(cat /tmp/termtrainer_lab/hello_result.txt | tr -d '[:space:]')
     if [ "$content" = "hello" ]; then
         echo "✓ Скрипт ожил и поприветствовал мир!"
     else
@@ -149,14 +149,14 @@ else
     errors=$((errors+1))
 fi
 
-if [ -x /tmp/ninja_training/keystore/hello.sh ]; then
+if [ -x /tmp/termtrainer_lab/keystore/hello.sh ]; then
     echo "✓ hello.sh — исполняемый! Заклинание живо!"
 else
     echo "✗ hello.sh не имеет права выполнения (chmod +x)"
     errors=$((errors+1))
 fi
 
-priv_perm=$(stat -f "%Lp" /tmp/ninja_training/keystore/private/passwords.txt 2>/dev/null || stat -c "%a" /tmp/ninja_training/keystore/private/passwords.txt)
+priv_perm=$(stat -f "%Lp" /tmp/termtrainer_lab/keystore/private/passwords.txt 2>/dev/null || stat -c "%a" /tmp/termtrainer_lab/keystore/private/passwords.txt)
 if [ "$priv_perm" = "600" ]; then
     echo "✓ Пароль Архиканцлера надёжно защищён (600)!"
 else
@@ -164,8 +164,8 @@ else
     errors=$((errors+1))
 fi
 
-if [ -L /tmp/ninja_training/schedule_link ]; then
-    target=$(readlink /tmp/ninja_training/schedule_link)
+if [ -L /tmp/termtrainer_lab/schedule_link ]; then
+    target=$(readlink /tmp/termtrainer_lab/schedule_link)
     if echo "$target" | grep -q "schedule.txt"; then
         echo "✓ Магический портал создан! schedule_link → schedule.txt"
     else
@@ -177,7 +177,7 @@ else
     errors=$((errors+1))
 fi
 
-if [ -f /tmp/ninja_training/whoami.txt ]; then
+if [ -f /tmp/termtrainer_lab/whoami.txt ]; then
     echo "✓ Ты знаешь кто ты! (whoami.txt создан)"
 else
     echo "✗ whoami.txt не создан"
@@ -193,7 +193,7 @@ exit $errors
 HINTS
 Создание скрипта: printf '#!/bin/bash\necho hello' > keystore/hello.sh
 Право выполнения: chmod +x keystore/hello.sh
-Запуск: cd /tmp/ninja_training/keystore && ./hello.sh > /tmp/ninja_training/hello_result.txt
+Запуск: cd /tmp/termtrainer_lab/keystore && ./hello.sh > /tmp/termtrainer_lab/hello_result.txt
 Закрыть доступ: chmod 600 keystore/private/passwords.txt
-Ссылка: ln -s /tmp/ninja_training/keystore/public/schedule.txt /tmp/ninja_training/schedule_link
-whoami > /tmp/ninja_training/whoami.txt
+Ссылка: ln -s /tmp/termtrainer_lab/keystore/public/schedule.txt /tmp/termtrainer_lab/schedule_link
+whoami > /tmp/termtrainer_lab/whoami.txt

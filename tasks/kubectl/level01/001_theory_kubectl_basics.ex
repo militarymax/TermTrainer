@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_001"
+DIR="$HOME/.termtrainer/kubectl_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -78,7 +78,7 @@ kubectl delete pod nginx                 # Уничтожить под
 • `CrashLoopBackOff` 💀 — падает и перезапускается! Смотри логи!
 • `ImagePullBackOff` ❌ — не может скачать образ (опечатка? приватный?)
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_001`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_001`
 
 📋 **Попробуй**:
 1. `kubectl get nodes`
@@ -92,9 +92,9 @@ score=0
 nodes=$(kubectl get nodes 2>/dev/null | grep -c "Ready\|control-plane\|worker" || echo "0")
 [ "$nodes" -ge 1 ] && { echo "✓ Кластер доступен ($nodes нод)"; score=$((score+1)); }
 
-kubectl run ninja-test --image=nginx &>/dev/null && sleep 3
-kubectl get pod ninja-test &>/dev/null && { echo "✓ Pod создан"; score=$((score+1)); }
-kubectl delete pod ninja-test --force &>/dev/null
+kubectl run tower-test --image=nginx &>/dev/null && sleep 3
+kubectl get pod tower-test &>/dev/null && { echo "✓ Pod создан"; score=$((score+1)); }
+kubectl delete pod tower-test --force &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Основы kubectl освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Убедитесь что kubectl подключён к кластеру"

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_012"
+DIR="$HOME/.termtrainer/git_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -48,7 +48,7 @@ TASK
 • `git gc` — упаковать объекты, удалить недостижимые
 • `.git/refs/heads/` — файлы веток, `.git/HEAD` — текущая ветка
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_012`
+📂 Рабочий каталог: `~/.termtrainer/git_012`
 
 📋 **Попробуй**:
 1. Посмотри последний коммит: `git cat-file -p HEAD`
@@ -58,7 +58,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_012"
+DIR="$HOME/.termtrainer/git_012"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

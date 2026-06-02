@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_014"
+DIR="$HOME/.termtrainer/terraform_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -92,11 +92,11 @@ Terragrunt выносит общее в одно место.»
    echo "═══ End of DRY Audit ═══"
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_014`
+📂 Рабочий каталог: `~/.termtrainer/terraform_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_014"
+DIR="$HOME/.termtrainer/terraform_014"
 score=0
 
 [ -f "$DIR/terragrunt.hcl" ] && { echo "✓ Корневой terragrunt.hcl создан"; score=$((score+1)); }

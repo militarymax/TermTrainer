@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_002"
+DIR="$HOME/.termtrainer/docker_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -66,7 +66,7 @@ docker rmi nginx:latest          # Удалить рецепт
 • Сосуд (container) = воплощённый образ
 • Один образ → много сосудов!
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_002`
+📂 Рабочий каталог: `~/.termtrainer/docker_002`
 
 📋 **Попробуй**:
 1. `docker run -d --name web nginx`
@@ -79,15 +79,15 @@ VALIDATION
 #!/bin/bash
 score=0
 
-docker run -d --name ninja_test_logs nginx &>/dev/null && sleep 2
+docker run -d --name tower_test_logs nginx &>/dev/null && sleep 2
 
-logs=$(docker logs ninja_test_logs 2>&1 | head -3)
+logs=$(docker logs tower_test_logs 2>&1 | head -3)
 [ -n "$logs" ] && { echo "✓ Записи прочитаны"; score=$((score+1)); }
 
-exec_out=$(docker exec ninja_test_logs ls / 2>&1 | head -3)
+exec_out=$(docker exec tower_test_logs ls / 2>&1 | head -3)
 [ -n "$exec_out" ] && { echo "✓ exec работает"; score=$((score+1)); }
 
-docker stop ninja_test_logs &>/dev/null; docker rm ninja_test_logs &>/dev/null
+docker stop tower_test_logs &>/dev/null; docker rm tower_test_logs &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Записи и exec освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/2)"

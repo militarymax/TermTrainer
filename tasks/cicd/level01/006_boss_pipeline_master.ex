@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_006"
+DIR="$HOME/.termtrainer/cicd_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -79,11 +79,11 @@ TASK
        - run: echo "🔴 Deployed to production!"
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_006`
+📂 Рабочий каталог: `~/.termtrainer/cicd_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_006"
+DIR="$HOME/.termtrainer/cicd_006"
 score=0
 
 [ -f "$DIR/Dockerfile" ] && grep -q "FROM\|CMD\|USER" "$DIR/Dockerfile" && { echo "✓ Dockerfile создан"; score=$((score+1)); }

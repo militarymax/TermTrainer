@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_016"
+DIR="$HOME/.termtrainer/terraform_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/modules/tower-server"
 
@@ -80,11 +80,11 @@ echo "── Security ──"; command -v tfsec &>/dev/null && tfsec . || echo "
 echo "═══ Gate Complete ═══"
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_016`
+📂 Рабочий каталог: `~/.termtrainer/terraform_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_016"
+DIR="$HOME/.termtrainer/terraform_016"
 score=0
 max=5
 

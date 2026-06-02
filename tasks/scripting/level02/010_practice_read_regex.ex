@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_010"
+DIR="$HOME/.termtrainer/scripting_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/students.txt" << 'EOF'
@@ -80,11 +80,11 @@ TASK
    - Является ли аргумент числом? `[[ "$1" =~ ^[0-9]+$ ]]`
    - Email формат? `[[ "$1" =~ ^[^@]+@[^@]+\.[a-z]+$ ]]`
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_010`
+📂 Рабочий каталог: `~/.termtrainer/scripting_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_010"
+DIR="$HOME/.termtrainer/scripting_010"
 score=0
 
 if [ -f "$DIR/student_lookup.sh" ]; then

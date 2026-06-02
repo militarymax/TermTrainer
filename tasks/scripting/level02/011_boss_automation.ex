@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_011"
+DIR="$HOME/.termtrainer/scripting_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/logs" "$DIR/reports"
 for i in $(seq 1 20); do
@@ -108,11 +108,11 @@ TASK
 
 3. **Запусти**: `chmod +x tower_monitor.sh && ./tower_monitor.sh`
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_011`
+📂 Рабочий каталог: `~/.termtrainer/scripting_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_011"
+DIR="$HOME/.termtrainer/scripting_011"
 score=0
 
 if [ -f "$DIR/tower_monitor.sh" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_015"
+DIR="$HOME/.termtrainer/cicd_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -92,11 +92,11 @@ Production → ручное подтверждение + canary release.
 
 3. Запусти: `chmod +x promote.sh && ./promote.sh ghcr.io/tower:v1.0 staging`
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_015`
+📂 Рабочий каталог: `~/.termtrainer/cicd_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_015"
+DIR="$HOME/.termtrainer/cicd_015"
 score=0
 
 if [ -f "$DIR/promote.sh" ]; then

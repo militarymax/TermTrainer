@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_002"
+DIR="$HOME/.termtrainer/terraform_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -77,7 +77,7 @@ output "tower_dns" {
 }
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_002`
+📂 Рабочий каталог: `~/.termtrainer/terraform_002`
 
 VALIDATION
 #!/bin/bash

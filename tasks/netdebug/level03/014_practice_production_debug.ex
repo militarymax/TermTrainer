@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_014"
+DIR="$HOME/.termtrainer/netdebug_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -67,11 +67,11 @@ TLS-сертификаты, DNS trace, HTTP profiling — всё в бой!»
    ```
    Сохрани в `$DIR/cert_check.sh` и запусти: `bash cert_check.sh google.com github.com`
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_014`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_014"
+DIR="$HOME/.termtrainer/netdebug_014"
 score=0
 
 cert=$(echo | openssl s_client -connect google.com:443 -servername google.com 2>/dev/null | openssl x509 -noout -dates 2>/dev/null)

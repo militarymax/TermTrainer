@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_009"
+DIR="$HOME/.termtrainer/git_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -37,11 +37,11 @@ TASK
 12. Верни: `git stash pop`
 13. Посмотри список: `git stash list`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_009`
+📂 Рабочий каталог: `~/.termtrainer/git_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_009"
+DIR="$HOME/.termtrainer/git_009"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

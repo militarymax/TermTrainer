@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_012"
+DIR="$HOME/.termtrainer/scripting_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -98,7 +98,7 @@ source ./utils.sh             # Подключить библиотеку
 log_info "Library loaded!"    # Использовать функцию
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_012`
+📂 Рабочий каталог: `~/.termtrainer/scripting_012`
 
 📋 **Попробуй**:
 1. Default value: `echo "${undefined_var:-fallback}"`

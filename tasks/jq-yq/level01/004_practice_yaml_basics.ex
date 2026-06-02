@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_004"
+DIR="$HOME/.termtrainer/jqyq_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/deploy.yaml" << 'EOF'
@@ -48,11 +48,11 @@ YAML — основной формат конфигураций в Универ�
 6. Конвертируй в JSON: `yq -o json '.' deploy.yaml`
 7. Сохрани JSON: `yq -o json '.' deploy.yaml > deploy.json`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_004`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_004"
+DIR="$HOME/.termtrainer/jqyq_004"
 score=0
 
 result1=$(yq '.metadata.name' "$DIR/deploy.yaml" 2>/dev/null)

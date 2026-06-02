@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_013"
+DIR="$HOME/.termtrainer/terraform_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -76,11 +76,11 @@ terraform validate, tfsec, terraform plan — всё это должно
 
 3. Запусти: `chmod +x tf_check.sh && ./tf_check.sh $DIR`
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_013`
+📂 Рабочий каталог: `~/.termtrainer/terraform_013`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_013"
+DIR="$HOME/.termtrainer/terraform_013"
 score=0
 
 if [ -f "$DIR/tf_check.sh" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_014"
+DIR="$HOME/.termtrainer/docker_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -77,11 +77,11 @@ TASK
 
 4. Очистка: `docker stop test_vessel && docker rm test_vessel`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_014`
+📂 Рабочий каталог: `~/.termtrainer/docker_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_014"
+DIR="$HOME/.termtrainer/docker_014"
 score=0
 
 if [ -f "$DIR/vessel_inspect.sh" ]; then

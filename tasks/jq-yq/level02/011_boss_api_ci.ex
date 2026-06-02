@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_011"
+DIR="$HOME/.termtrainer/jqyq_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/inventory.json" << 'EOF'
@@ -62,11 +62,11 @@ TASK
 7. Обнови образ через переменную: `export VER=v2.0.0 && yq -i '.spec.template.spec.containers[0].image = "uu/potion-api:" + strenv(VER)' deploy.yaml`
 8. Добавь переменную окружения: `yq -i '.spec.template.spec.containers[0].env += [{"name": "LOG_LEVEL", "value": "debug"}]' deploy.yaml`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_011`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_011"
+DIR="$HOME/.termtrainer/jqyq_011"
 score=0
 
 r1=$(jq '[.зелья[] | select(.наличие > 0)] | length' "$DIR/inventory.json" 2>/dev/null)

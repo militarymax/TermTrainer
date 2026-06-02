@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_007"
+DIR="$HOME/.termtrainer/kubectl_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -80,7 +80,7 @@ readinessProbe:
   periodSeconds: 5
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_007`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_007`
 
 📋 **Попробуй**:
 1. `kubectl create configmap test-cm --from-literal=key=val && kubectl get cm test-cm -o yaml`
@@ -91,15 +91,15 @@ VALIDATION
 #!/bin/bash
 score=0
 
-kubectl create configmap ninja-cm --from-literal=TOWER=test &>/dev/null
-cm=$(kubectl get cm ninja-cm -o jsonpath='{.data.TOWER}' 2>/dev/null)
+kubectl create configmap tower-cm --from-literal=TOWER=test &>/dev/null
+cm=$(kubectl get cm tower-cm -o jsonpath='{.data.TOWER}' 2>/dev/null)
 [ "$cm" = "test" ] && { echo "✓ ConfigMap работает"; score=$((score+1)); }
 
-kubectl create secret generic ninja-sec --from-literal=pw=secret &>/dev/null
-sec=$(kubectl get secret ninja-sec -o jsonpath='{.data.pw}' 2>/dev/null | base64 -d)
+kubectl create secret generic tower-sec --from-literal=pw=secret &>/dev/null
+sec=$(kubectl get secret tower-sec -o jsonpath='{.data.pw}' 2>/dev/null | base64 -d)
 [ "$sec" = "secret" ] && { echo "✓ Secret работает"; score=$((score+1)); }
 
-kubectl delete cm ninja-cm &>/dev/null; kubectl delete secret ninja-sec &>/dev/null
+kubectl delete cm tower-cm &>/dev/null; kubectl delete secret tower-sec &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: ConfigMap и Secrets освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

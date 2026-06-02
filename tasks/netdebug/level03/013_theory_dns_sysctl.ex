@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_013"
+DIR="$HOME/.termtrainer/netdebug_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -63,7 +63,7 @@ netstat -s | grep -i retrans     # Повторные передачи (Linux)
 ss -ti                           # RTT/CWND/retransmits per socket
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_013`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_013`
 
 📋 **Попробуй**:
 1. `dig +trace google.com | head -30`

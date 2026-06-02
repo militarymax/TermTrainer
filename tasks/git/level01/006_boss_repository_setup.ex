@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_006"
+DIR="$HOME/.termtrainer/git_006"
 rm -rf "$DIR" /tmp/git_006_bare.git 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -31,11 +31,11 @@ TASK
 7. Запушь: `git push origin main`
 8. Проверь историю через `git log --oneline`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_006`
+📂 Рабочий каталог: `~/.termtrainer/git_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_006"
+DIR="$HOME/.termtrainer/git_006"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

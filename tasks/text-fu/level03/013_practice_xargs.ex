@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_013"
+DIR="$HOME/.termtrainer/textfu_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/свитки" "$DIR/логи" "$DIR/архив"
 # Создаём много файлов с "проклятыми" метками
@@ -52,11 +52,11 @@ TASK
 6. Создай `заглавный_архив.txt`: рекурсивно собери содержимое всех .txt файлов из `архив/` и переведи в ВЕРХНИЙ РЕГИСТР
 7. Найди все файлы, содержащие `ПРОКЛЯТЫЙ`, и удали их с помощью `xargs rm` (ОСТОРОЖНО! Сначала проверь без `rm`: `grep -rl ПРОКЛЯТЫЙ свитки/`)
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_013`
+📂 Рабочий каталог: `~/.termtrainer/textfu_013`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_013"
+DIR="$HOME/.termtrainer/textfu_013"
 score=0
 
 if [ ! -d "$DIR/свитки" ]; then

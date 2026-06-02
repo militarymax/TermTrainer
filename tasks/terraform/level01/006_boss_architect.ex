@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_006"
+DIR="$HOME/.termtrainer/terraform_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/modules/tower-server"
 
@@ -51,11 +51,11 @@ outputs для результатов. И всё это с terraform validate!»
 
 5. **Запусти**: `terraform init && terraform fmt && terraform validate`
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_006`
+📂 Рабочий каталог: `~/.termtrainer/terraform_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_006"
+DIR="$HOME/.termtrainer/terraform_006"
 score=0
 
 [ -f "$DIR/main.tf" ] && grep -q "module\|provider\|terraform" "$DIR/main.tf" && { echo "✓ main.tf создан"; score=$((score+1)); }

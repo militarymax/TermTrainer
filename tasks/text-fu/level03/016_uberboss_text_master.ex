@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_016"
+DIR="$HOME/.termtrainer/textfu_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/архив_1" "$DIR/архив_2" "$DIR/архив_3" "$DIR/логи" "$DIR/отчёты"
 # Архив 1: инвентарь предметов
@@ -126,11 +126,11 @@ TASK
 **БЛОК 5 — Финальный отчёт**:
 12. Создай `UBERBOSS_ОТЧЁТ.txt` — объедини ВСЕ созданные файлы с заголовками секций
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_016`
+📂 Рабочий каталог: `~/.termtrainer/textfu_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_016"
+DIR="$HOME/.termtrainer/textfu_016"
 score=0
 max=12
 

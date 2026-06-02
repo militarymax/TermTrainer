@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_009"
+DIR="$HOME/.termtrainer/docker_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -81,25 +81,25 @@ TASK
 
 5. Очистка: `docker stop suspect && docker rm suspect`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_009`
+📂 Рабочий каталог: `~/.termtrainer/docker_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_009"
+DIR="$HOME/.termtrainer/docker_009"
 score=0
 
-docker run -d --name ninja_suspect -e SECRET=magic nginx &>/dev/null && sleep 2
+docker run -d --name tower_suspect -e SECRET=magic nginx &>/dev/null && sleep 2
 
-ip=$(docker inspect ninja_suspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
+ip=$(docker inspect tower_suspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
 [ -n "$ip" ] && { echo "✓ IP извлечён"; score=$((score+1)); }
 
-env=$(docker inspect ninja_suspect | jq -r '.[0].Config.Env[]' 2>/dev/null | grep SECRET)
+env=$(docker inspect tower_suspect | jq -r '.[0].Config.Env[]' 2>/dev/null | grep SECRET)
 [ -n "$env" ] && { echo "✓ Секрет найден: $env"; score=$((score+1)); }
 
-diff_out=$(docker diff ninja_suspect 2>&1)
+diff_out=$(docker diff tower_suspect 2>&1)
 [ -n "$diff_out" ] && { echo "✓ Diff работает"; score=$((score+1)); }
 
-docker stop ninja_suspect &>/dev/null; docker rm ninja_suspect &>/dev/null
+docker stop tower_suspect &>/dev/null; docker rm tower_suspect &>/dev/null
 
 [ $score -ge 2 ] && { echo "✓ ok: Расследование освоено! (баллов: $score/3)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/3)"

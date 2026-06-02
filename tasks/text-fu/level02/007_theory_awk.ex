@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_007"
+DIR="$HOME/.termtrainer/textfu_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/студенты.txt" << 'EOF'
@@ -48,7 +48,7 @@ TASK
 • `awk 'NR==1{print; next} {print $0, $3*2}' файл` — вывести заголовок, потом строки с удвоенным 3-м столбцом
 • `awk '{print NR, $0}' файл` — вывести с номерами строк (NR — номер записи)
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_007`
+📂 Рабочий каталог: `~/.termtrainer/textfu_007`
 
 ⚡ **Ключевые переменные awk**:
 • `$1, $2, ... $NF` — столбцы
@@ -59,7 +59,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_007"
+DIR="$HOME/.termtrainer/textfu_007"
 score=0
 
 if [ ! -f "$DIR/студенты.txt" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_003"
+DIR="$HOME/.termtrainer/scripting_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -50,11 +50,11 @@ TASK
    ./check.sh /etc/hostname    # → File exists
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_003`
+📂 Рабочий каталог: `~/.termtrainer/scripting_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_003"
+DIR="$HOME/.termtrainer/scripting_003"
 score=0
 
 if [ -f "$DIR/hello.sh" ] && head -1 "$DIR/hello.sh" | grep -q '^#!'; then

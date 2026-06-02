@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_004"
+DIR="$HOME/.termtrainer/docker_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -62,22 +62,22 @@ IP-адрес, переменные окружения, подключённые
 
 6. Очистка: `docker stop secret_vault && docker rm secret_vault`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_004`
+📂 Рабочий каталог: `~/.termtrainer/docker_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_004"
+DIR="$HOME/.termtrainer/docker_004"
 score=0
 
-docker run -d --name ninja_inspect -e SECRET=magic -p 19090:80 nginx &>/dev/null && sleep 2
+docker run -d --name tower_inspect -e SECRET=magic -p 19090:80 nginx &>/dev/null && sleep 2
 
-ip=$(docker inspect ninja_inspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
+ip=$(docker inspect tower_inspect | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
 [ -n "$ip" ] && { echo "✓ IP извлечён: $ip"; score=$((score+1)); }
 
-env=$(docker inspect ninja_inspect | jq -r '.[0].Config.Env[]' 2>/dev/null | grep SECRET)
+env=$(docker inspect tower_inspect | jq -r '.[0].Config.Env[]' 2>/dev/null | grep SECRET)
 [ -n "$env" ] && { echo "✓ Env извлечён: $env"; score=$((score+1)); }
 
-docker stop ninja_inspect &>/dev/null; docker rm ninja_inspect &>/dev/null
+docker stop tower_inspect &>/dev/null; docker rm tower_inspect &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Inspect+jq освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/2)"

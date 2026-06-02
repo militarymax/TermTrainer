@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_014"
+DIR="$HOME/.termtrainer/git_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -46,11 +46,11 @@ TASK
 • `post-merge` — после merge (установка зависимостей)
 • `prepare-commit-msg` — подготовка сообщения (шаблон)
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_014`
+📂 Рабочий каталог: `~/.termtrainer/git_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_014"
+DIR="$HOME/.termtrainer/git_014"
 score=0
 
 if [ -f "$DIR/.git/hooks/pre-commit" ]; then

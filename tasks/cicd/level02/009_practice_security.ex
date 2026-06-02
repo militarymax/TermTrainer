@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_009"
+DIR="$HOME/.termtrainer/cicd_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -69,11 +69,11 @@ TASK
    git log --all --full-history -- '*.env' '*.key' '*secret*'
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_009`
+📂 Рабочий каталог: `~/.termtrainer/cicd_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_009"
+DIR="$HOME/.termtrainer/cicd_009"
 score=0
 
 [ -f "$DIR/.github/workflows/security.yml" ] && grep -q "trivy\|secret\|scan\|security" "$DIR/.github/workflows/security.yml" && { echo "✓ security.yml создан"; score=$((score+1)); }

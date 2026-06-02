@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_008"
+DIR="$HOME/.termtrainer/terraform_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -89,7 +89,7 @@ resource "aws_security_group" "tower" {
 }
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_008`
+📂 Рабочий каталог: `~/.termtrainer/terraform_008`
 
 VALIDATION
 #!/bin/bash

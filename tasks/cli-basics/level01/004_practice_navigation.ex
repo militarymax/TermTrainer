@@ -8,10 +8,10 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/maze/{corridor1,corridor2,corridor3/{room_a,room_b},dead_end}
-echo "ключ" > /tmp/ninja_training/maze/corridor2/key.txt
-echo "карта" > /tmp/ninja_training/maze/corridor3/room_b/map.txt
-echo "выход" > /tmp/ninja_training/maze/corridor3/room_a/exit.txt
+mkdir -p /tmp/termtrainer_lab/maze/{corridor1,corridor2,corridor3/{room_a,room_b},dead_end}
+echo "ключ" > /tmp/termtrainer_lab/maze/corridor2/key.txt
+echo "карта" > /tmp/termtrainer_lab/maze/corridor3/room_b/map.txt
+echo "выход" > /tmp/termtrainer_lab/maze/corridor3/room_a/exit.txt
 
 TASK
 ⚗️ ЛАБОРАТОРНАЯ #004: Заблудиться в подземельях
@@ -42,10 +42,10 @@ TASK
       (тупик. тут ничего. как и в жизни.)
 
 🎯 ЗАДАНИЕ:
-1. Перейди в /tmp/ninja_training/maze
-2. Найди key.txt и запиши его содержимое в /tmp/ninja_training/result_key.txt
-3. Найди map.txt и запиши его содержимое в /tmp/ninja_training/result_map.txt
-4. Найди exit.txt и запиши его содержимое в /tmp/ninja_training/result_exit.txt
+1. Перейди в /tmp/termtrainer_lab/maze
+2. Найди key.txt и запиши его содержимое в /tmp/termtrainer_lab/result_key.txt
+3. Найди map.txt и запиши его содержимое в /tmp/termtrainer_lab/result_map.txt
+4. Найди exit.txt и запиши его содержимое в /tmp/termtrainer_lab/result_exit.txt
 
 Подсказка: используй cat для чтения и > для записи.
 И НЕ заблудись по дороге. Опять.
@@ -54,11 +54,11 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/result_key.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/result_key.txt ]; then
     echo "✗ result_key.txt не найден"
     errors=$((errors+1))
 else
-    content=$(cat /tmp/ninja_training/result_key.txt)
+    content=$(cat /tmp/termtrainer_lab/result_key.txt)
     if [ "$content" = "ключ" ]; then
         echo "✓ Ключ найден! Дверь открыта!"
     else
@@ -67,11 +67,11 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/result_map.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/result_map.txt ]; then
     echo "✗ result_map.txt не найден"
     errors=$((errors+1))
 else
-    content=$(cat /tmp/ninja_training/result_map.txt)
+    content=$(cat /tmp/termtrainer_lab/result_map.txt)
     if [ "$content" = "карта" ]; then
         echo "✓ Карта найдена! Теперь не заблудишься."
     else
@@ -80,11 +80,11 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/result_exit.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/result_exit.txt ]; then
     echo "✗ result_exit.txt не найден"
     errors=$((errors+1))
 else
-    content=$(cat /tmp/ninja_training/result_exit.txt)
+    content=$(cat /tmp/termtrainer_lab/result_exit.txt)
     if [ "$content" = "выход" ]; then
         echo "✓ Выход найден! Свобода!"
     else
@@ -100,6 +100,6 @@ fi
 exit $errors
 
 HINTS
-Перейди в maze: cd /tmp/ninja_training/maze, затем ls для осмотра
-Запись содержимого: cat corridor2/key.txt > /tmp/ninja_training/result_key.txt
+Перейди в maze: cd /tmp/termtrainer_lab/maze, затем ls для осмотра
+Запись содержимого: cat corridor2/key.txt > /tmp/termtrainer_lab/result_key.txt
 Вложенные комнаты: corridor3/room_b/map.txt

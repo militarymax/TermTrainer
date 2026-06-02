@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_013"
+DIR="$HOME/.termtrainer/jqyq_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/config.yaml" << 'EOF'
@@ -70,7 +70,7 @@ yq — не только YAML. Это швейцарский нож для фо�
 • Пример: `jq '.items[] | debug | .name' файл`
 • Полезно для понимания потока данных
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_013`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_013`
 
 📋 **Попробуй**:
 1. XML→JSON: `yq -p xml -o json '.' data.xml`
@@ -79,7 +79,7 @@ yq — не только YAML. Это швейцарский нож для фо�
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_013"
+DIR="$HOME/.termtrainer/jqyq_013"
 score=0
 
 r1=$(yq -p csv -o json '.' "$DIR/data.csv" 2>/dev/null)

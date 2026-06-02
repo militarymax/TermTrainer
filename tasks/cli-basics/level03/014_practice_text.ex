@@ -8,8 +8,8 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/datalab
-cat > /tmp/ninja_training/datalab/access.log << 'LOG'
+mkdir -p /tmp/termtrainer_lab/datalab
+cat > /tmp/termtrainer_lab/datalab/access.log << 'LOG'
 192.168.1.10 GET /index.html 200 1234
 192.168.1.20 POST /login 401 56
 192.168.1.10 GET /dashboard 200 5678
@@ -41,19 +41,19 @@ TASK
 2. Найди все запросы с кодом ошибки (4xx или 5xx)
 3. Определи самый популярный путь через портал
 4. Создай отчёт:
-   - /tmp/ninja_training/report_total.txt — число запросов
-   - /tmp/ninja_training/report_errors.txt — строки с ошибками
-   - /tmp/ninja_training/report_popular.txt — самый популярный путь
+   - /tmp/termtrainer_lab/report_total.txt — число запросов
+   - /tmp/termtrainer_lab/report_errors.txt — строки с ошибками
+   - /tmp/termtrainer_lab/report_popular.txt — самый популярный путь
 
 VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/report_total.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/report_total.txt ]; then
     echo "✗ report_total.txt не создан"
     errors=$((errors+1))
 else
-    total=$(cat /tmp/ninja_training/report_total.txt | tr -d '[:space:]')
+    total=$(cat /tmp/termtrainer_lab/report_total.txt | tr -d '[:space:]')
     if [ "$total" = "10" ]; then
         echo "✓ Общее количество запросов верно!"
     else
@@ -62,11 +62,11 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/report_errors.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/report_errors.txt ]; then
     echo "✗ report_errors.txt не создан"
     errors=$((errors+1))
 else
-    err_count=$(wc -l < /tmp/ninja_training/report_errors.txt | tr -d '[:space:]')
+    err_count=$(wc -l < /tmp/termtrainer_lab/report_errors.txt | tr -d '[:space:]')
     if [ "$err_count" = "3" ]; then
         echo "✓ Ошибки найдены верно!"
     else
@@ -75,11 +75,11 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/report_popular.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/report_popular.txt ]; then
     echo "✗ report_popular.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "/api/users\|/index.html\|/dashboard" /tmp/ninja_training/report_popular.txt; then
+    if grep -q "/api/users\|/index.html\|/dashboard" /tmp/termtrainer_lab/report_popular.txt; then
         echo "✓ Популярный путь определён!"
     else
         echo "✗ Популярный путь не определён"

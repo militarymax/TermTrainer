@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_015"
+DIR="$HOME/.termtrainer/terraform_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -94,11 +94,11 @@ terraform plan при каждом PR и показывает результат
              });
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_015`
+📂 Рабочий каталог: `~/.termtrainer/terraform_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_015"
+DIR="$HOME/.termtrainer/terraform_015"
 score=0
 
 if [ -f "$DIR/tf_gitops_check.sh" ]; then

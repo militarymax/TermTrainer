@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_014"
+DIR="$HOME/.termtrainer/scripting_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/logs"
 for i in $(seq 1 8); do
@@ -67,7 +67,7 @@ TASK
    set -euo pipefail
    
    MAX_JOBS=4
-   PIPE="$HOME/.ninja_trainer/scripting_014/pipe_$$"
+   PIPE="$HOME/.termtrainer/scripting_014/pipe_$$"
    
    mkfifo "$PIPE"
    exec 3<>"$PIPE"
@@ -91,11 +91,11 @@ TASK
 
 3. **Запусти оба** и сравни результаты
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_014`
+📂 Рабочий каталог: `~/.termtrainer/scripting_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_014"
+DIR="$HOME/.termtrainer/scripting_014"
 score=0
 
 if [ -f "$DIR/parallel_process.sh" ]; then

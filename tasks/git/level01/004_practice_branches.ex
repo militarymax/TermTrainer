@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_004"
+DIR="$HOME/.termtrainer/git_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -31,11 +31,11 @@ TASK
 7. Проверь, что файл теперь в main
 8. Удали слитую ветку: `git branch -d feature/potions`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_004`
+📂 Рабочий каталог: `~/.termtrainer/git_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_004"
+DIR="$HOME/.termtrainer/git_004"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

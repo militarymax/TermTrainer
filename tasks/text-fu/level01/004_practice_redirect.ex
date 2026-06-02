@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_004"
+DIR="$HOME/.termtrainer/textfu_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/рецепт.txt" << 'EOF'
@@ -39,7 +39,7 @@ TASK
 5. Выведи содержимое `рецепт_полный.txt` и **подсчитай** количество строк в нём — одной командой (через конвейер `|`)
 6. Эксперимент: направь и stdout, и stderr команды `ls несуществующий_каталог` в файл `полный_лог.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_004`
+📂 Рабочий каталог: `~/.termtrainer/textfu_004`
 
 ⚠ Напоминание:
 • `>` — перезапись файла
@@ -49,7 +49,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_004"
+DIR="$HOME/.termtrainer/textfu_004"
 score=0
 
 if [ ! -f "$DIR/рецепт.txt" ]; then
@@ -87,10 +87,10 @@ echo "✓ ok: Лабораторный журнал оформлен (балло
 exit 0
 
 HINTS
-Добавление в конец: cat ~/.ninja_trainer/textfu_004/рецепт.txt > ~/.ninja_trainer/textfu_004/рецепт_полный.txt
-Затем: echo "- Мед фей (опционально)" >> ~/.ninja_trainer/textfu_004/рецепт_полный.txt
-Создание с заголовком: echo "=== Лабораторный журнал ===" > ~/.ninja_trainer/textfu_004/журнал.txt
-Добавление даты: date >> ~/.ninja_trainer/textfu_004/журнал.txt
-stderr в файл: cat ~/.ninja_trainer/textfu_004/проклятая_книга.txt 2> ~/.ninja_trainer/textfu_004/ошибки.log
-Конвейер со счётом: cat ~/.ninja_trainer/textfu_004/рецепт_полный.txt | wc -l
-stdout + stderr: ls несуществующий_каталог > ~/.ninja_trainer/textfu_004/полный_лог.txt 2>&1
+Добавление в конец: cat ~/.termtrainer/textfu_004/рецепт.txt > ~/.termtrainer/textfu_004/рецепт_полный.txt
+Затем: echo "- Мед фей (опционально)" >> ~/.termtrainer/textfu_004/рецепт_полный.txt
+Создание с заголовком: echo "=== Лабораторный журнал ===" > ~/.termtrainer/textfu_004/журнал.txt
+Добавление даты: date >> ~/.termtrainer/textfu_004/журнал.txt
+stderr в файл: cat ~/.termtrainer/textfu_004/проклятая_книга.txt 2> ~/.termtrainer/textfu_004/ошибки.log
+Конвейер со счётом: cat ~/.termtrainer/textfu_004/рецепт_полный.txt | wc -l
+stdout + stderr: ls несуществующий_каталог > ~/.termtrainer/textfu_004/полный_лог.txt 2>&1

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_002"
+DIR="$HOME/.termtrainer/cicd_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -79,13 +79,13 @@ ${{ github.ref }}        # Ветка или тег
 ${{ secrets.API_KEY }}   # Секреты (НЕ в коде!)
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_002`
+📂 Рабочий каталог: `~/.termtrainer/cicd_002`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-if [ -d "/Users/militarymax/ninja-trainer/.github/workflows" ]; then
+if [ -d "$HOME/termtrainer/.github/workflows" ]; then
   echo "✓ .github/workflows существует"; score=$((score+1))
 else
   echo "ℹ Нет workflow файлов (это нормально для этого проекта)"

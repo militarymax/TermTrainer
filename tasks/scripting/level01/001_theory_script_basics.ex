@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_001"
+DIR="$HOME/.termtrainer/scripting_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/scrolls" "$DIR/drafts"
 cat > "$DIR/scrolls/welcome.txt" << 'EOF'
@@ -85,7 +85,7 @@ echo "${name}s"      # → Rincewinds (фигурные скобки для об
 • `>>` — добавить в конец файла
 • `2>` — перенаправить stderr (ошибки)
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_001`
+📂 Рабочий каталог: `~/.termtrainer/scripting_001`
 
 📋 **Попробуй**:
 1. Создай `hello.sh` с шебангом и `echo "Hello, Unseen University!"`
@@ -95,7 +95,7 @@ echo "${name}s"      # → Rincewinds (фигурные скобки для об
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_001"
+DIR="$HOME/.termtrainer/scripting_001"
 score=0
 
 if [ -f "$DIR/hello.sh" ]; then

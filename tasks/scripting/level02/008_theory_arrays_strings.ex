@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_008"
+DIR="$HOME/.termtrainer/scripting_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -76,7 +76,7 @@ echo "$(( power / 3 ))" # → 10 (целочисленное деление!)
 • `(( ... ))` — арифметическое выражение (можно без $)
 • Для чисел с точкой нужен `bc` или `awk`
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_008`
+📂 Рабочий каталог: `~/.termtrainer/scripting_008`
 
 📋 **Попробуй**:
 1. Создай массив: `spells=(fireball heal teleport)` и выведи все элементы

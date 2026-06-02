@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_009"
+DIR="$HOME/.termtrainer/scripting_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/logs"
 for i in $(seq 1 10); do
@@ -86,11 +86,11 @@ TASK
 
 3. **Запусти**: `chmod +x log_parser.sh && ./log_parser.sh`
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_009`
+📂 Рабочий каталог: `~/.termtrainer/scripting_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_009"
+DIR="$HOME/.termtrainer/scripting_009"
 score=0
 
 if [ -f "$DIR/log_parser.sh" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_004"
+DIR="$HOME/.termtrainer/netdebug_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -63,11 +63,11 @@ curl — это твой телескоп для HTTP. Научись читат
    [[ "$code" =~ ^2 ]] && echo "✅ Healthy!" || echo "❌ Problem!"
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_004`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_004"
+DIR="$HOME/.termtrainer/netdebug_004"
 score=0
 
 code=$(curl -s -o /dev/null -w "%{http_code}" https://google.com 2>/dev/null)

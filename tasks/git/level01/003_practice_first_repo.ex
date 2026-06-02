@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_003"
+DIR="$HOME/.termtrainer/git_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -30,11 +30,11 @@ TASK
 7. Посмотри `git diff --staged` после `git add` — увидишь подготовленные
 8. Закоммить: `git commit -m "docs: update readme with version"`
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_003`
+📂 Рабочий каталог: `~/.termtrainer/git_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_003"
+DIR="$HOME/.termtrainer/git_003"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

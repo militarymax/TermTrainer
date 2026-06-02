@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_016"
+DIR="$HOME/.termtrainer/netdebug_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/reports"
 
@@ -130,11 +130,11 @@ jq -n \
   '{date:$date, gateway:$gw, dns_resolves:($dns!=""), external_ip:$ext_ip, http:{code:$http_code,time_seconds:$http_time}}'
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_016`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_016"
+DIR="$HOME/.termtrainer/netdebug_016"
 score=0
 max=5
 

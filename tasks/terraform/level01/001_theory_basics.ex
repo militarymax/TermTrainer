@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_001"
+DIR="$HOME/.termtrainer/terraform_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -67,7 +67,7 @@ terraform validate  # Проверить синтаксис
 
 ⚠️ **НИКОГДА не редактируй .tfstate вручную!**
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_001`
+📂 Рабочий каталог: `~/.termtrainer/terraform_001`
 
 📋 **Попробуй**:
 1. `which terraform && terraform version`

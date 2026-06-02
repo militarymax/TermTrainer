@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_009"
+DIR="$HOME/.termtrainer/textfu_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/продажи.csv" << 'EOF'
@@ -55,7 +55,7 @@ TASK
 6. Выведи всех студентов с баллами **> 80** — создай `отличники.txt`
 7. Подсчитай, сколько студентов живёт в каждом общежитии — создай `общежития.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_009`
+📂 Рабочий каталог: `~/.termtrainer/textfu_009`
 
 ⚡ Ключевые подсказки awk:
 • `awk -F','` — разделитель запятая
@@ -66,7 +66,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_009"
+DIR="$HOME/.termtrainer/textfu_009"
 score=0
 
 if [ ! -f "$DIR/продажи.csv" ]; then

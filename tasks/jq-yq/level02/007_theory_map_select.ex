@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_007"
+DIR="$HOME/.termtrainer/jqyq_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/students.json" << 'EOF'
@@ -54,7 +54,7 @@ jq '.студенты | length' students.json                    # количе�
 jq '.студенты[] | del(.факультет)' students.json         # без факультета
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_007`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_007`
 
 📋 **Попробуй**:
 1. Все имена через map: `jq '.студенты | map(.имя)' students.json`
@@ -64,7 +64,7 @@ jq '.студенты[] | del(.факультет)' students.json         # бе
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_007"
+DIR="$HOME/.termtrainer/jqyq_007"
 score=0
 
 r1=$(jq '.студенты | map(.имя) | length' "$DIR/students.json" 2>/dev/null)

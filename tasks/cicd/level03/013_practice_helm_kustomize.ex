@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_013"
+DIR="$HOME/.termtrainer/cicd_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -94,11 +94,11 @@ Kustomize — это накладывание патчей на существу
    kubectl kustomize k8s/overlays/staging/ | head -20
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_013`
+📂 Рабочий каталог: `~/.termtrainer/cicd_013`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_013"
+DIR="$HOME/.termtrainer/cicd_013"
 score=0
 
 [ -f "$DIR/tower-chart/Chart.yaml" ] && { echo "✓ Helm Chart создан"; score=$((score+1)); }

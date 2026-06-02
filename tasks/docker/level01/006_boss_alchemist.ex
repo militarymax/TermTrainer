@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_006"
+DIR="$HOME/.termtrainer/docker_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -64,25 +64,25 @@ TASK
 
 5. **Очисти**: `docker stop boss_web && docker rm boss_web`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_006`
+📂 Рабочий каталог: `~/.termtrainer/docker_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_006"
+DIR="$HOME/.termtrainer/docker_006"
 score=0
 
-docker run -d --name ninja_boss -p 18888:80 nginx &>/dev/null && sleep 2
+docker run -d --name tower_boss -p 18888:80 nginx &>/dev/null && sleep 2
 
 curl -s http://localhost:18888 &>/dev/null && { echo "✓ Nginx отвечает"; score=$((score+1)); }
 
-ip=$(docker inspect ninja_boss | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
+ip=$(docker inspect tower_boss | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
 [ -n "$ip" ] && { echo "✓ IP извлечён через jq"; score=$((score+1)); }
 
 if [ -f "$DIR/boss_report.txt" ]; then
   grep -q "Report\|Status\|IP\|HTTP" "$DIR/boss_report.txt" && { echo "✓ Отчёт создан"; score=$((score+1)); }
 fi
 
-docker stop ninja_boss &>/dev/null; docker rm ninja_boss &>/dev/null
+docker stop tower_boss &>/dev/null; docker rm tower_boss &>/dev/null
 
 [ $score -ge 2 ] && { echo "✓ ok: БОСС пройден! Экзамен Алхимика сдан! (баллов: $score/3)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/3)"

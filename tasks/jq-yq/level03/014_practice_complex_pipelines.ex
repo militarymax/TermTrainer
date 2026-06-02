@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_014"
+DIR="$HOME/.termtrainer/jqyq_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/servers.json" << 'EOF'
@@ -57,11 +57,11 @@ TASK
 • `-c` для компактного вывода без пробелов
 • `--stream` для огромных файлов (не загружает всё в память)
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_014`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_014"
+DIR="$HOME/.termtrainer/jqyq_014"
 score=0
 
 r1=$(jq '[.серверы[] | select(.cpu > 70)] | length' "$DIR/servers.json" 2>/dev/null)

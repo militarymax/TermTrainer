@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_015"
+DIR="$HOME/.termtrainer/netdebug_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -84,11 +84,11 @@ TASK
 
 5. Запусти: `chmod +x net_forensics.sh && ./net_forensics.sh > $DIR/report.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_015`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_015"
+DIR="$HOME/.termtrainer/netdebug_015"
 score=0
 
 if [ -f "$DIR/net_forensics.sh" ]; then

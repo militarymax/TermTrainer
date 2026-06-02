@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_010"
+DIR="$HOME/.termtrainer/kubectl_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -105,20 +105,20 @@ Ingress — это Главные Врата Башни! Они направля
 
 5. **Очисти**: `kubectl delete deploy api web && kubectl delete svc api web && kubectl delete ingress tower-gate && kubectl delete networkpolicy deny-all allow-api-to-web`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_010`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_010`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-kubectl create deployment ninja-api --image=nginx &>/dev/null && sleep 3
-kubectl expose deployment ninja-api --port=80 &>/dev/null && { echo "✓ Deployment+Service созданы"; score=$((score+1)); }
+kubectl create deployment tower-api --image=nginx &>/dev/null && sleep 3
+kubectl expose deployment tower-api --port=80 &>/dev/null && { echo "✓ Deployment+Service созданы"; score=$((score+1)); }
 
 cat <<YAML | kubectl apply -f - &>/dev/null
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ninja-ingress
+  name: tower-ingress
 spec:
   rules:
   - host: test.local
@@ -128,15 +128,15 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: ninja-api
+            name: tower-api
             port:
               number: 80
 YAML
 
-ing=$(kubectl get ingress ninja-ingress -o jsonpath='{.spec.rules[0].host}' 2>/dev/null)
+ing=$(kubectl get ingress tower-ingress -o jsonpath='{.spec.rules[0].host}' 2>/dev/null)
 [ "$ing" = "test.local" ] && { echo "✓ Ingress создан"; score=$((score+1)); }
 
-kubectl delete deploy ninja-api &>/dev/null; kubectl delete svc ninja-api &>/dev/null; kubectl delete ingress ninja-ingress &>/dev/null
+kubectl delete deploy tower-api &>/dev/null; kubectl delete svc tower-api &>/dev/null; kubectl delete ingress tower-ingress &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Ingress освоен! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

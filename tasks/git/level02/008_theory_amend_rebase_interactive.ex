@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_008"
+DIR="$HOME/.termtrainer/git_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -41,7 +41,7 @@ TASK
 
 ⚠️ **Правило**: Никогда не делай rebase публичных веток! Только локальные.
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_008`
+📂 Рабочий каталог: `~/.termtrainer/git_008`
 
 📋 **Попробуй**:
 1. Измени последний коммит: добавь файл и сделай `git commit --amend`
@@ -49,7 +49,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_008"
+DIR="$HOME/.termtrainer/git_008"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

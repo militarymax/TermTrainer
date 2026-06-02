@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_006"
+DIR="$HOME/.termtrainer/kubectl_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -83,30 +83,30 @@ TASK
    kubectl delete ns tower-production
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_006`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_006"
+DIR="$HOME/.termtrainer/kubectl_006"
 score=0
 
-kubectl create ns ninja-boss &>/dev/null || true
-kubectl create deployment ninja-boss-dep --image=nginx --replicas=2 -n ninja-boss &>/dev/null && sleep 5
+kubectl create ns tower-boss &>/dev/null || true
+kubectl create deployment tower-boss-dep --image=nginx --replicas=2 -n tower-boss &>/dev/null && sleep 5
 
-pods=$(kubectl get pods -n ninja-boss --no-headers 2>/dev/null | grep -c Running || echo "0")
+pods=$(kubectl get pods -n tower-boss --no-headers 2>/dev/null | grep -c Running || echo "0")
 [ "$pods" -ge 1 ] && { echo "✓ Деплоймент работает"; score=$((score+1)); }
 
-kubectl expose deployment ninja-boss-dep --port=80 --type=NodePort -n ninja-boss &>/dev/null
-svc=$(kubectl get svc -n ninja-boss 2>/dev/null | grep -v NAME)
+kubectl expose deployment tower-boss-dep --port=80 --type=NodePort -n tower-boss &>/dev/null
+svc=$(kubectl get svc -n tower-boss 2>/dev/null | grep -v NAME)
 [ -n "$svc" ] && { echo "✓ Сервис создан"; score=$((score+1)); }
 
 if [ -f "$DIR/boss_report.txt" ]; then
   grep -q "Report\|Namespace\|Deployment\|Pods\|Service" "$DIR/boss_report.txt" && { echo "✓ Отчёт создан"; score=$((score+1)); }
 fi
 
-kubectl delete deploy ninja-boss-dep -n ninja-boss &>/dev/null
-kubectl delete svc ninja-boss-dep -n ninja-boss &>/dev/null
-kubectl delete ns ninja-boss &>/dev/null
+kubectl delete deploy tower-boss-dep -n tower-boss &>/dev/null
+kubectl delete svc tower-boss-dep -n tower-boss &>/dev/null
+kubectl delete ns tower-boss &>/dev/null
 
 [ $score -ge 2 ] && { echo "✓ ok: БОСС пройден! Экзамен Призывателя сдан! (баллов: $score/3)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/3)"

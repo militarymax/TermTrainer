@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_005"
+DIR="$HOME/.termtrainer/git_005"
 rm -rf "$DIR" "$DIR-remote" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -38,11 +38,11 @@ TASK
 • `git pull` — забрать изменения (fetch + merge)
 • `git clone <url>` — скачать репозиторий
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_005`
+📂 Рабочий каталог: `~/.termtrainer/git_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_005"
+DIR="$HOME/.termtrainer/git_005"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

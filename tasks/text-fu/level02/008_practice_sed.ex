@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_008"
+DIR="$HOME/.termtrainer/textfu_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/гримуар.txt" << 'EOF'
@@ -74,13 +74,13 @@ TASK
 6. Создай `чистые_слова.txt`: удали строки, содержащие `ПРОКЛЯТОЕ`
 7. В файле `гримуар.txt` замени **на месте** (`sed -i ''`) `КРАСНЫЙ` на `АЛЫЙ`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_008`
+📂 Рабочий каталог: `~/.termtrainer/textfu_008`
 
 ⚠ macOS: `sed -i '' 's/old/new/g' file`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_008"
+DIR="$HOME/.termtrainer/textfu_008"
 score=0
 
 if [ ! -f "$DIR/гримуар.txt" ]; then

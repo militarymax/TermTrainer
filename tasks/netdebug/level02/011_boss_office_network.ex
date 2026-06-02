@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_011"
+DIR="$HOME/.termtrainer/netdebug_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -80,11 +80,11 @@ echo "════════════════════════�
 
 Запусти: `chmod +x office_report.sh && ./office_report.sh > $DIR/report.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_011`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_011"
+DIR="$HOME/.termtrainer/netdebug_011"
 score=0
 
 if [ -f "$DIR/office_report.sh" ]; then

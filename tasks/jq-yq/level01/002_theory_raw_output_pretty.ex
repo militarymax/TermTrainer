@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_002"
+DIR="$HOME/.termtrainer/jqyq_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/potions.json" << 'EOF'
@@ -56,7 +56,7 @@ TASK
 📖 **Несколько входных файлов**:
 • `jq '.' ф1.json ф2.json` — обработать оба файла
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_002`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_002`
 
 📋 **Попробуй**:
 1. С кавычками: `jq '.название' potions.json`
@@ -66,7 +66,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_002"
+DIR="$HOME/.termtrainer/jqyq_002"
 score=0
 
 if [ -f "$DIR/potions.json" ] && [ -f "$DIR/config.yaml" ]; then

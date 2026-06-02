@@ -8,8 +8,8 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/textlab
-cat > /tmp/ninja_training/textlab/data.csv << 'DATA'
+mkdir -p /tmp/termtrainer_lab/textlab
+cat > /tmp/termtrainer_lab/textlab/data.csv << 'DATA'
 имя,возраст,город
 Алиса,25,Москва
 Борис,30,Санкт-Петербург
@@ -19,7 +19,7 @@ cat > /tmp/ninja_training/textlab/data.csv << 'DATA'
 Елена,27,Москва
 DATA
 
-cat > /tmp/ninja_training/textlab/server.log << 'LOG'
+cat > /tmp/termtrainer_lab/textlab/server.log << 'LOG'
 2024-01-15 08:00:01 INFO Портал открыт на порту 8080
 2024-01-15 08:05:23 INFO Маг Ринсвинд вошёл в систему
 2024-01-15 09:12:45 ERROR Связь с Бездной потеряна
@@ -95,18 +95,18 @@ TASK
 1. Посчитай сколько строк в data.csv (без заголовка)
 2. Найди все уникальные города из data.csv
 3. Посчитай количество ERROR в server.log
-4. Запиши уникальные города в /tmp/ninja_training/cities.txt
-5. Запиши количество ошибок в /tmp/ninja_training/error_count.txt
+4. Запиши уникальные города в /tmp/termtrainer_lab/cities.txt
+5. Запиши количество ошибок в /tmp/termtrainer_lab/error_count.txt
 
 VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -f /tmp/ninja_training/cities.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/cities.txt ]; then
     echo "✗ cities.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "Москва" /tmp/ninja_training/cities.txt; then
+    if grep -q "Москва" /tmp/termtrainer_lab/cities.txt; then
         echo "✓ Города найдены!"
     else
         echo "✗ Москва не найдена в cities.txt"
@@ -114,11 +114,11 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/error_count.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/error_count.txt ]; then
     echo "✗ error_count.txt не создан"
     errors=$((errors+1))
 else
-    count=$(cat /tmp/ninja_training/error_count.txt | tr -d '[:space:]')
+    count=$(cat /tmp/termtrainer_lab/error_count.txt | tr -d '[:space:]')
     if [ "$count" = "2" ]; then
         echo "✓ Количество ошибок верное!"
     else
@@ -136,4 +136,4 @@ exit $errors
 HINTS
 Города: cat data.csv | tail -n +2 | cut -d',' -f3 | sort | uniq
 Количество ошибок: grep "ERROR" server.log | wc -l
-Запись: ... > /tmp/ninja_training/cities.txt
+Запись: ... > /tmp/termtrainer_lab/cities.txt

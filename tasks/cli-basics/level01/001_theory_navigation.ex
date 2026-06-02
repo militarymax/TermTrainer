@@ -8,13 +8,13 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/{tower,library,dungeon,.forbidden}
-echo "Добро пожаловать в Незримый Университет!" > /tmp/ninja_training/tower/welcome.txt
-echo "Осторожно: магические аномалии" > /tmp/ninja_training/dungeon/README.md
-echo "Каталог свитков, том III" > /tmp/ninja_training/library/catalog.md
-echo "СЕКРЕТНО: рецепт пудинга Декана" > /tmp/ninja_training/.forbidden/pudding.txt
-echo "01-15 INFO Портал открыт" > /tmp/ninja_training/tower/portal.log
-echo "01-15 ERROR Демон вырвался из подвала" >> /tmp/ninja_training/tower/portal.log
+mkdir -p /tmp/termtrainer_lab/{tower,library,dungeon,.forbidden}
+echo "Добро пожаловать в Незримый Университет!" > /tmp/termtrainer_lab/tower/welcome.txt
+echo "Осторожно: магические аномалии" > /tmp/termtrainer_lab/dungeon/README.md
+echo "Каталог свитков, том III" > /tmp/termtrainer_lab/library/catalog.md
+echo "СЕКРЕТНО: рецепт пудинга Декана" > /tmp/termtrainer_lab/.forbidden/pudding.txt
+echo "01-15 INFO Портал открыт" > /tmp/termtrainer_lab/tower/portal.log
+echo "01-15 ERROR Демон вырвался из подвала" >> /tmp/termtrainer_lab/tower/portal.log
 
 TASK
 📜 СВИТОК ЗНАНИЙ #001: Архивы Незримого Университета
@@ -68,7 +68,7 @@ TASK
 ───────────────────────────────────────
 
 Абсолютный путь — от Корня Мироздания (/):
-  cd /tmp/ninja_training
+  cd /tmp/termtrainer_lab
   Это как сказать: «Третья башня слева от Главных Ворот.»
 
 Относительный путь — от того места, где ты стоишь:
@@ -92,7 +92,7 @@ TASK
 
 🎯 ЗАДАНИЕ: Исследуй архивы Университета!
 
-1. Перейди в /tmp/ninja_training
+1. Перейди в /tmp/termtrainer_lab
 2. Осмотрись командой ls
 3. Используй ls -la чтобы найти тайную комнату (.forbidden)
 4. Зайди в library/ и прочитай catalog.md через cat
@@ -107,35 +107,35 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -d /tmp/ninja_training ]; then
+if [ ! -d /tmp/termtrainer_lab ]; then
     echo "✗ Архивы Университета не найдены!"
     errors=$((errors+1))
 else
     echo "✓ Ты нашёл вход в архивы"
 fi
 
-if [ ! -d /tmp/ninja_training/library ]; then
+if [ ! -d /tmp/termtrainer_lab/library ]; then
     echo "✗ Библиотека не найдена"
     errors=$((errors+1))
 else
     echo "✓ Библиотека на месте (Библиотекарь доволен)"
 fi
 
-if [ ! -f /tmp/ninja_training/library/catalog.md ]; then
+if [ ! -f /tmp/termtrainer_lab/library/catalog.md ]; then
     echo "✗ Каталог свитков не найден"
     errors=$((errors+1))
 else
     echo "✓ Каталог свитков прочитан"
 fi
 
-if [ ! -f /tmp/ninja_training/tower/portal.log ]; then
+if [ ! -f /tmp/termtrainer_lab/tower/portal.log ]; then
     echo "✗ Журнал портала не найден"
     errors=$((errors+1))
 else
     echo "✓ Журнал портала прочитан"
 fi
 
-if [ ! -f /tmp/ninja_training/.forbidden/pudding.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/.forbidden/pudding.txt ]; then
     echo "✗ Тайная комната не найдена (используй ls -la!)"
     errors=$((errors+1))
 else
@@ -149,7 +149,7 @@ fi
 exit $errors
 
 HINTS
-Начни с: cd /tmp/ninja_training
+Начни с: cd /tmp/termtrainer_lab
 Используй ls для осмотра, ls -la для тайных комнат
 Читать свитки: cat catalog.md
 Подсчёт строк: wc -l portal.log

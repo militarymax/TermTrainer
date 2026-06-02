@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_012"
+DIR="$HOME/.termtrainer/jqyq_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/transactions.json" << 'EOF'
@@ -49,7 +49,7 @@ TASK
 • `jq -L /path/to/modules --from-file script.jq файл` — выполнить из файла
 • Вынос сложной логики в отдельный `.jq` файл
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_012`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_012`
 
 📋 **Попробуй**:
 1. Сумма доходов через reduce: `jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' transactions.json`
@@ -57,7 +57,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_012"
+DIR="$HOME/.termtrainer/jqyq_012"
 score=0
 
 r1=$(jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' "$DIR/transactions.json" 2>/dev/null)

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_002"
+DIR="$HOME/.termtrainer/netdebug_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -62,7 +62,7 @@ nc -zv google.com 22        # SSH
 • `3306` — MySQL, `5432` — PostgreSQL
 • `6379` — Redis, `8080` — часто для приложений
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_002`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_002`
 
 📋 **Попробуй**:
 1. `dig google.com +short` — IP по имени

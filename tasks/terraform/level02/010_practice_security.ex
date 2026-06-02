@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_010"
+DIR="$HOME/.termtrainer/terraform_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -82,11 +82,11 @@ Sensitive variables, encryption at rest, least privilege —
    echo "═══ End of Audit ═══"
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_010`
+📂 Рабочий каталог: `~/.termtrainer/terraform_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_010"
+DIR="$HOME/.termtrainer/terraform_010"
 score=0
 
 [ -f "$DIR/.gitignore" ] && grep -q "tfstate\|terraform\|tfvars" "$DIR/.gitignore" && { echo "✓ .gitignore создан"; score=$((score+1)); }

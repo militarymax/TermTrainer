@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_005"
+DIR="$HOME/.termtrainer/textfu_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 # Хаотичный каталог свитков с дубликатами
@@ -61,7 +61,7 @@ TASK
 4. Выведи **первые 10** и **последние 10** строк `лог_продаж.txt` — собери тренды. Сохрани в `тренды.txt`
 5. Создай итоговый `отчёт_босса.txt` со всей собранной статистикой
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_005`
+📂 Рабочий каталог: `~/.termtrainer/textfu_005`
 
 ⚡ Подсказки:
 • `sort -f` — игнорировать регистр
@@ -70,7 +70,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_005"
+DIR="$HOME/.termtrainer/textfu_005"
 score=0
 
 if [ ! -f "$DIR/архив.txt" ]; then
@@ -118,8 +118,8 @@ echo "✓ ok: БОСС пройден! (баллов: $score/6)"
 exit 0
 
 HINTS
-Игнор регистра + уникальные: sort -fu ~/.ninja_trainer/textfu_005/архив.txt > ~/.ninja_trainer/textfu_005/чистый_архив.txt
-Частотный анализ: sort -f ~/.ninja_trainer/textfu_005/архив.txt | uniq -ci | sort -rn > ~/.ninja_trainer/textfu_005/статистика_архива.txt
-Сортировка по 2-му столбцу: sort -k2 -nr ~/.ninja_trainer/textfu_005/продажи.txt > ~/.ninja_trainer/textfu_005/рейтинг_продаж.txt
-Первые и последние: head -n 10 ~/.ninja_trainer/textfu_005/лог_продаж.txt > ~/.ninja_trainer/textfu_005/тренды.txt && echo "---" >> ~/.ninja_trainer/textfu_005/тренды.txt && tail -n 10 ~/.ninja_trainer/textfu_005/лог_продаж.txt >> ~/.ninja_trainer/textfu_005/тренды.txt
+Игнор регистра + уникальные: sort -fu ~/.termtrainer/textfu_005/архив.txt > ~/.termtrainer/textfu_005/чистый_архив.txt
+Частотный анализ: sort -f ~/.termtrainer/textfu_005/архив.txt | uniq -ci | sort -rn > ~/.termtrainer/textfu_005/статистика_архива.txt
+Сортировка по 2-му столбцу: sort -k2 -nr ~/.termtrainer/textfu_005/продажи.txt > ~/.termtrainer/textfu_005/рейтинг_продаж.txt
+Первые и последние: head -n 10 ~/.termtrainer/textfu_005/лог_продаж.txt > ~/.termtrainer/textfu_005/тренды.txt && echo "---" >> ~/.termtrainer/textfu_005/тренды.txt && tail -n 10 ~/.termtrainer/textfu_005/лог_продаж.txt >> ~/.termtrainer/textfu_005/тренды.txt
 Итоговый отчёт: объедини результаты (cat чистый_архив.txt > отчёт_босса.txt && echo "===" >> отчёт_босса.txt && cat рейтинг_продаж.txt >> отчёт_босса.txt)

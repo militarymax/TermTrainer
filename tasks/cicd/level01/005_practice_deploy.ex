@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_005"
+DIR="$HOME/.termtrainer/cicd_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -73,11 +73,11 @@ TASK
 
 3. Запусти: `chmod +x deploy.sh && ./deploy.sh staging v1.0`
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_005`
+📂 Рабочий каталог: `~/.termtrainer/cicd_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_005"
+DIR="$HOME/.termtrainer/cicd_005"
 score=0
 
 if [ -f "$DIR/deploy.sh" ]; then

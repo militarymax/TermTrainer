@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_004"
+DIR="$HOME/.termtrainer/kubectl_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -65,24 +65,24 @@ TASK
 
 6. **Очисти**: `kubectl delete pod crasher --force && kubectl delete ns tower-alchemy`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_004`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_004`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-kubectl create ns ninja-test-ns &>/dev/null || true
-kubectl run ninja-crash -n ninja-test-ns --image=busybox --command -- sh -c "exit 1" &>/dev/null
+kubectl create ns tower-test-ns &>/dev/null || true
+kubectl run tower-crash -n tower-test-ns --image=busybox --command -- sh -c "exit 1" &>/dev/null
 sleep 8
 
-status=$(kubectl get pod ninja-crash -n ninja-test-ns -o jsonpath='{.status.containerStatuses[0].state}' 2>/dev/null)
+status=$(kubectl get pod tower-crash -n tower-test-ns -o jsonpath='{.status.containerStatuses[0].state}' 2>/dev/null)
 [ -n "$status" ] && { echo "✓ Pod создан и отслеживается"; score=$((score+1)); }
 
-prev=$(kubectl logs ninja-crash -n ninja-test-ns --previous 2>&1)
+prev=$(kubectl logs tower-crash -n tower-test-ns --previous 2>&1)
 [ -n "$prev" ] && { echo "✓ --previous работает"; score=$((score+1)); }
 
-kubectl delete pod ninja-crash -n ninja-test-ns --force &>/dev/null
-kubectl delete ns ninja-test-ns &>/dev/null
+kubectl delete pod tower-crash -n tower-test-ns --force &>/dev/null
+kubectl delete ns tower-test-ns &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Дебаг и неймспейсы освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

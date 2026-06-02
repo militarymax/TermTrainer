@@ -8,11 +8,11 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/workspace/{drafts,archive,src}
-echo "Версия 1.0 (работает!)" > /tmp/ninja_training/workspace/notes.txt
-echo "Черновик заклинания Левитации" > /tmp/ninja_training/workspace/drafts/draft1.txt
-echo "Древний свиток (частично съеден)" > /tmp/ninja_training/workspace/archive/old.txt
-echo "#!/bin/bash" > /tmp/ninja_training/workspace/src/summon.sh
+mkdir -p /tmp/termtrainer_lab/workspace/{drafts,archive,src}
+echo "Версия 1.0 (работает!)" > /tmp/termtrainer_lab/workspace/notes.txt
+echo "Черновик заклинания Левитации" > /tmp/termtrainer_lab/workspace/drafts/draft1.txt
+echo "Древний свиток (частично съеден)" > /tmp/termtrainer_lab/workspace/archive/old.txt
+echo "#!/bin/bash" > /tmp/termtrainer_lab/workspace/src/summon.sh
 
 TASK
 📜 СВИТОК ЗНАНИЙ #002: Создание и перемещение артефактов
@@ -133,7 +133,7 @@ TASK
 
 🎯 ЗАДАНИЕ: Работа с артефактами Университета!
 
-1. Перейди в /tmp/ninja_training/workspace
+1. Перейди в /tmp/termtrainer_lab/workspace
 2. Создай пустой свиток report.txt командой touch
 3. Запиши заклинание в todo.txt: echo "Мои задачи" > todo.txt
 4. Добавь строку "Накормить Библиотекаря" через echo >>
@@ -149,25 +149,25 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-if [ ! -d /tmp/ninja_training/workspace ]; then
+if [ ! -d /tmp/termtrainer_lab/workspace ]; then
     echo "✗ Рабочая комната не найдена"
     errors=$((errors+1))
 else
     echo "✓ Ты нашёл рабочую комнату"
 fi
 
-if [ ! -f /tmp/ninja_training/workspace/report.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/workspace/report.txt ]; then
     echo "✗ Свиток report.txt не создан (используй touch)"
     errors=$((errors+1))
 else
     echo "✓ Пустой свиток report.txt создан!"
 fi
 
-if [ ! -f /tmp/ninja_training/workspace/todo.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/workspace/todo.txt ]; then
     echo "✗ Свиток todo.txt не создан"
     errors=$((errors+1))
 else
-    if grep -q "Накормить Библиотекаря" /tmp/ninja_training/workspace/todo.txt; then
+    if grep -q "Накормить Библиотекаря" /tmp/termtrainer_lab/workspace/todo.txt; then
         echo "✓ Библиотекарь будет накормлен! (строка добавлена)"
     else
         echo "✗ В todo.txt нет 'Накормить Библиотекаря' (используй echo >>)"
@@ -175,35 +175,35 @@ else
     fi
 fi
 
-if [ ! -f /tmp/ninja_training/workspace/archive/notes.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/workspace/archive/notes.txt ]; then
     echo "✗ notes.txt не скопирован в archive/"
     errors=$((errors+1))
 else
     echo "✓ Резервная копия notes.txt в архиве!"
 fi
 
-if [ ! -f /tmp/ninja_training/workspace/drafts/final.txt ]; then
+if [ ! -f /tmp/termtrainer_lab/workspace/drafts/final.txt ]; then
     echo "✗ draft1.txt не переименован в final.txt (используй mv)"
     errors=$((errors+1))
 else
     echo "✓ Черновик стал финальной версией!"
 fi
 
-if [ ! -f /tmp/ninja_training/workspace/summon.sh ]; then
+if [ ! -f /tmp/termtrainer_lab/workspace/summon.sh ]; then
     echo "✗ summon.sh не перемещён в workspace/"
     errors=$((errors+1))
 else
     echo "✓ Заклинание призыва на месте!"
 fi
 
-if [ ! -d /tmp/ninja_training/workspace/new/project/scripts ]; then
+if [ ! -d /tmp/termtrainer_lab/workspace/new/project/scripts ]; then
     echo "✗ Вложенные комнаты не созданы (используй mkdir -p)"
     errors=$((errors+1))
 else
     echo "✓ Новые комнаты созданы!"
 fi
 
-if [ -f /tmp/ninja_training/workspace/archive/old.txt ]; then
+if [ -f /tmp/termtrainer_lab/workspace/archive/old.txt ]; then
     echo "✗ Съеденный свиток old.txt не уничтожен (rm)"
     errors=$((errors+1))
 else

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_008"
+DIR="$HOME/.termtrainer/docker_008"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -67,13 +67,13 @@ docker run -d --name db --network tower_net postgres
 # Теперь web может обратиться к db по имени "db"!
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_008`
+📂 Рабочий каталог: `~/.termtrainer/docker_008`
 
 📋 **Попробуй**:
 1. `docker stats --no-stream` — снимок пульса
 2. `docker network ls` — список сетей
-3. `docker network create ninja_net && docker network inspect ninja_net`
-4. `docker network rm ninja_net` — очистка
+3. `docker network create tower_net && docker network inspect tower_net`
+4. `docker network rm tower_net` — очистка
 
 VALIDATION
 #!/bin/bash

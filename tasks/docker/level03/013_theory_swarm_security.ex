@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_013"
+DIR="$HOME/.termtrainer/docker_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -68,7 +68,7 @@ trivy image nginx:latest             # Найти CVE в образе!
 trivy image --severity HIGH,CRITICAL nginx:latest
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_013`
+📂 Рабочий каталог: `~/.termtrainer/docker_013`
 
 📋 **Попробуй**:
 1. `docker info | grep Swarm` — статус роя

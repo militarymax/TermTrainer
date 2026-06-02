@@ -8,14 +8,14 @@ META
 
 SETUP
 #!/bin/bash
-mkdir -p /tmp/ninja_training/taskmgr
+mkdir -p /tmp/termtrainer_lab/taskmgr
 # Призываем несколько демонов для тренировки
 (while true; do echo "worker1"; sleep 10; done) &
-echo $! > /tmp/ninja_training/taskmgr/worker1.pid
+echo $! > /tmp/termtrainer_lab/taskmgr/worker1.pid
 (while true; do echo "worker2"; sleep 10; done) &
-echo $! > /tmp/ninja_training/taskmgr/worker2.pid
+echo $! > /tmp/termtrainer_lab/taskmgr/worker2.pid
 (while true; do echo "zombie"; sleep 10; done) &
-echo $! > /tmp/ninja_training/taskmgr/zombie.pid
+echo $! > /tmp/termtrainer_lab/taskmgr/zombie.pid
 
 TASK
 🎯 ПРАКТИКА #010: Истребитель Сущностей
@@ -36,7 +36,7 @@ TASK
 1. Прочитай PID процессов из taskmgr/*.pid
 2. Останови worker1 и worker2 сигналом SIGTERM (вежливо)
 3. Принудительно заверши zombie сигналом SIGKILL (без вариантов)
-4. Создай отчёт /tmp/ninja_training/process_report.txt:
+4. Создай отчёт /tmp/termtrainer_lab/process_report.txt:
    - Строка "worker1: stopped"
    - Строка "worker2: stopped"
    - Строка "zombie: killed"
@@ -45,9 +45,9 @@ VALIDATION
 #!/bin/bash
 errors=0
 
-w1=$(cat /tmp/ninja_training/taskmgr/worker1.pid 2>/dev/null | tr -d '[:space:]')
-w2=$(cat /tmp/ninja_training/taskmgr/worker2.pid 2>/dev/null | tr -d '[:space:]')
-zz=$(cat /tmp/ninja_training/taskmgr/zombie.pid 2>/dev/null | tr -d '[:space:]')
+w1=$(cat /tmp/termtrainer_lab/taskmgr/worker1.pid 2>/dev/null | tr -d '[:space:]')
+w2=$(cat /tmp/termtrainer_lab/taskmgr/worker2.pid 2>/dev/null | tr -d '[:space:]')
+zz=$(cat /tmp/termtrainer_lab/taskmgr/zombie.pid 2>/dev/null | tr -d '[:space:]')
 
 all_stopped=true
 for pid in "$w1" "$w2" "$zz"; do
@@ -63,10 +63,10 @@ else
     errors=$((errors+1))
 fi
 
-if [ -f /tmp/ninja_training/process_report.txt ]; then
-    if grep -q "worker1.*stopped" /tmp/ninja_training/process_report.txt && \
-       grep -q "worker2.*stopped" /tmp/ninja_training/process_report.txt && \
-       grep -q "zombie.*killed" /tmp/ninja_training/process_report.txt; then
+if [ -f /tmp/termtrainer_lab/process_report.txt ]; then
+    if grep -q "worker1.*stopped" /tmp/termtrainer_lab/process_report.txt && \
+       grep -q "worker2.*stopped" /tmp/termtrainer_lab/process_report.txt && \
+       grep -q "zombie.*killed" /tmp/termtrainer_lab/process_report.txt; then
         echo "✓ Отчёт о зачистке корректен!"
     else
         echo "✗ Отчёт не содержит нужных строк"

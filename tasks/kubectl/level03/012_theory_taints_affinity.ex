@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_012"
+DIR="$HOME/.termtrainer/kubectl_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -89,7 +89,7 @@ affinity:
     # Никакие два api-пода на одной ноде!
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_012`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_012`
 
 📋 **Попробуй**:
 1. `kubectl get nodes -o jsonpath='{.items[*].spec.taints}' | jq '.'`

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_013"
+DIR="$HOME/.termtrainer/git_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -48,7 +48,7 @@ TASK
 • `git clone archive.bundle repo` — распаковать
 • Полезно для air-gapped систем
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_013`
+📂 Рабочий каталог: `~/.termtrainer/git_013`
 
 📋 **Попробуй**:
 1. Создай worktree для другой ветки
@@ -57,7 +57,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_013"
+DIR="$HOME/.termtrainer/git_013"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

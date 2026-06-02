@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_007"
+DIR="$HOME/.termtrainer/scripting_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -115,7 +115,7 @@ trap cleanup EXIT    # Выполнится при ЛЮБОМ выходе из 
 • `trap cmd TERM` — при сигнале terminate
 • Используй для удаления временных файлов!
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_007`
+📂 Рабочий каталог: `~/.termtrainer/scripting_007`
 
 VALIDATION
 #!/bin/bash

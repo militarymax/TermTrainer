@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_014"
+DIR="$HOME/.termtrainer/kubectl_014"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -85,11 +85,11 @@ TASK
 
 4. Запусти: `chmod +x cluster_audit.sh && ./cluster_audit.sh > $DIR/audit.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_014`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_014`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_014"
+DIR="$HOME/.termtrainer/kubectl_014"
 score=0
 
 if [ -f "$DIR/cluster_audit.sh" ]; then

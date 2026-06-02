@@ -1,3 +1,3 @@
-module ninja-trainer
+module termtrainer
 
 go 1.21

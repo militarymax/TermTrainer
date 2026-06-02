@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_002"
+DIR="$HOME/.termtrainer/textfu_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 # Создаём хаотичный список свитков
@@ -59,13 +59,13 @@ TASK
 • `tail -n N файл` — последние N строк
 • `tail -f файл` — следить за файлом в реальном времени
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_002`
+📂 Рабочий каталог: `~/.termtrainer/textfu_002`
 
 ⚡ Помни: `uniq` работает только с **соседними** строками! Обычно используют `sort | uniq`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_002"
+DIR="$HOME/.termtrainer/textfu_002"
 errors=0
 
 if [ ! -f "$DIR/инвентарь.txt" ]; then
@@ -89,9 +89,9 @@ echo "✓ ok: Инвентаризация проведена"
 exit 0
 
 HINTS
-Отсортируй: sort ~/.ninja_trainer/textfu_002/инвентарь.txt > ~/.ninja_trainer/textfu_002/отсортировано.txt
-Найди уникальные: sort ~/.ninja_trainer/textfu_002/инвентарь.txt | uniq
-Подсчитай повторы: sort ~/.ninja_trainer/textfu_002/инвентарь.txt | uniq -c | sort -rn
-Посмотри первые 5 строк: head -n 5 ~/.ninja_trainer/textfu_002/длинный_свиток.txt
-Последние 10 строк: tail -n 10 ~/.ninja_trainer/textfu_002/длинный_свиток.txt
-Сколько всего строк? wc -l ~/.ninja_trainer/textfu_002/инвентарь.txt
+Отсортируй: sort ~/.termtrainer/textfu_002/инвентарь.txt > ~/.termtrainer/textfu_002/отсортировано.txt
+Найди уникальные: sort ~/.termtrainer/textfu_002/инвентарь.txt | uniq
+Подсчитай повторы: sort ~/.termtrainer/textfu_002/инвентарь.txt | uniq -c | sort -rn
+Посмотри первые 5 строк: head -n 5 ~/.termtrainer/textfu_002/длинный_свиток.txt
+Последние 10 строк: tail -n 10 ~/.termtrainer/textfu_002/длинный_свиток.txt
+Сколько всего строк? wc -l ~/.termtrainer/textfu_002/инвентарь.txt

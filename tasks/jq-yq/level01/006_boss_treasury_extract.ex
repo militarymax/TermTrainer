@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_006"
+DIR="$HOME/.termtrainer/jqyq_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/budget.json" << 'EOF'
@@ -60,11 +60,11 @@ TASK
 8. Порт БД из YAML: `yq '.база_данных.порт' config.yaml`
 9. Конвертируй YAML в JSON и сохрани: `yq -o json '.' config.yaml > config.json`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_006`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_006`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_006"
+DIR="$HOME/.termtrainer/jqyq_006"
 score=0
 
 r1=$(jq -r '.год' "$DIR/budget.json" 2>/dev/null)

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_015"
+DIR="$HOME/.termtrainer/jqyq_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/report.json" << 'EOF'
@@ -58,11 +58,11 @@ TASK
    Попробуй тот же фильтр в yq (синтаксис может отличаться):
    `yq '.отделы[] | select(.доход > 10000)' report.json`
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_015`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_015"
+DIR="$HOME/.termtrainer/jqyq_015"
 score=0
 
 r1=$(jq '[.отделы[] | .доход - .расход] | add' "$DIR/report.json" 2>/dev/null)

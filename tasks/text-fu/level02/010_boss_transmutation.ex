@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_010"
+DIR="$HOME/.termtrainer/textfu_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/эксперименты.csv" << 'EOF'
@@ -57,11 +57,11 @@ TASK
 6. Создай `чистый_отчёт.txt`: удали строки с `===` и `---` из `отчёт_алхимика.txt`
 7. Создай `финальный_отчёт.txt` — объедини все результаты
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_010`
+📂 Рабочий каталог: `~/.termtrainer/textfu_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_010"
+DIR="$HOME/.termtrainer/textfu_010"
 score=0
 
 if [ ! -f "$DIR/эксперименты.csv" ]; then

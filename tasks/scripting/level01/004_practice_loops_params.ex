@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_004"
+DIR="$HOME/.termtrainer/scripting_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/potions"
 for p in healing mana fire invisibility strength; do
@@ -75,11 +75,11 @@ TASK
    ```
    Запусти: `./summon.sh dragon imp goblin`
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_004`
+📂 Рабочий каталог: `~/.termtrainer/scripting_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_004"
+DIR="$HOME/.termtrainer/scripting_004"
 score=0
 
 [ -f "$DIR/brew.sh" ] && bash "$DIR/brew.sh" 2>&1 | grep -q "healing" && { echo "✓ brew.sh работает"; score=$((score+1)); }

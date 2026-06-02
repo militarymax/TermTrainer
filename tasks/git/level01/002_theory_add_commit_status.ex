@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_002"
+DIR="$HOME/.termtrainer/git_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -37,7 +37,7 @@ TASK
 • Не: `update`, `changes`, `asdf`
 • Используй императив: "add feature", не "added feature"
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_002`
+📂 Рабочий каталог: `~/.termtrainer/git_002`
 
 📋 **Попробуй**:
 1. Создай файл `свиток.txt` с любым текстом
@@ -49,7 +49,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_002"
+DIR="$HOME/.termtrainer/git_002"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1
@@ -70,8 +70,8 @@ echo "✗ Создай файл, добавь и закоммить (балло�
 exit 1
 
 HINTS
-Создать файл: echo "Мой первый свиток" > ~/.ninja_trainer/git_002/свиток.txt
-Статус: cd ~/.ninja_trainer/git_002 && git status
+Создать файл: echo "Мой первый свиток" > ~/.termtrainer/git_002/свиток.txt
+Статус: cd ~/.termtrainer/git_002 && git status
 Добавить: git add свиток.txt или git add .
 Закоммитить: git commit -m "feat: add first scroll"
 История: git log или git log --oneline

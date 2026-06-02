@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_016"
+DIR="$HOME/.termtrainer/cicd_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -68,11 +68,11 @@ CMD ["/tower-app"]
 
 Напиши `$DIR/pipeline_monitor.sh` для аудита конвейера
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_016`
+📂 Рабочий каталог: `~/.termtrainer/cicd_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_016"
+DIR="$HOME/.termtrainer/cicd_016"
 score=0
 max=5
 

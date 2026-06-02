@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_003"
+DIR="$HOME/.termtrainer/cicd_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -62,11 +62,11 @@ TASK
 
 3. **Проверь YAML на валидность**: `cat .github/workflows/test.yml`
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_003`
+📂 Рабочий каталог: `~/.termtrainer/cicd_003`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_003"
+DIR="$HOME/.termtrainer/cicd_003"
 score=0
 
 if [ -f "$DIR/.github/workflows/test.yml" ]; then

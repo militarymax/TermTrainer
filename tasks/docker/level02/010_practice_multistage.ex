@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_010"
+DIR="$HOME/.termtrainer/docker_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -45,7 +45,7 @@ TASK
 
 2. **Собери и запусти**:
    ```bash
-   cd ~/.ninja_trainer/docker_010
+   cd ~/.termtrainer/docker_010
    docker build -t tower-greet .
    docker run --rm tower-greet
    docker run --rm -e NAME=Rincewind tower-greet
@@ -65,17 +65,17 @@ TASK
    docker images | grep tower-greet    # Маленький!
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_010`
+📂 Рабочий каталог: `~/.termtrainer/docker_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_010"
+DIR="$HOME/.termtrainer/docker_010"
 score=0
 
 if [ -f "$DIR/Dockerfile" ]; then
   grep -qi "FROM.*AS\|COPY --from" "$DIR/Dockerfile" && { echo "✓ Многоступенчатый Dockerfile"; score=$((score+1)); }
   
-  cd "$DIR" && docker build -t ninja_multi . &>/dev/null && { echo "✓ Образ собран"; score=$((score+1)); }
+  cd "$DIR" && docker build -t tower_multi . &>/dev/null && { echo "✓ Образ собран"; score=$((score+1)); }
 fi
 
 [ $score -ge 1 ] && { echo "✓ ok: Многоступенчатая сборка освоена! (баллов: $score/2)"; exit 0; }

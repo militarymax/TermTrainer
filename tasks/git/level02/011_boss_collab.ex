@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_011"
+DIR="$HOME/.termtrainer/git_011"
 rm -rf "$DIR" /tmp/git_011_bare.git 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -40,11 +40,11 @@ TASK
 • `git bisect good <commit>` — известный хороший коммит
 • Git сам переключает на средний коммит — ты проверяешь и говоришь good/bad
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_011`
+📂 Рабочий каталог: `~/.termtrainer/git_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_011"
+DIR="$HOME/.termtrainer/git_011"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

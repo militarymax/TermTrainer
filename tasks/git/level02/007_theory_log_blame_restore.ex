@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_007"
+DIR="$HOME/.termtrainer/git_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cd "$DIR" && git init && git config user.email "rincewind@uu.edu" && git config user.name "Rincewind"
@@ -34,7 +34,7 @@ TASK
 • `git restore <file>` — откатить незакоммиченные изменения в рабочем каталоге
 • `git restore --staged <file>` — то же что reset HEAD
 
-📂 Рабочий каталог: `~/.ninja_trainer/git_007`
+📂 Рабочий каталог: `~/.termtrainer/git_007`
 
 📋 **Попробуй**:
 1. Посмотри красивую историю: `git log --oneline --graph --all`
@@ -44,7 +44,7 @@ TASK
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/git_007"
+DIR="$HOME/.termtrainer/git_007"
 score=0
 
 cd "$DIR" 2>/dev/null || exit 1

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_015"
+DIR="$HOME/.termtrainer/kubectl_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -98,11 +98,11 @@ kubeadm upgrade — это ритуал обновления. Сначала con
    - [ ] Applications healthy
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_015`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_015"
+DIR="$HOME/.termtrainer/kubectl_015"
 score=0
 
 version=$(kubectl version --short 2>/dev/null || kubectl version 2>/dev/null | head -5)

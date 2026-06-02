@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_005"
+DIR="$HOME/.termtrainer/jqyq_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/api_response.json" << 'EOF'
@@ -46,11 +46,11 @@ TASK
 • `{key1, key2}` — построить новый объект (сокращение от `{key1: .key1, key2: .key2}`)
 • `length` — длина массива или строки
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_005`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_005"
+DIR="$HOME/.termtrainer/jqyq_005"
 score=0
 
 result1=$(jq -r '.status' "$DIR/api_response.json" 2>/dev/null)

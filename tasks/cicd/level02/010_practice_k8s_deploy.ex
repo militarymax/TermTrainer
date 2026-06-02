@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_010"
+DIR="$HOME/.termtrainer/cicd_010"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -70,11 +70,11 @@ TASK
    [ "$pods" -ge 1 ] && echo "✅ Healthy!" || { echo "❌ Unhealthy!"; exit 1; }
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_010`
+📂 Рабочий каталог: `~/.termtrainer/cicd_010`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_010"
+DIR="$HOME/.termtrainer/cicd_010"
 score=0
 
 [ -f "$DIR/.github/workflows/k8s-deploy.yml" ] && grep -q "kubectl\|deploy\|kube" "$DIR/.github/workflows/k8s-deploy.yml" && { echo "✓ k8s-deploy.yml создан"; score=$((score+1)); }

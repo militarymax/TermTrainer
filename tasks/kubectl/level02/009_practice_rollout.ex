@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_009"
+DIR="$HOME/.termtrainer/kubectl_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -63,22 +63,22 @@ Rolling update обновляет по одному, пока старые ещ�
 
 5. **Очисти**: `kubectl delete deploy web && kubectl delete pod ssd-app --force`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_009`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_009`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-kubectl create deployment ninja-roll --image=nginx:1.24 --replicas=2 &>/dev/null && sleep 3
+kubectl create deployment tower-roll --image=nginx:1.24 --replicas=2 &>/dev/null && sleep 3
 
-kubectl set image deployment/ninja-roll nginx=nginx:1.25 &>/dev/null && { echo "✓ Rolling update выполнен"; score=$((score+1)); }
+kubectl set image deployment/tower-roll nginx=nginx:1.25 &>/dev/null && { echo "✓ Rolling update выполнен"; score=$((score+1)); }
 
-history=$(kubectl rollout history deployment/ninja-roll 2>/dev/null)
+history=$(kubectl rollout history deployment/tower-roll 2>/dev/null)
 [ -n "$history" ] && { echo "✓ Rollout history доступна"; score=$((score+1)); }
 
-kubectl rollout undo deployment/ninja-roll &>/dev/null && { echo "✓ Rollback работает"; score=$((score+1)); }
+kubectl rollout undo deployment/tower-roll &>/dev/null && { echo "✓ Rollback работает"; score=$((score+1)); }
 
-kubectl delete deployment ninja-roll &>/dev/null
+kubectl delete deployment tower-roll &>/dev/null
 
 [ $score -ge 2 ] && { echo "✓ ok: Rollout освоен! (баллов: $score/3)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/3)"

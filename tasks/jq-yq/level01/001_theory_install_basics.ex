@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_001"
+DIR="$HOME/.termtrainer/jqyq_001"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/wizard.json" << 'EOF'
@@ -57,18 +57,18 @@ jq '.факультеты[0]' wizard.json # "магия"
 jq '.бюджет | .доход' wizard.json # 50000
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/jqyq_001`
+📂 Рабочий каталог: `~/.termtrainer/jqyq_001`
 
 📋 **Попробуй**:
 1. Проверь установку: `jq --version` и `yq --version`
-2. Выведи весь JSON: `cd ~/.ninja_trainer/jqyq_001 && jq '.' wizard.json`
+2. Выведи весь JSON: `cd ~/.termtrainer/jqyq_001 && jq '.' wizard.json`
 3. Извлеки ректора: `jq '.ректор' wizard.json`
 4. Первый факультет: `jq '.факультеты[0]' wizard.json`
 5. Доход через pipe: `jq '.бюджет | .доход' wizard.json`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/jqyq_001"
+DIR="$HOME/.termtrainer/jqyq_001"
 score=0
 
 if command -v jq &>/dev/null; then

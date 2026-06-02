@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_003"
+DIR="$HOME/.termtrainer/docker_003"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -57,19 +57,19 @@ TASK
    docker stop web db && docker rm web db
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_003`
+📂 Рабочий каталог: `~/.termtrainer/docker_003`
 
 VALIDATION
 #!/bin/bash
 score=0
 
-docker run -d --name ninja_test_web -p 18080:80 nginx &>/dev/null && sleep 2
+docker run -d --name tower_test_web -p 18080:80 nginx &>/dev/null && sleep 2
 curl -s http://localhost:18080 &>/dev/null && { echo "✓ Nginx работает"; score=$((score+1)); }
-docker stop ninja_test_web &>/dev/null; docker rm ninja_test_web &>/dev/null
+docker stop tower_test_web &>/dev/null; docker rm tower_test_web &>/dev/null
 
-docker run -d --name ninja_test_db -e POSTGRES_PASSWORD=t -p 15432:5432 postgres:15 &>/dev/null && sleep 3
-docker ps | grep -q ninja_test_db && { echo "✓ Postgres работает"; score=$((score+1)); }
-docker stop ninja_test_db &>/dev/null; docker rm ninja_test_db &>/dev/null
+docker run -d --name tower_test_db -e POSTGRES_PASSWORD=t -p 15432:5432 postgres:15 &>/dev/null && sleep 3
+docker ps | grep -q tower_test_db && { echo "✓ Postgres работает"; score=$((score+1)); }
+docker stop tower_test_db &>/dev/null; docker rm tower_test_db &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Мульти-контейнеры освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики (баллов: $score/2)"

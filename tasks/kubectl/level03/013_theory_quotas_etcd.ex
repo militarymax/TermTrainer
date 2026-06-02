@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_013"
+DIR="$HOME/.termtrainer/kubectl_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -90,7 +90,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd-backup.db \
 
 ⚠️ Это критичный для CKA топик! Обязательно практикуй!
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_013`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_013`
 
 📋 **Попробуй**:
 1. `kubectl get quota -A` — есть ли квоты?

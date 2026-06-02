@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_002"
+DIR="$HOME/.termtrainer/scripting_002"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/vaults" "$DIR/potions"
 echo "dragon_fire" > "$DIR/vaults/ingredient.txt"
@@ -95,7 +95,7 @@ done < scrolls/list.txt
 • `$?` — код возврата последней команды (0 = успех)
 • `exit N` — завершить скрипт с кодом N
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_002`
+📂 Рабочий каталог: `~/.termtrainer/scripting_002`
 
 📋 **Попробуй**:
 1. Напиши скрипт `greet.sh`: если `$1` задан → `echo "Hello, $1"`, иначе → ошибка
@@ -104,7 +104,7 @@ done < scrolls/list.txt
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_002"
+DIR="$HOME/.termtrainer/scripting_002"
 score=0
 
 [ -f "$DIR/greet.sh" ] && { echo "✓ greet.sh создан"; score=$((score+1)); }

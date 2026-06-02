@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_005"
+DIR="$HOME/.termtrainer/terraform_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/modules/tower-server"
 
@@ -89,11 +89,11 @@ TASK
 
 3. **Запусти**: `terraform init && terraform plan`
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_005`
+📂 Рабочий каталог: `~/.termtrainer/terraform_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_005"
+DIR="$HOME/.termtrainer/terraform_005"
 score=0
 
 [ -f "$DIR/modules/tower-server/main.tf" ] && { echo "✓ Модуль создан"; score=$((score+1)); }

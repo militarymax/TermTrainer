@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_015"
+DIR="$HOME/.termtrainer/textfu_015"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/секция_А" "$DIR/секция_Б" "$DIR/секция_В"
 # Секция А: свитки с данными
@@ -83,11 +83,11 @@ TASK
 
 4. **Финальный отчёт**: объедини все результаты в `BOSS_ОТЧЁТ.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_015`
+📂 Рабочий каталог: `~/.termtrainer/textfu_015`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_015"
+DIR="$HOME/.termtrainer/textfu_015"
 score=0
 
 if [ ! -d "$DIR/секция_А" ]; then

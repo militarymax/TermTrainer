@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_005"
+DIR="$HOME/.termtrainer/scripting_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/vaults" "$DIR/forbidden"
 echo "Scroll of Fireball" > "$DIR/vaults/fireball.txt"
@@ -88,11 +88,11 @@ TASK
    echo $?                            # → 2
    ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_005`
+📂 Рабочий каталог: `~/.termtrainer/scripting_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_005"
+DIR="$HOME/.termtrainer/scripting_005"
 score=0
 
 [ -f "$DIR/guard.sh" ] && bash "$DIR/guard.sh" vaults 2>&1 | grep -q "fireball\|invisibility\|cursed" && { echo "✓ guard.sh работает"; score=$((score+1)); }

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_007"
+DIR="$HOME/.termtrainer/docker_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -69,7 +69,7 @@ docker compose down -v        # Уничтожить и тома тоже!
 • `volumes` — данные переживут пересоздание сосуда
 • Сосуды видят друг друга по имени сервиса (`db`, `web`)
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_007`
+📂 Рабочий каталог: `~/.termtrainer/docker_007`
 
 📋 **Попробуй**:
 1. Создай `docker-compose.yml` с nginx и postgres
@@ -80,7 +80,7 @@ VALIDATION
 #!/bin/bash
 score=0
 
-cat > /tmp/ninja_compose_test/docker-compose.yml << 'EOF'
+cat > /tmp/tower_compose_test/docker-compose.yml << 'EOF'
 version: "3.8"
 services:
   test_web:
@@ -89,11 +89,11 @@ services:
       - "18765:80"
 EOF
 
-cd /tmp/ninja_compose_test && docker compose up -d &>/dev/null && sleep 2
+cd /tmp/tower_compose_test && docker compose up -d &>/dev/null && sleep 2
 
 curl -s http://localhost:18765 &>/dev/null && { echo "✓ Compose работает"; score=$((score+1)); }
 
-cd /tmp/ninja_compose_test && docker compose down &>/dev/null
+cd /tmp/tower_compose_test && docker compose down &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Compose освоен! (баллов: $score/1)"; exit 0; }
 echo "✗ Нужно больше практики"

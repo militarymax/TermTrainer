@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_012"
+DIR="$HOME/.termtrainer/cicd_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -83,7 +83,7 @@ spec:
       selfHeal: true     # Автоматически лечить расхождения!
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_012`
+📂 Рабочий каталог: `~/.termtrainer/cicd_012`
 
 VALIDATION
 #!/bin/bash

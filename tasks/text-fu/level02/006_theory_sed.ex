@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_006"
+DIR="$HOME/.termtrainer/textfu_006"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 cat > "$DIR/заклинание.txt" << 'EOF'
@@ -56,13 +56,13 @@ TASK
 • `sed 's/$/:СУФФИКС/' файл` — добавить в конец строки
 • `sed -i '' 's/старое/новое/g' файл` — замена НА МЕСТЕ (осторожно! macOS требует `-i ''`)
 
-📂 Рабочий каталог: `~/.ninja_trainer/textfu_006`
+📂 Рабочий каталог: `~/.termtrainer/textfu_006`
 
 ⚡ **Важно для macOS**: `sed -i` требует аргумент: `sed -i '' 's/old/new/g' file`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/textfu_006"
+DIR="$HOME/.termtrainer/textfu_006"
 score=0
 
 if [ ! -f "$DIR/заклинание.txt" ]; then

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_009"
+DIR="$HOME/.termtrainer/netdebug_009"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -66,11 +66,11 @@ TASK
 
 4. Запусти и сохрани: `chmod +x net_monitor.sh && ./net_monitor.sh > $DIR/report.txt`
 
-📂 Рабочий каталог: `~/.ninja_trainer/netdebug_009`
+📂 Рабочий каталог: `~/.termtrainer/netdebug_009`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/netdebug_009"
+DIR="$HOME/.termtrainer/netdebug_009"
 score=0
 
 if [ -f "$DIR/net_monitor.sh" ]; then

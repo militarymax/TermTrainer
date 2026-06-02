@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_007"
+DIR="$HOME/.termtrainer/terraform_007"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -72,7 +72,7 @@ terraform {
 • Шифрование — state содержит секреты!
 • Версионирование — S3 versioning для отката
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_007`
+📂 Рабочий каталог: `~/.termtrainer/terraform_007`
 
 VALIDATION
 #!/bin/bash

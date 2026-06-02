@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_013"
+DIR="$HOME/.termtrainer/scripting_013"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -91,7 +91,7 @@ wait
 exec 3>&-
 ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_013`
+📂 Рабочий каталог: `~/.termtrainer/scripting_013`
 
 📋 **Попробуй**:
 1. Свой дескриптор: `exec 3>/tmp/test_fd.txt; echo "hello" >&3; exec 3>&-`
@@ -101,7 +101,7 @@ VALIDATION
 #!/bin/bash
 score=0
 
-fd_out=$(bash -c 'exec 3>/tmp/ninja_fd_test; echo "magic" >&3; exec 3>&-; cat /tmp/ninja_fd_test' 2>/dev/null)
+fd_out=$(bash -c 'exec 3>/tmp/tower_fd_test; echo "magic" >&3; exec 3>&-; cat /tmp/tower_fd_test' 2>/dev/null)
 [ "$fd_out" = "magic" ] && { echo "✓ Файловые дескрипторы работают"; score=$((score+1)); }
 
 bg_out=$(bash -c '(sleep 0.1; echo "bg_done") & wait' 2>/dev/null)

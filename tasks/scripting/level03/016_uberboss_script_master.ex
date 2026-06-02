@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_016"
+DIR="$HOME/.termtrainer/scripting_016"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/logs" "$DIR/configs" "$DIR/libs" "$DIR/reports"
 for i in $(seq 1 20); do
@@ -129,11 +129,11 @@ Parallel jobs used: 4
    5) Exit
   ```
 
-📂 Рабочий каталог: `~/.ninja_trainer/scripting_016`
+📂 Рабочий каталог: `~/.termtrainer/scripting_016`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/scripting_016"
+DIR="$HOME/.termtrainer/scripting_016"
 score=0
 max=6
 

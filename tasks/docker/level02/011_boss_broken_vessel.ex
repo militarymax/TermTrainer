@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_011"
+DIR="$HOME/.termtrainer/docker_011"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -88,22 +88,22 @@ TASK
 
 5. Очистка: `docker stop broken && docker rm broken`
 
-📂 Рабочий каталог: `~/.ninja_trainer/docker_011`
+📂 Рабочий каталог: `~/.termtrainer/docker_011`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/docker_011"
+DIR="$HOME/.termtrainer/docker_011"
 score=0
 
-docker run -d --name ninja_broken -e SECRET=test nginx &>/dev/null && sleep 2
+docker run -d --name tower_broken -e SECRET=test nginx &>/dev/null && sleep 2
 
-ip=$(docker inspect ninja_broken | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
+ip=$(docker inspect tower_broken | jq -r '.[0].NetworkSettings.IPAddress' 2>/dev/null)
 [ -n "$ip" ] && { echo "✓ Inspect работает"; score=$((score+1)); }
 
-env=$(docker inspect ninja_broken | jq -r '.[0].Config.Env[]' 2>/dev/null)
+env=$(docker inspect tower_broken | jq -r '.[0].Config.Env[]' 2>/dev/null)
 echo "$env" | grep -q SECRET && { echo "✓ Секреты найдены"; score=$((score+1)); }
 
-docker stop ninja_broken &>/dev/null; docker rm ninja_broken &>/dev/null
+docker stop tower_broken &>/dev/null; docker rm tower_broken &>/dev/null
 
 if [ -f "$DIR/case_report.txt" ]; then
   grep -q "Report\|Status\|Diagnosis\|Network" "$DIR/case_report.txt" && { echo "✓ Отчёт создан"; score=$((score+1)); }

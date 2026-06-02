@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_004"
+DIR="$HOME/.termtrainer/cicd_004"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR/.github/workflows"
 
@@ -66,11 +66,11 @@ Docker Hub — выбирай! Главное — тегируй правиль�
 
 3. **Локальная проверка**: `docker build -t tower-test . && docker run --rm tower-test`
 
-📂 Рабочий каталог: `~/.ninja_trainer/cicd_004`
+📂 Рабочий каталог: `~/.termtrainer/cicd_004`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/cicd_004"
+DIR="$HOME/.termtrainer/cicd_004"
 score=0
 
 if [ -f "$DIR/.github/workflows/docker.yml" ]; then

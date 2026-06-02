@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_005"
+DIR="$HOME/.termtrainer/kubectl_005"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -67,23 +67,23 @@ TASK
 
 6. **Очисти**: `kubectl delete deployment web-army && kubectl delete svc web-army web-army-ext`
 
-📂 Рабочий каталог: `~/.ninja_trainer/kubectl_005`
+📂 Рабочий каталог: `~/.termtrainer/kubectl_005`
 
 VALIDATION
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/kubectl_005"
+DIR="$HOME/.termtrainer/kubectl_005"
 score=0
 
-kubectl create deployment ninja-deploy --image=nginx --replicas=2 &>/dev/null && sleep 3
+kubectl create deployment tower-deploy --image=nginx --replicas=2 &>/dev/null && sleep 3
 
-pods=$(kubectl get pods -l app=ninja-deploy --no-headers 2>/dev/null | grep -c Running || echo "0")
+pods=$(kubectl get pods -l app=tower-deploy --no-headers 2>/dev/null | grep -c Running || echo "0")
 [ "$pods" -ge 1 ] && { echo "✓ Deployment работает ($pods pods)"; score=$((score+1)); }
 
-kubectl expose deployment ninja-deploy --port=80 --type=ClusterIP &>/dev/null
-svc=$(kubectl get svc ninja-deploy -o jsonpath='{.spec.clusterIP}' 2>/dev/null)
+kubectl expose deployment tower-deploy --port=80 --type=ClusterIP &>/dev/null
+svc=$(kubectl get svc tower-deploy -o jsonpath='{.spec.clusterIP}' 2>/dev/null)
 [ -n "$svc" ] && { echo "✓ Service создан: $svc"; score=$((score+1)); }
 
-kubectl delete deployment ninja-deploy &>/dev/null; kubectl delete svc ninja-deploy &>/dev/null
+kubectl delete deployment tower-deploy &>/dev/null; kubectl delete svc tower-deploy &>/dev/null
 
 [ $score -ge 1 ] && { echo "✓ ok: Deployments и Services освоены! (баллов: $score/2)"; exit 0; }
 echo "✗ Нужно больше практики"

@@ -10,7 +10,7 @@ META
 
 SETUP
 #!/bin/bash
-DIR="$HOME/.ninja_trainer/terraform_012"
+DIR="$HOME/.termtrainer/terraform_012"
 rm -rf "$DIR" 2>/dev/null
 mkdir -p "$DIR"
 
@@ -67,7 +67,7 @@ terraform refresh                       # Обновить state из реаль
 
 ⚠️ `terraform state rm` удаляет ТОЛЬКО из state, реальный ресурс остаётся!
 
-📂 Рабочий каталог: `~/.ninja_trainer/terraform_012`
+📂 Рабочий каталог: `~/.termtrainer/terraform_012`
 
 VALIDATION
 #!/bin/bash
