@@ -44,6 +44,7 @@ echo "── Step 2: Gateway ──"
 GW=$(ip route 2>/dev/null | grep default | awk '{print $3}' || netstat -rn 2>/dev/null | grep default | awk '{print $2}' | head -1)
 echo "Gateway: ${GW:-NOT FOUND}"
 
+ASSIGNMENT
 echo ""
 echo "── Step 3: Connectivity ──"
 echo -n "Loopback: "; ping -c 1 -W 2 127.0.0.1 &>/dev/null && echo "✓ OK" || echo "✗ FAIL"

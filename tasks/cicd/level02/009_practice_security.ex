@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `.github/workflows/security.yml`**:
    ```yaml
    name: Security Scan

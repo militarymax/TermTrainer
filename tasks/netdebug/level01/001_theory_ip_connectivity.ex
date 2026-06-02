@@ -66,6 +66,7 @@ ping -c 4 google.com      # По имени (проверка DNS!)
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_001`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `ip addr | grep "inet "` или `ifconfig | grep "inet "` — свои IP
 2. `netstat -rn | grep default` — шлюз

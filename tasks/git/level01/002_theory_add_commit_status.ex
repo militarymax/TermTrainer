@@ -42,6 +42,8 @@ TASK
 📋 **Попробуй**:
 1. Создай файл `свиток.txt` с любым текстом
 2. Проверь `git status` — увидишь untracked file
+
+ASSIGNMENT
 3. Выполни `git add свиток.txt`
 4. Проверь `git status` — увидишь "new file" в staging
 5. Выполни `git commit -m "feat: add first scroll"`

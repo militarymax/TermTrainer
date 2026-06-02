@@ -24,6 +24,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `.github/workflows/k8s-deploy.yml`**:
    ```yaml
    name: Deploy to Tower Cluster

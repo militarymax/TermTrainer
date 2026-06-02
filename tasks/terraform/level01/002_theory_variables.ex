@@ -65,6 +65,7 @@ terraform apply -var-file="production.tfvars"
 🔹 OUTPUTS — РЕЗУЛЬТАТЫ СТРОИТЕЛЬСТВА
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```hcl
 # outputs.tf
 output "tower_ip" {

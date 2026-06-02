@@ -42,6 +42,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/git_001`
 
 📋 **Попробуй**:
+
+ASSIGNMENT
 1. Выполни `cd ~/.termtrainer/git_001 && git init`
 2. Посмотри содержимое `.git/`: `ls -la .git/`
 3. Проверь статус: `git status`

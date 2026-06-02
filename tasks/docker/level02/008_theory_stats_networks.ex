@@ -69,6 +69,7 @@ docker run -d --name db --network tower_net postgres
 
 📂 Рабочий каталог: `~/.termtrainer/docker_008`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `docker stats --no-stream` — снимок пульса
 2. `docker network ls` — список сетей

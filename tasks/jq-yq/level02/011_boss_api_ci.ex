@@ -50,6 +50,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 **JSON часть**:
 1. Только зелья в наличии (наличие > 0): `jq '.зелья[] | select(.наличие > 0)' inventory.json`
 2. Отсортируй по цене по убыванию: `jq '.зелья | sort_by(.цена) | reverse' inventory.json`

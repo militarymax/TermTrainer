@@ -57,6 +57,7 @@ import {
 🔹 STATE MANIPULATION
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```bash
 terraform state list                    # Все ресурсы
 terraform state show aws_instance.web  # Детали ресурса

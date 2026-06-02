@@ -50,6 +50,7 @@ TASK
 
 📂 Рабочий каталог: `~/.termtrainer/git_013`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Создай worktree для другой ветки
 2. Включи rerere: `git config rerere.enabled true`

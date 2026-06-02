@@ -27,6 +27,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Запусти nginx** на порту 8888:
    ```bash
    docker run -d --name boss_web -p 8888:80 nginx

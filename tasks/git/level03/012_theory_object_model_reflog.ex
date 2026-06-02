@@ -50,6 +50,7 @@ TASK
 
 📂 Рабочий каталог: `~/.termtrainer/git_012`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Посмотри последний коммит: `git cat-file -p HEAD`
 2. Посмотри его tree: `git ls-tree HEAD`

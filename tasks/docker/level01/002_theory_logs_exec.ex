@@ -43,6 +43,8 @@ docker logs --since 5m web      # Записи за последние 5 мин�
 ───────────────────────────────────────
 
 ```bash
+
+ASSIGNMENT
 docker exec web ls /             # Выполнить команду внутри сосуда
 docker exec -it web bash         # Открыть оболочку внутри!
 docker exec web cat /etc/hosts   # Прочитать файл внутри сосуда

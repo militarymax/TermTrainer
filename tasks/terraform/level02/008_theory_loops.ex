@@ -73,6 +73,7 @@ for_each удаляет только его, а count пересоздаёт в�
 🔹 DYNAMIC BLOCKS
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```hcl
 resource "aws_security_group" "tower" {
   name = "tower-sg"

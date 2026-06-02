@@ -86,6 +86,7 @@ echo "── 8. NAT Check ──"
 EXT=$(curl -s --connect-timeout 5 https://ifconfig.me 2>/dev/null)
 echo "External IP: ${EXT:-UNREACHABLE}"
 
+ASSIGNMENT
 # TLS certificates
 echo ""
 echo "── 9. TLS Certificates ──"

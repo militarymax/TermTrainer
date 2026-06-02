@@ -25,6 +25,7 @@ terraform plan при каждом PR и показывает результат
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Настройка Atlantis** (концептуально):
    ```yaml
    # atlantis.yaml — конфиг в корне репо

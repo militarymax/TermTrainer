@@ -24,6 +24,7 @@ terraform validate, tfsec, terraform plan — всё это должно
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `tf_check.sh`** — полная проверка:
    ```bash
    #!/bin/bash

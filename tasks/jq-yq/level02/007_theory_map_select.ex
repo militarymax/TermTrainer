@@ -56,6 +56,7 @@ jq '.студенты[] | del(.факультет)' students.json         # бе
 
 📂 Рабочий каталог: `~/.termtrainer/jqyq_007`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Все имена через map: `jq '.студенты | map(.имя)' students.json`
 2. Отличники (>80): `jq '.студенты[] | select(.оценка > 80)' students.json`

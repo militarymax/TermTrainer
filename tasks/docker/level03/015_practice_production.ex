@@ -25,6 +25,7 @@ deploy... Если сосуд упадёт — пользователи Башн
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Dockerfile с healthcheck**:
    ```dockerfile
    FROM nginx

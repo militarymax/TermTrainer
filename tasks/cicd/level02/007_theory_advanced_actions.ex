@@ -71,6 +71,7 @@ jobs:
 🔹 REUSABLE WORKFLOWS
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```yaml
 # Вызвать другой workflow как функцию:
 jobs:

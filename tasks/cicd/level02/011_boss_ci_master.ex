@@ -25,6 +25,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **`.github/workflows/full-pipeline.yml`** — полный pipeline:
    - Matrix test (Go 1.21 + 1.22)
    - Cache Go modules

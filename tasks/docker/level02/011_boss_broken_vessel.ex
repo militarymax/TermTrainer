@@ -27,6 +27,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Запусти сломанный сосуд**:
    ```bash
    docker run -d --name broken \

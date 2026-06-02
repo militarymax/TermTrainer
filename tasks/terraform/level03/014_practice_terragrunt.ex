@@ -25,6 +25,7 @@ Terragrunt выносит общее в одно место.»
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Структура проекта с Terragrunt**:
    ```
    infra/

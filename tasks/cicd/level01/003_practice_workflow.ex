@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `.github/workflows/test.yml`**:
    ```yaml
    name: Spell Tests

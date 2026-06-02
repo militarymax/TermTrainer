@@ -25,6 +25,7 @@ Rolling update обновляет по одному, пока старые ещ�
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай деплоймент**:
    ```bash
    kubectl create deployment web --image=nginx:1.24 --replicas=3

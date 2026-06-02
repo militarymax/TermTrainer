@@ -24,6 +24,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `deploy.sh`** — скрипт деплоя:
    ```bash
    #!/bin/bash

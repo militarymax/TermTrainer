@@ -24,6 +24,7 @@ outputs для результатов. И всё это с terraform validate!»
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Модуль `modules/tower-server/`**:
    - `main.tf` — docker_container + docker_image
    - `variables.tf` — name, image, port (с defaults)

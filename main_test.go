@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -209,5 +210,61 @@ func TestStripAnsi(t *testing.T) {
 	stripped := stripAnsi(input)
 	if stripped != "Red Text" {
 		t.Errorf("stripAnsi = %q, want %q", stripped, "Red Text")
+	}
+}
+
+func TestParseTaskFileWithAssignment(t *testing.T) {
+	dir := t.TempDir()
+	taskDir := filepath.Join(dir, "test-track", "level01")
+	os.MkdirAll(taskDir, 0755)
+
+	content := `META
+# Title: Test With Assignment
+# Number: 002
+# Level: 1
+# Type: practice
+# Difficulty: medium
+
+SETUP
+#!/bin/bash
+echo "setup"
+
+TASK
+This is theory and description.
+Multiple lines of explanation.
+
+ASSIGNMENT
+🎯 ЗАДАНИЕ: Do the thing
+1. Step one
+2. Step two
+
+VALIDATION
+#!/bin/bash
+echo "✓ ok"
+exit 0
+
+HINTS
+First hint
+`
+
+	path := filepath.Join(taskDir, "002_assign.ex")
+	os.WriteFile(path, []byte(content), 0644)
+
+	task, err := parseTaskFile(path)
+	if err != nil {
+		t.Fatalf("parseTaskFile failed: %v", err)
+	}
+
+	if task.Assignment == "" {
+		t.Error("Assignment should not be empty")
+	}
+	if !strings.Contains(task.Assignment, "🎯 ЗАДАНИЕ") {
+		t.Errorf("Assignment = %q, should contain 🎯 ЗАДАНИЕ", task.Assignment)
+	}
+	if !strings.Contains(task.TaskText, "theory and description") {
+		t.Error("TaskText should contain description")
+	}
+	if strings.Contains(task.TaskText, "🎯 ЗАДАНИЕ") {
+		t.Error("TaskText should NOT contain assignment content")
 	}
 }

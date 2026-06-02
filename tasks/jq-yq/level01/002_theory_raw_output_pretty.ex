@@ -58,6 +58,7 @@ TASK
 
 📂 Рабочий каталог: `~/.termtrainer/jqyq_002`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. С кавычками: `jq '.название' potions.json`
 2. Без кавычек: `jq -r '.название' potions.json`

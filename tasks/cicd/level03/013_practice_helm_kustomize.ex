@@ -25,6 +25,7 @@ Kustomize — это накладывание патчей на существу
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай структуру Helm chart**:
    ```bash
    mkdir -p tower-chart/templates

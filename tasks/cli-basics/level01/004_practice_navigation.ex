@@ -41,6 +41,7 @@ TASK
   └── dead_end/
       (тупик. тут ничего. как и в жизни.)
 
+ASSIGNMENT
 🎯 ЗАДАНИЕ:
 1. Перейди в /tmp/termtrainer_lab/maze
 2. Найди key.txt и запиши его содержимое в /tmp/termtrainer_lab/result_key.txt

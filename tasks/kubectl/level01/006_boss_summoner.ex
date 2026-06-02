@@ -25,6 +25,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Создай пространство `tower-production`**:
    ```bash
    kubectl create ns tower-production

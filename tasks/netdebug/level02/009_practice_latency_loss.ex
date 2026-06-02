@@ -24,6 +24,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Измерь RTT до нескольких хостов**:
    ```bash
    for host in google.com github.com cloudflare.com; do

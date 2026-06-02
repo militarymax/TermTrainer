@@ -25,6 +25,7 @@ Production → ручное подтверждение + canary release.
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `promote.sh`** — скрипт продвижения:
    ```bash
    #!/bin/bash

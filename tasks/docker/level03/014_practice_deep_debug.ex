@@ -26,6 +26,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `vessel_inspect.sh`**:
    ```bash
    #!/bin/bash

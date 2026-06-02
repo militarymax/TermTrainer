@@ -25,6 +25,7 @@ Sensitive variables, encryption at rest, least privilege —
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Sensitive переменные**:
    ```hcl
    variable "db_password" {

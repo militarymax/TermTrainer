@@ -103,6 +103,7 @@ echo ""
 echo "═══ End of Investigation ═══"
 ```
 
+ASSIGNMENT
 📋 **БЛОК 4 — Запуск и проверка**:
 1. `cd $DIR && docker compose build`
 2. `docker compose up -d`

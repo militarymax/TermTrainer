@@ -53,6 +53,7 @@ TASK
 
 📂 Рабочий каталог: `~/.termtrainer/jqyq_008`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. По цене: `jq '.склад | sort_by(.цена)' potions.json`
 2. Дорогие сначала: `jq '.склад | sort_by(.цена) | reverse' potions.json`

@@ -24,6 +24,7 @@ curl — это твой телескоп для HTTP. Научись читат
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Базовый HTTP-запрос**:
    ```bash
    curl -v https://google.com 2>&1 | head -30    # Verbose — все детали!

@@ -67,6 +67,7 @@ docker stop web && docker rm web             # Остановить и унич�
 
 📂 Рабочий каталог: `~/.termtrainer/docker_001`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `docker version` — проверить установку
 2. `docker run -d --name hello nginx` — запустить первый сосуд

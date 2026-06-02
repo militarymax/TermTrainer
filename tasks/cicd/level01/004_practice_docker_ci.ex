@@ -25,6 +25,7 @@ Docker Hub — выбирай! Главное — тегируй правиль�
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `.github/workflows/docker.yml`**:
    ```yaml
    name: Build & Push Vessel

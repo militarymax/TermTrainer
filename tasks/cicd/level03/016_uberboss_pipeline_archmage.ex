@@ -46,6 +46,7 @@ CMD ["/tower-app"]
 
 📋 **БЛОК 2 — Полный Pipeline**:
 
+ASSIGNMENT
 `.github/workflows/full-pipeline.yml`:
 - Matrix test (Go 1.21 + 1.22)
 - Cache Go modules

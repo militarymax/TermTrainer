@@ -35,6 +35,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `Dockerfile`**:
    ```dockerfile
    FROM alpine:3.19

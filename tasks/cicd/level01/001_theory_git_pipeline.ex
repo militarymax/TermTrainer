@@ -73,6 +73,7 @@ jobs:
 
 📂 Рабочий каталог: `~/.termtrainer/cicd_001`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `git log --oneline | head -5` — история коммитов этого проекта
 2. `git branch -a` — все ветки

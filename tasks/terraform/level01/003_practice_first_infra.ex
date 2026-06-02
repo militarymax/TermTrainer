@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `main.tf`** (Docker provider — работает локально!):
    ```hcl
    terraform {

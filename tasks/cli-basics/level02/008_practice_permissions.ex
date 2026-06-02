@@ -35,6 +35,7 @@ TASK
       ├── deploy.sh                ← должен стать исполняемым (+x)
       └── data.txt                 ← создай портал на него в /tmp/termtrainer_lab/data_portal
 
+ASSIGNMENT
 🎯 ЗАДАНИЕ:
 1. Установи права public/announcement.txt → 644 (все читают, владелец пишет)
 2. Установи права internal/memo.txt → 640 (владелец rw, группа r)

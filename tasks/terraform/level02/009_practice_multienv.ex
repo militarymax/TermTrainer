@@ -24,6 +24,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай `main.tf`** с for_each и locals:
    ```hcl
    terraform {

@@ -73,6 +73,7 @@ ss -ti                        # Детали: RTT, CWND, retransmits!
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_007`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `traceroute google.com` или `mtr -r -c 5 google.com`
 2. `ss -s` — статистика TCP

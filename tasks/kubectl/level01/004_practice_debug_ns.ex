@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай пространство факультета**:
    ```bash
    kubectl create ns tower-alchemy

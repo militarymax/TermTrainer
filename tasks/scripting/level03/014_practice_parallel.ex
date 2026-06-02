@@ -29,6 +29,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `parallel_process.sh`**:
    ```bash
    #!/bin/bash

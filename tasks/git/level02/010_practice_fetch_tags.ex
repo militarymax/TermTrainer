@@ -30,6 +30,8 @@ TASK
 4. Посмотри информацию о теге: `git show v1.1`
 5. Добавь remote: `git remote add origin /tmp/git_010_bare.git`
 6. Запушь с тегами: `git push origin main --tags`
+
+ASSIGNMENT
 7. Выполни `git fetch origin` — получить информацию об удалённых изменениях
 8. Сравни fetch vs pull: pull = fetch + merge
 

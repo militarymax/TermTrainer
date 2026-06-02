@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Запусти nginx** на порту 8080:
    ```bash
    docker run -d --name web -p 8080:80 nginx

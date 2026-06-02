@@ -57,6 +57,8 @@ TASK
 • `find каталог -name '*.txt' -exec wc -l {} \;` — подсчёт строк в каждом .txt
 • `find каталог -name '*.txt' -exec grep -l 'ошибка' {} \;` — найти .txt с «ошибка»
 
+ASSIGNMENT
+
 📂 Рабочий каталог: `~/.termtrainer/textfu_012`
 
 VALIDATION

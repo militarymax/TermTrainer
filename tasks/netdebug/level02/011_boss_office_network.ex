@@ -69,6 +69,7 @@ echo ""
 echo "── 6. Listening Ports ──"
 ss -tlnp 2>/dev/null | head -10
 
+ASSIGNMENT
 echo ""
 echo "── 7. External IP (NAT check) ──"
 EXT=$(curl -s --connect-timeout 5 https://ifconfig.me 2>/dev/null)

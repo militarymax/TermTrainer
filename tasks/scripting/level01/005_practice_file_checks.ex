@@ -30,6 +30,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `guard.sh`** — страж архивов:
    ```bash
    #!/bin/bash

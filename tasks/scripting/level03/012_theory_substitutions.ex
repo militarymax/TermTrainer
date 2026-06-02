@@ -100,6 +100,7 @@ log_info "Library loaded!"    # Использовать функцию
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_012`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Default value: `echo "${undefined_var:-fallback}"`
 2. Error on empty: `empty=""; echo "${empty:?This is required!}"`

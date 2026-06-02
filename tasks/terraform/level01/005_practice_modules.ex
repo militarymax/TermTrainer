@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай модуль `modules/tower-server/main.tf`**:
    ```hcl
    variable "name" {

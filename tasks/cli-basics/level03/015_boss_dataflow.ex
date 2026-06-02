@@ -48,6 +48,7 @@ TASK
   raw/employees.csv — сотрудники Университета
   raw/sales.csv     — продажи магических артефактов
 
+ASSIGNMENT
 🎯 ЗАДАНИЕ:
 1. Создай processed/engineering.csv — сотрудники Engineering отдела
 2. Создай processed/moscow_sales.csv — продажи в Москве

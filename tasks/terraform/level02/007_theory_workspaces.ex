@@ -54,6 +54,7 @@ resource "aws_instance" "server" {
 🔹 REMOTE BACKEND — УДАЛЁННЫЙ АРХИВ
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```hcl
 terraform {
   backend "s3" {

@@ -121,6 +121,8 @@ Parallel jobs used: 4
 - Поддержка `DEBUG=1 ./script.sh` для трассировки
 - Интерактивное меню через `select`:
   ```
+
+ASSIGNMENT
    Tower Monitor Menu:
    1) Show config
    2) Parse logs

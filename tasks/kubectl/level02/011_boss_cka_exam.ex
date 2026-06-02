@@ -25,6 +25,7 @@ ServiceAccount с правами только на чтение подов.
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Создай неймспейс `tower-app`**:
    ```bash
    kubectl create ns tower-app

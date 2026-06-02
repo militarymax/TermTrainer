@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Призови nginx-под**:
    ```bash
    kubectl run web --image=nginx

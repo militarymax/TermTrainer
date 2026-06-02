@@ -36,6 +36,7 @@ TASK
   │   └── cache.tmp ← мусор! Перемести в backup/, потом удали temp/
   └── config.ini    ← важная конфигурация!
 
+ASSIGNMENT
 🎯 ЗАДАНИЕ:
 1. Перейди в /tmp/termtrainer_lab/filelab
 2. Создай файл src/Makefile с содержимым "all: build"

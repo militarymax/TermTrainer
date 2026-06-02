@@ -24,6 +24,7 @@ workspaces, sensitive variables, security audit и .gitignore.
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Модуль `modules/tower-server/`** с variables + outputs
 
 2. **Корневой `main.tf`** — три сервера через for_each:

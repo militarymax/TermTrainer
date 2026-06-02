@@ -107,6 +107,8 @@ cleanup() {
     rm -f "$tempfile"
     echo "Cleanup complete!"
 }
+
+ASSIGNMENT
 trap cleanup EXIT    # Выполнится при ЛЮБОМ выходе из скрипта
 ```
 

@@ -63,6 +63,8 @@ TASK
 • `xargs команда` — читает stdin и передаёт аргументы команде
 • `команда | xargs -I{} другая_команда {}` — подстановка каждого элемента
 
+ASSIGNMENT
+
 📂 Рабочий каталог: `~/.termtrainer/textfu_011`
 
 ⚡ **Зачем нужен xargs**: некоторые команды (например, `rm`, `cp`, `kill`) не читают stdin. `xargs` преобразует stdin в аргументы. Без xargs: `echo "file.txt" | rm` — не сработает. С xargs: `echo "file.txt" | xargs rm` — удалит.

@@ -24,6 +24,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `pipeline_monitor.sh`**:
    ```bash
    #!/bin/bash

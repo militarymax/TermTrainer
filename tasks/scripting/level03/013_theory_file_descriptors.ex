@@ -57,6 +57,8 @@ read -r back <&5
 # Запустить в фоне:
 slow_spell() { sleep 2; echo "Potion ready!"; }
 slow_spell &                    # & = запустить в фоне
+
+ASSIGNMENT
 echo "Doing other things..."    # Выполнится сразу!
 wait                             # Дождаться фоновой задачи
 echo "All done!"

@@ -26,6 +26,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Многоступенчатый Dockerfile** — создай `$DIR/Dockerfile`:
    ```dockerfile
    # === Stage 1: Builder (большой котёл) ===

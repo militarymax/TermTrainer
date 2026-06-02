@@ -92,6 +92,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd-backup.db \
 
 📂 Рабочий каталог: `~/.termtrainer/kubectl_013`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `kubectl get quota -A` — есть ли квоты?
 2. `kubectl describe limitrange -A` — есть ли лимиты?

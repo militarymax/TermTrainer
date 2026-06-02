@@ -20,6 +20,7 @@ type Task struct {
 	Setup        string
 	TaskText     string
 	Validation   string
+	Assignment   string
 	Hints        []string
 	Level        int
 	Number       string
@@ -110,7 +111,9 @@ func parseTaskFile(path string) (*Task, error) {
 			task.Setup = text
 		case "TASK":
 			task.TaskText = text
-		case "VALIDATION":
+		case "ASSIGNMENT":
+			task.Assignment = text
+	case "VALIDATION":
 			task.Validation = text
 		case "HINTS":
 			for _, line := range lines {
@@ -129,6 +132,7 @@ func parseTaskFile(path string) (*Task, error) {
 		trimmed := strings.TrimSpace(line)
 		upper := strings.ToUpper(trimmed)
 		if upper == "META" || upper == "SETUP" || upper == "TASK" ||
+			upper == "ASSIGNMENT" ||
 			upper == "VALIDATION" || upper == "HINTS" {
 			if section != "" && lines != nil {
 				readSection()
@@ -856,6 +860,19 @@ func taskView(task *Task, progress *Progress, allTasks []*Task, taskIdx int) {
 		}
 
 		taskLines := strings.Split(task.TaskText, "\n")
+		assignLines := strings.Split(task.Assignment, "\n")
+
+		// Calculate total pages: TASK pages + optional ASSIGNMENT page
+		taskPages := (len(taskLines) + linesPerPage - 1) / linesPerPage
+		if taskPages < 1 {
+			taskPages = 1
+		}
+		hasAssignment := task.Assignment != ""
+		totalPages := taskPages
+		if hasAssignment {
+			totalPages++ // last page is assignment
+		}
+		onAssignmentPage := hasAssignment && taskPage >= taskPages
 
 		// Section label depends on type
 		sectionLabel := "ЗАДАНИЕ"
@@ -871,31 +888,38 @@ func taskView(task *Task, progress *Progress, allTasks []*Task, taskIdx int) {
 			sectionColor = BrightRed
 		}
 
-		fmt.Println(padLine(color("  ═══════ "+sectionLabel+" ═══════", sectionColor), w))
-		fmt.Println()
+		if onAssignmentPage {
+			// Assignment page — always fits on one screen
+			fmt.Println(padLine(color("  ═══════ 🎯 ЗАДАНИЕ ═══════", Yellow), w))
+			fmt.Println()
+			for _, line := range assignLines {
+				fmt.Println(padLine("    "+line, w-2))
+			}
+			fmt.Println()
+			fmt.Println(padLine(color("  ═══════════════════════════", Yellow), w))
+		} else {
+			// Theory/description page — paginated
+			fmt.Println(padLine(color("  ═══════ "+sectionLabel+" ═══════", sectionColor), w))
+			fmt.Println()
 
-		totalPages := (len(taskLines) + linesPerPage - 1) / linesPerPage
-		if totalPages < 1 {
-			totalPages = 1
-		}
+			start := taskPage * linesPerPage
+			end := start + linesPerPage
+			if end > len(taskLines) {
+				end = len(taskLines)
+			}
 
-		start := taskPage * linesPerPage
-		end := start + linesPerPage
-		if end > len(taskLines) {
-			end = len(taskLines)
-		}
+			for _, line := range taskLines[start:end] {
+				fmt.Println(padLine("    "+line, w-2))
+			}
+			fmt.Println()
 
-		for _, line := range taskLines[start:end] {
-			fmt.Println(padLine("    "+line, w-2))
+			if totalPages > 1 {
+				pageIndicator := fmt.Sprintf("📜 %s %d/%d %s",
+					color("◁", Dim), taskPage+1, totalPages, color("▷", Dim))
+				fmt.Println(padLine(pageIndicator, w-2))
+			}
+			fmt.Println(padLine(color("  ═════════════════════", sectionColor), w))
 		}
-		fmt.Println()
-
-		if totalPages > 1 {
-			pageIndicator := fmt.Sprintf("📜 %s %d/%d %s",
-				color("◁", Dim), taskPage+1, totalPages, color("▷", Dim))
-			fmt.Println(padLine(pageIndicator, w-2))
-		}
-		fmt.Println(padLine(color("  ═════════════════════", sectionColor), w))
 		fmt.Println()
 
 		fmt.Println(color("  ═══════ ДЕЙСТВИЯ ═══════", Green))
@@ -910,10 +934,16 @@ func taskView(task *Task, progress *Progress, allTasks []*Task, taskIdx int) {
 		}
 		if totalPages > 1 {
 			if taskPage > 0 {
-				fmt.Println("    [P] ◀ Предыдущая страница свитка")
+				fmt.Println("    [P] ◀ Предыдущая страница")
 			}
 			if taskPage < totalPages-1 {
-				fmt.Println("    [N] ▶ Следующая страница свитка")
+				if onAssignmentPage {
+					// no next after assignment
+				} else if hasAssignment && taskPage == taskPages-1 {
+					fmt.Println("    [N] ▶ К заданию")
+				} else {
+					fmt.Println("    [N] ▶ Следующая страница")
+				}
 			}
 		}
 		fmt.Println("    [M] 📋 Вернуться в Университет")

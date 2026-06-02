@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Исследуй state**:
    ```bash
    # В любом проекте с terraform:

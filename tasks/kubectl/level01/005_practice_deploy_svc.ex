@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай Deployment (армию)**:
    ```bash
    kubectl create deployment web-army --image=nginx --replicas=3

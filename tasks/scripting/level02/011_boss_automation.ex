@@ -32,6 +32,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Напиши `tower_monitor.sh`** который:
    - Использует `set -euo pipefail`
    - Имеет функции: `log_info`, `log_error`, `parse_failures`, `generate_report`

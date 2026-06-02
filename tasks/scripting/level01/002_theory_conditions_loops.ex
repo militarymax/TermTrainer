@@ -97,6 +97,7 @@ done < scrolls/list.txt
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_002`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Напиши скрипт `greet.sh`: если `$1` задан → `echo "Hello, $1"`, иначе → ошибка
 2. Цикл: `for i in 1 2 3; do echo "Potion #$i"; done`

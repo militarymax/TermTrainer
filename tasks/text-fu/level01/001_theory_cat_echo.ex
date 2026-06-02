@@ -44,6 +44,8 @@ TASK
 • `команда 2> файл` — перенаправить stderr в файл
 • `команда > файл 2>&1` — перенаправить и stdout, и stderr в файл
 
+ASSIGNMENT
+
 📂 Рабочий каталог: `~/.termtrainer/textfu_001`
 
 Подсказка: начни с `cat ~/.termtrainer/textfu_001/приветствие.txt`

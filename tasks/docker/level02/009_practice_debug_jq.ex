@@ -25,6 +25,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Запусти подозрительный сосуд**:
    ```bash
    docker run -d --name suspect \

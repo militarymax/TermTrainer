@@ -69,6 +69,7 @@ terraform validate  # Проверить синтаксис
 
 📂 Рабочий каталог: `~/.termtrainer/terraform_001`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `which terraform && terraform version`
 2. Создай `main.tf` с простым провайдером и запусти `terraform init`

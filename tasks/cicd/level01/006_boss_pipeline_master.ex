@@ -24,6 +24,7 @@ TASK
 
 📋 **Боевые задания**:
 
+ASSIGNMENT
 1. **Dockerfile** для приложения:
    ```dockerfile
    FROM alpine:3.19

@@ -24,6 +24,7 @@ TLS-сертификаты, DNS trace, HTTP profiling — всё в бой!»
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **TLS-анализ сертификата**:
    ```bash
    echo | openssl s_client -connect google.com:443 -servername google.com 2>/dev/null | \

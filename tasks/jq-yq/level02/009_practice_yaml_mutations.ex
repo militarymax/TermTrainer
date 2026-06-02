@@ -34,6 +34,7 @@ TASK
 
 Казначей хочет обновлять конфиги не вручную, а через yq — менять версию образа, количество реплик, добавлять переменные.
 
+ASSIGNMENT
 📋 **Задания**:
 1. Обнови версию образа: `yq '.spec.template.spec.containers[0].image = "uu/spell-api:v2.0.0"' deploy.yaml`
 2. Обнови на месте: `yq -i '.spec.replicas = 5' deploy.yaml`

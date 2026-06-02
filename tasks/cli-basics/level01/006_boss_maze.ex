@@ -40,6 +40,7 @@ TASK
   │   └── trap/poison.txt    ← ЯД! НЕ ТРОГАТЬ! Уничтожь немедленно!
   └── exit/freedom.txt       ← Выход на свободу!
 
+ASSIGNMENT
 🎯 ЗАДАНИЕ:
 1. Создай инвентарь: /tmp/termtrainer_lab/inventory.txt
 2. Запиши туда содержимое torch.txt, sword.txt, potion.txt и gold.txt

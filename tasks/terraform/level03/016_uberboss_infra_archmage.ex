@@ -80,6 +80,8 @@ echo "── Security ──"; command -v tfsec &>/dev/null && tfsec . || echo "
 echo "═══ Gate Complete ═══"
 ```
 
+ASSIGNMENT
+
 📂 Рабочий каталог: `~/.termtrainer/terraform_016`
 
 VALIDATION

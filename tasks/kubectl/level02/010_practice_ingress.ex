@@ -25,6 +25,7 @@ Ingress — это Главные Врата Башни! Они направля
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Создай два деплоймента**:
    ```bash
    kubectl create deployment api --image=nginx --replicas=2

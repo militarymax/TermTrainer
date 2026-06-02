@@ -65,6 +65,7 @@ ss -ti                           # RTT/CWND/retransmits per socket
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_013`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `dig +trace google.com | head -30`
 2. `dig -x 8.8.8.8 +short`

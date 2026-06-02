@@ -30,6 +30,7 @@ TASK
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Напиши `log_parser.sh`** с функциями:
    ```bash
    #!/bin/bash

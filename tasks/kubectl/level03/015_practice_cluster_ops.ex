@@ -25,6 +25,7 @@ kubeadm upgrade — это ритуал обновления. Сначала con
 
 📋 **Задания**:
 
+ASSIGNMENT
 1. **Подготовка — etcd backup!** (на control-plane):
    ```bash
    ETCDCTL_API=3 etcdctl snapshot save /tmp/pre-upgrade.db \

@@ -2,6 +2,7 @@ META
 # Title: Название задания
 # Number: 001
 # Level: 1
+# Type: theory|practice|boss|uberboss
 # Difficulty: easy|medium|hard|expert
 # TimeLimitMin: 10
 
@@ -9,21 +10,33 @@ SETUP
 #!/bin/bash
 # Подготовительный скрипт — выполняется при нажатии [R]
 # Создай файлы, папки, данные для задания
-rm -rf /tmp/ninja_training 2>/dev/null
-mkdir -p /tmp/ninja_training
+rm -rf /tmp/termtrainer_lab 2>/dev/null
+mkdir -p /tmp/termtrainer_lab
 echo "✅ Окружение готово!"
 
 TASK
-Описание задания для пользователя.
+📜 Описание и теория для пользователя.
 
 Пиши понятно, с примерами команд если нужно.
-Используй эмодзи для наглядности 🥷
+Используй эмодзи для наглядности 🧙
+
+Эта секция может быть длинной — она будет разбита на страницы.
+Описание, примеры команд, советы — всё здесь.
+
+ASSIGNMENT
+🎯 ЗАДАНИЕ: Краткое название
+
+1. Первый шаг
+2. Второй шаг
+3. Третий шаг
+
+Нажми [V] когда выполнишь — Стиббонс проверит.
 
 VALIDATION
 #!/bin/bash
 # Скрипт проверки — exit 0 = успех, exit 1+ = ошибки
 errors=0
-[ -d /tmp/ninja_training ] && echo "✓ Папка существует" || { echo "✗ Папка не найдена"; errors=$((errors+1)); }
+[ -d /tmp/termtrainer_lab ] && echo "✓ Папка существует" || { echo "✗ Папка не найдена"; errors=$((errors+1)); }
 [ "$errors" -eq 0 ] && echo "✓✓✓ ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ! ✓✓✓"
 exit $errors
 

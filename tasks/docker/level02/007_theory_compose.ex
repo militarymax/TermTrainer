@@ -71,6 +71,7 @@ docker compose down -v        # Уничтожить и тома тоже!
 
 📂 Рабочий каталог: `~/.termtrainer/docker_007`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. Создай `docker-compose.yml` с nginx и postgres
 2. `docker compose up -d`

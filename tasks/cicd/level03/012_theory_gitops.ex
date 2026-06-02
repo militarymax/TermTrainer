@@ -45,6 +45,7 @@ Pull model (GitOps):
 🔹 ARGOCD — ДЕМОН СИНХРОНИЗАЦИИ
 ───────────────────────────────────────
 
+ASSIGNMENT
 ```bash
 # Установка ArgoCD:
 kubectl create namespace argocd

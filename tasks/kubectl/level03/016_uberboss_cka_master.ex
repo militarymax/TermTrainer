@@ -140,6 +140,8 @@ echo "═══ End of Audit ═══"
 
 Запусти: `chmod +x cluster_audit.sh && ./cluster_audit.sh > $DIR/full_audit.txt`
 
+ASSIGNMENT
+
 📂 Рабочий каталог: `~/.termtrainer/kubectl_016`
 
 VALIDATION

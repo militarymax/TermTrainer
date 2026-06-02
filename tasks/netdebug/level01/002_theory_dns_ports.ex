@@ -64,6 +64,7 @@ nc -zv google.com 22        # SSH
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_002`
 
+ASSIGNMENT
 📋 **Попробуй**:
 1. `dig google.com +short` — IP по имени
 2. `nslookup github.com` — ещё один способ
