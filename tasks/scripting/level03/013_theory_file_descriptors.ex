@@ -95,6 +95,8 @@ exec 3>&-
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_013`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_013
+
 📋 **Попробуй**:
 1. Свой дескриптор: `exec 3>/tmp/test_fd.txt; echo "hello" >&3; exec 3>&-`
 2. Фоновая задача: `(sleep 1; echo done) &; wait`

@@ -81,6 +81,8 @@ kubectl delete pod nginx                 # Уничтожить под
 📂 Рабочий каталог: `~/.termtrainer/kubectl_001`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_001
 📋 **Попробуй**:
 1. `kubectl get nodes`
 2. `kubectl run hello --image=nginx && kubectl get pods -w` (Ctrl+C через 10 сек)

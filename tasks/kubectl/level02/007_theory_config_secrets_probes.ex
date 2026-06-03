@@ -83,6 +83,8 @@ readinessProbe:
 📂 Рабочий каталог: `~/.termtrainer/kubectl_007`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_007
 📋 **Попробуй**:
 1. `kubectl create configmap test-cm --from-literal=key=val && kubectl get cm test-cm -o yaml`
 2. `kubectl create secret generic test-sec --from-literal=pw=secret && kubectl get secret test-sec -o yaml`

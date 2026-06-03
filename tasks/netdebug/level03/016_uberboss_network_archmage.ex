@@ -133,6 +133,8 @@ jq -n \
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_016`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_016
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/netdebug_016"

@@ -123,6 +123,8 @@ TASK
 ASSIGNMENT
 🎯 ЗАДАНИЕ: Освой магию прав доступа!
 
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/keystore/{public,private,shared,links}
+
 1. Посмотри права файлов в keystore/ через ls -la
 2. Создай скрипт /tmp/termtrainer_lab/keystore/hello.sh с "#!/bin/bash\necho hello"
 3. Сделай его исполняемым (chmod +x)

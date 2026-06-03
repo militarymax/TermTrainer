@@ -81,6 +81,8 @@ jobs:
 
 📂 Рабочий каталог: `~/.termtrainer/cicd_007`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/cicd_007
+
 VALIDATION
 #!/bin/bash
 score=0

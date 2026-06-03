@@ -83,6 +83,8 @@ echo "════════════════════════�
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_011`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_011
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/netdebug_011"

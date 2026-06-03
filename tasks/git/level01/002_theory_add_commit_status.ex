@@ -44,6 +44,8 @@ TASK
 2. Проверь `git status` — увидишь untracked file
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/git_002
 3. Выполни `git add свиток.txt`
 4. Проверь `git status` — увидишь "new file" в staging
 5. Выполни `git commit -m "feat: add first scroll"`

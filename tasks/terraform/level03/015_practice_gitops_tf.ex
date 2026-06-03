@@ -97,6 +97,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/terraform_015`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/terraform_015
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/terraform_015"

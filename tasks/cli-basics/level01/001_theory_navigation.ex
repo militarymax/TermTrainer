@@ -93,6 +93,8 @@ TASK
 ASSIGNMENT
 🎯 ЗАДАНИЕ: Исследуй архивы Университета!
 
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/{tower,library,dungeon,.forbidden}
+
 1. Перейди в /tmp/termtrainer_lab
 2. Осмотрись командой ls
 3. Используй ls -la чтобы найти тайную комнату (.forbidden)

@@ -77,6 +77,8 @@ docker network connect tower_net isolated_vessel
 📂 Рабочий каталог: `~/.termtrainer/docker_012`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/docker_012
 📋 **Попробуй**:
 1. `docker run -d --name test_cp nginx && docker cp test_cp:/etc/hostname /tmp/tower_hostname`
 2. `cat /tmp/tower_hostname && docker stop test_cp && docker rm test_cp`

@@ -39,6 +39,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/crimescene/{evidence,witnesses,suspects}
 1. Прочитай все улики в evidence/
 2. Прочитай показания свидетелей в witnesses/
 3. Сопоставь улики с данными подозреваемых (grep!)

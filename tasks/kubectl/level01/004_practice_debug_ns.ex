@@ -68,6 +68,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/kubectl_004`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_004
+
 VALIDATION
 #!/bin/bash
 score=0

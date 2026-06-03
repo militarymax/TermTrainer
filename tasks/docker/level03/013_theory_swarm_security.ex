@@ -71,6 +71,8 @@ trivy image --severity HIGH,CRITICAL nginx:latest
 📂 Рабочий каталог: `~/.termtrainer/docker_013`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/docker_013
 📋 **Попробуй**:
 1. `docker info | grep Swarm` — статус роя
 2. `trivy image alpine:3.19` — сканирование образа (если установлен)

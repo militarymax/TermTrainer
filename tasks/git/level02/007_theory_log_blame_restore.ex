@@ -37,6 +37,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/git_007`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/git_007
 📋 **Попробуй**:
 1. Посмотри красивую историю: `git log --oneline --graph --all`
 2. Проверь кто писал README: `git blame README.md`

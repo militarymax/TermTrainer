@@ -88,6 +88,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/kubectl_014`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_014
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/kubectl_014"

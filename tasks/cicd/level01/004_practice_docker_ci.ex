@@ -69,6 +69,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/cicd_004`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/cicd_004
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/cicd_004"

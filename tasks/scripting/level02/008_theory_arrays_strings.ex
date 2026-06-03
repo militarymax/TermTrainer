@@ -79,6 +79,8 @@ echo "$(( power / 3 ))" # → 10 (целочисленное деление!)
 📂 Рабочий каталог: `~/.termtrainer/scripting_008`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_008
 📋 **Попробуй**:
 1. Создай массив: `spells=(fireball heal teleport)` и выведи все элементы
 2. Длина строки: `spell="abracadabra"; echo "${#spell}"`

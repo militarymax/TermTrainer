@@ -70,6 +70,8 @@ docker rmi nginx:latest          # Удалить рецепт
 
 📂 Рабочий каталог: `~/.termtrainer/docker_002`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/docker_002
+
 📋 **Попробуй**:
 1. `docker run -d --name web nginx`
 2. `docker logs web` — что пишет сосуд?

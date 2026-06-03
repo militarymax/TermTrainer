@@ -51,6 +51,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/git_012`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/git_012
 📋 **Попробуй**:
 1. Посмотри последний коммит: `git cat-file -p HEAD`
 2. Посмотри его tree: `git ls-tree HEAD`

@@ -86,6 +86,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/docker_015`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/docker_015
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/docker_015"

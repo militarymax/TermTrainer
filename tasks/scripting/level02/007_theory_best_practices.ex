@@ -119,6 +119,8 @@ trap cleanup EXIT    # Выполнится при ЛЮБОМ выходе из 
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_007`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_007
+
 VALIDATION
 #!/bin/bash
 score=0

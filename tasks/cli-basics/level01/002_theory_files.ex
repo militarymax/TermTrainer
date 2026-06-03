@@ -134,6 +134,8 @@ TASK
 ASSIGNMENT
 🎯 ЗАДАНИЕ: Работа с артефактами Университета!
 
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/workspace/{drafts,archive,src}
+
 1. Перейди в /tmp/termtrainer_lab/workspace
 2. Создай пустой свиток report.txt командой touch
 3. Запиши заклинание в todo.txt: echo "Мои задачи" > todo.txt

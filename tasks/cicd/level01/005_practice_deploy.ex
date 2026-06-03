@@ -76,6 +76,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/cicd_005`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/cicd_005
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/cicd_005"

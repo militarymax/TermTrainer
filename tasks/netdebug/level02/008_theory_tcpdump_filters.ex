@@ -65,6 +65,8 @@ sudo tcpdump 'tcp[tcpflags] == tcp-syn|tcp-ack' # SYN+ACK (ответ серве
 📂 Рабочий каталог: `~/.termtrainer/netdebug_008`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_008
 📋 **Попробуй**:
 1. `sudo tcpdump -c 20 -nn port 443` — только HTTPS пакеты
 2. `sudo tcpdump -c 10 'tcp[tcpflags] & tcp-syn != 0'` — только новые соединения

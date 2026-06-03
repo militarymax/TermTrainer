@@ -88,6 +88,8 @@ echo "${name}s"      # → Rincewinds (фигурные скобки для об
 📂 Рабочий каталог: `~/.termtrainer/scripting_001`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_001
 📋 **Попробуй**:
 1. Создай `hello.sh` с шебангом и `echo "Hello, Unseen University!"`
 2. Сделай исполняемым: `chmod +x hello.sh`

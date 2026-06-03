@@ -75,6 +75,8 @@ terraform {
 
 📂 Рабочий каталог: `~/.termtrainer/terraform_007`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/terraform_007
+
 VALIDATION
 #!/bin/bash
 score=0

@@ -144,6 +144,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/kubectl_016`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_016
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/kubectl_016"

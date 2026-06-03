@@ -33,6 +33,8 @@ TASK
 Ну, кроме Смерти, но он занят.
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/taskmgr
 ЗАДАНИЕ:
 1. Прочитай PID процессов из taskmgr/*.pid
 2. Останови worker1 и worker2 сигналом SIGTERM (вежливо)

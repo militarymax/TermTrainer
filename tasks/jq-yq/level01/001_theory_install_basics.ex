@@ -60,6 +60,8 @@ jq '.бюджет | .доход' wizard.json # 50000
 📂 Рабочий каталог: `~/.termtrainer/jqyq_001`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/jqyq_001
 📋 **Попробуй**:
 1. Проверь установку: `jq --version` и `yq --version`
 2. Выведи весь JSON: `cd ~/.termtrainer/jqyq_001 && jq '.' wizard.json`

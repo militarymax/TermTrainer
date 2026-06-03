@@ -80,6 +80,8 @@ output "tower_dns" {
 
 📂 Рабочий каталог: `~/.termtrainer/terraform_002`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/terraform_002
+
 VALIDATION
 #!/bin/bash
 score=0

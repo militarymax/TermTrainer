@@ -51,6 +51,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/jqyq_004`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/jqyq_004
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/jqyq_004"

@@ -52,6 +52,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_007`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_007
+
 ⚡ **Ключевые переменные awk**:
 • `$1, $2, ... $NF` — столбцы
 • `NR` — номер строки (Number of Record)

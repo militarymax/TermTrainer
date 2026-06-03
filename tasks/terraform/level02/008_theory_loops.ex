@@ -92,6 +92,8 @@ resource "aws_security_group" "tower" {
 
 📂 Рабочий каталог: `~/.termtrainer/terraform_008`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/terraform_008
+
 VALIDATION
 #!/bin/bash
 score=0

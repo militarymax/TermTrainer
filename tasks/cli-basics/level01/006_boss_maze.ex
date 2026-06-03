@@ -42,6 +42,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/dungeon/{entrance,hallway/{left,right},chamber/{treasure,trap},exit}
 1. Создай инвентарь: /tmp/termtrainer_lab/inventory.txt
 2. Запиши туда содержимое torch.txt, sword.txt, potion.txt и gold.txt
    (каждый артефакт с новой строки — используй >> !)

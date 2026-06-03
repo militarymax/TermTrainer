@@ -66,6 +66,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_004`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_004
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/netdebug_004"

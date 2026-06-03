@@ -48,6 +48,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_001`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_001
+
 Подсказка: начни с `cat ~/.termtrainer/textfu_001/приветствие.txt`
 
 VALIDATION

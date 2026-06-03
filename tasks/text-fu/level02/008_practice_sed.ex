@@ -77,6 +77,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_008`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_008
+
 ⚠ macOS: `sed -i '' 's/old/new/g' file`
 
 VALIDATION

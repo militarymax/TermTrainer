@@ -52,6 +52,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/jqyq_012`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/jqyq_012
 📋 **Попробуй**:
 1. Сумма доходов через reduce: `jq 'reduce .транзакции[] as $t (0; if $t.тип=="доход" then .+$t.сумма else . end)' transactions.json`
 2. Функция double: `echo '[1,2,3]' | jq 'def double: . * 2; map(double)'`

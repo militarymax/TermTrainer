@@ -82,6 +82,8 @@ ${{ secrets.API_KEY }}   # Секреты (НЕ в коде!)
 
 📂 Рабочий каталог: `~/.termtrainer/cicd_002`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/cicd_002
+
 VALIDATION
 #!/bin/bash
 score=0

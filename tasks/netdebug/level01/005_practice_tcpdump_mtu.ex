@@ -55,6 +55,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/netdebug_005`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_005
+
 VALIDATION
 #!/bin/bash
 score=0

@@ -77,6 +77,8 @@ kubectl explain deploy.spec.strategy         # Стратегия обновле
 📂 Рабочий каталог: `~/.termtrainer/kubectl_002`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_002
 📋 **Попробуй**:
 1. `kubectl create deployment test --image=nginx --dry-run=client -o yaml | head -20`
 2. `kubectl explain pod.spec.containers | head -20`

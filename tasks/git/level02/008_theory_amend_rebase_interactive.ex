@@ -44,6 +44,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/git_008`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/git_008
 📋 **Попробуй**:
 1. Измени последний коммит: добавь файл и сделай `git commit --amend`
 2. Посмотри интерактивный rebase: `git rebase -i HEAD~3` (объедини два коммита)

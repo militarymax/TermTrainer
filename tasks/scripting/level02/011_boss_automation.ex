@@ -111,6 +111,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_011`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_011
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/scripting_011"

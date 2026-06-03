@@ -78,6 +78,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/scripting_004`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/scripting_004
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/scripting_004"

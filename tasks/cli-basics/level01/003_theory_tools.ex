@@ -112,12 +112,16 @@ TASK
 ASSIGNMENT
 🎯 ЗАДАНИЕ: Изучи природу артефактов!
 
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/artifacts
+
 1. Определи тип файла mysterious.bin через file
+   (файл лежит в misc/mysterious.bin)
 2. Найди где лежит команда bash (which)
 3. Узнай природу команды cd (type)
-4. Открой длинный свиток long_tale.txt через less (просто попробуй!)
+4. Открой длинный свиток grimoires/long_tale.txt через less
 5. Посмотри справку по команде ls (man ls или ls --help)
-6. Запиши результат file mysterious.bin в /tmp/termtrainer_lab/file_result.txt
+6. Запиши результат file mysterious.bin в /tmp/termtrainer_lab/file_result.txt:
+   file misc/mysterious.bin > /tmp/termtrainer_lab/file_result.txt
 
 Нажми [V] когда выполнишь — Стиббонс проверит.
 

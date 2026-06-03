@@ -71,6 +71,8 @@ TASK
 ASSIGNMENT
 🎯 ЗАДАНИЕ: Найди спрятанное!
 
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/searchlab/{src,docs,config}
+
 1. Найди все .js файлы в searchlab/
 2. Найди все .conf файлы
 3. Найди в каком файле есть слово "bug"

@@ -50,6 +50,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/pipeline/{raw,processed,output}
 1. Создай processed/engineering.csv — сотрудники Engineering отдела
 2. Создай processed/moscow_sales.csv — продажи в Москве
 3. Посчитай среднюю зарплату в Engineering → output/avg_salary.txt

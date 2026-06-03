@@ -75,6 +75,8 @@ kubectl auth can-i delete pods --as=system:serviceaccount:default:tower-wizard
 📂 Рабочий каталог: `~/.termtrainer/kubectl_008`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_008
 📋 **Попробуй**:
 1. `kubectl create sa test-sa && kubectl create role test-role --verb=get,list --resource=pods`
 2. `kubectl create rolebinding test-rb --role=test-role --serviceaccount=test-sa`

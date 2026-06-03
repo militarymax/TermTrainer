@@ -37,6 +37,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/vault/{public,internal,confidential,portal}
 1. Установи права public/announcement.txt → 644 (все читают, владелец пишет)
 2. Установи права internal/memo.txt → 640 (владелец rw, группа r)
 3. Закрой confidential/passwords.txt → 600 (только владелец!)

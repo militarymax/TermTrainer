@@ -38,6 +38,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/filelab/{src,backup,temp}
 1. Перейди в /tmp/termtrainer_lab/filelab
 2. Создай файл src/Makefile с содержимым "all: build"
 3. Скопируй config.ini в backup/ (резервная копия!)

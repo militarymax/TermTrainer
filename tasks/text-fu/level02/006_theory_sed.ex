@@ -60,6 +60,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_006`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_006
+
 ⚡ **Важно для macOS**: `sed -i` требует аргумент: `sed -i '' 's/old/new/g' file`
 
 VALIDATION

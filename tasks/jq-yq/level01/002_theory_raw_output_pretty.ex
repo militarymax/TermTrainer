@@ -59,6 +59,8 @@ TASK
 📂 Рабочий каталог: `~/.termtrainer/jqyq_002`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/jqyq_002
 📋 **Попробуй**:
 1. С кавычками: `jq '.название' potions.json`
 2. Без кавычек: `jq -r '.название' potions.json`

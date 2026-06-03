@@ -92,6 +92,8 @@ affinity:
 📂 Рабочий каталог: `~/.termtrainer/kubectl_012`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/kubectl_012
 📋 **Попробуй**:
 1. `kubectl get nodes -o jsonpath='{.items[*].spec.taints}' | jq '.'`
 2. `kubectl taint nodes <node> test=true:NoSchedule && kubectl taint nodes <node> test=true-`

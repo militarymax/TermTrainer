@@ -77,6 +77,8 @@ TASK
 ═══════════════════════════════════
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/incident/{var/log,var/data,var/run,etc,home/admin,backup}
 📋 ЗАДАЧА 1: РАССЛЕДОВАНИЕ МАГИЧЕСКОГО ЖУРНАЛА
 Найди в var/log/application.log:
 - Сколько всего ошибок (ERROR)?

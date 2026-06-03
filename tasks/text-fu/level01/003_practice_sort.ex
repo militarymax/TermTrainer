@@ -62,6 +62,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_003`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_003
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/textfu_003"

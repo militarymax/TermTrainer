@@ -43,6 +43,8 @@ TASK
 
 ASSIGNMENT
 🎯 ЗАДАНИЕ:
+
+📂 Перейди в рабочий каталог: cd /tmp/termtrainer_lab/maze/{corridor1,corridor2,corridor3/{room_a,room_b},dead_end}
 1. Перейди в /tmp/termtrainer_lab/maze
 2. Найди key.txt и запиши его содержимое в /tmp/termtrainer_lab/result_key.txt
 3. Найди map.txt и запиши его содержимое в /tmp/termtrainer_lab/result_map.txt

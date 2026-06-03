@@ -73,6 +73,8 @@ yq — не только YAML. Это швейцарский нож для фо�
 📂 Рабочий каталог: `~/.termtrainer/jqyq_013`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/jqyq_013
 📋 **Попробуй**:
 1. XML→JSON: `yq -p xml -o json '.' data.xml`
 2. CSV→JSON: `yq -p csv -o json '.' data.csv`

@@ -76,6 +76,8 @@ echo | openssl s_client -connect host:443 2>/dev/null | openssl x509 -noout -dat
 📂 Рабочий каталог: `~/.termtrainer/netdebug_012`
 
 ASSIGNMENT
+
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/netdebug_012
 📋 **Попробуй**:
 1. `openssl s_client -connect google.com:443 -servername google.com </dev/null 2>&1 | grep -E "Protocol|Cipher"`
 2. `echo | openssl s_client -connect google.com:443 2>/dev/null | openssl x509 -noout -dates`

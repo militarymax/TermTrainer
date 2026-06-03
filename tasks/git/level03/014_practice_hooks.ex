@@ -49,6 +49,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/git_014`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/git_014
+
 VALIDATION
 #!/bin/bash
 DIR="$HOME/.termtrainer/git_014"

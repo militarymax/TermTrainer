@@ -63,6 +63,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_002`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_002
+
 ⚡ Помни: `uniq` работает только с **соседними** строками! Обычно используют `sort | uniq`
 
 VALIDATION

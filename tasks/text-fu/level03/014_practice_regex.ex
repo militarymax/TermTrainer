@@ -74,6 +74,8 @@ ASSIGNMENT
 
 📂 Рабочий каталог: `~/.termtrainer/textfu_014`
 
+📂 Перейди в рабочий каталог: cd $HOME/.termtrainer/textfu_014
+
 ⚡ Подсказки по regex:
 • `ERROR|WARNING` — ИЛИ
 • `\.university$` — заканчивается на .university
