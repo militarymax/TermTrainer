@@ -955,6 +955,11 @@ func taskView(task *Task, progress *Progress, allTasks []*Task, taskIdx int) {
 		input := readInput()
 		switch strings.ToUpper(input) {
 		case "R":
+			// Jump to assignment page first so user sees what to do
+			if hasAssignment && !onAssignmentPage {
+				taskPage = taskPages // jump to assignment page
+				continue // re-render with assignment visible, user presses R again to open shell
+			}
 			spawnShell(task)
 			running = true
 			startTime = time.Now()
