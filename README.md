@@ -29,8 +29,14 @@
 
 git clone https://github.com/militarymax/TermTrainer.git
 cd TermTrainer
-go build -o ninja-trainer
-./ninja-trainer
+make build          # или: go build -o termtrainer .
+./termtrainer
+```
+
+### Кросс-компиляция
+
+```bash
+make cross-compile  # соберёт termtrainer-darwin-arm64 и termtrainer-linux-amd64
 ```
 
 ## 🎮 Как пользоваться
@@ -63,8 +69,11 @@ go build -o ninja-trainer
 ```
 TermTrainer/
 ├── main.go              # Приложение на Go (stdlib only, single file)
-├── go.mod               # module ninja-trainer, go 1.21
+├── main_test.go         # Тесты парсера и утилит
+├── go.mod               # module termtrainer, go 1.21
+├── Makefile             # build, test, lint, cross-compile
 ├── README.md            # Этот свиток
+├── CONTRIBUTING.md      # Для контрибьюторов
 ├── progress.json        # Автосоздаётся — журнал Мага
 └── tasks/               # Свитки с заданиями (.ex файлы)
     ├── TEMPLATE.ex.example
@@ -153,7 +162,7 @@ TermTrainer/
 | Level | Тема | Задания |
 |-------|------|---------|
 | 🟢 1 | Подмастерье Алхимии | cat/echo, sort/uniq, перенаправление, boss-зелье |
-| 🟡 2 | Мастер Трансмутации | sed (потоковый редактор), awk (язык заклинаний), сломанный сосуд |
+| 🟡 2 | Мастер Трансмутации | sed (потоковый редактор), awk (язык заклинаний), практика sed/awk, сломанный сосуд |
 | 🔴 3 | Архимаг Дешифровки | cut/xargs, regex/find, дешифровка древних свитков |
 
 </details>
@@ -294,7 +303,7 @@ TermTrainer/
 | 300-499 | Верховный Маг |
 | 500+ | Архиканцлер |
 
-XP за задания: easy = 10XP, medium = 25XP, hard = 50XP, expert = 100XP.
+XP начисляется автоматически на основе сложности: easy = 10 XP, medium = 25 XP, hard = 50 XP, expert = 100 XP.
 
 ## 📝 Формат свитков (.ex)
 
@@ -302,22 +311,27 @@ XP за задания: easy = 10XP, medium = 25XP, hard = 50XP, expert = 100XP.
 
 ```
 META
-# Track: faculty-name
 # Title: Название свитка
 # Number: 001
 # Level: 1
 # Type: theory|practice|boss|uberboss
 # Difficulty: easy|medium|hard|expert
 # TimeLimitMin: 10
-# XP: 10
 
 SETUP
 #!/bin/bash
-# Подготовка магического круга (выполняется при [R])
+# Подготовка магического круга (выполняется при нажатии [R])
 
 TASK
 Текст свитка — описание того, что нужно сделать в терминале.
-Включает лор Плоского Мира, примеры команд и задания.
+Включает лор Плоского Мира, примеры команд и объяснения.
+Эта секция может быть длинной — она будет разбита на страницы.
+
+ASSIGNMENT
+🎯 ЗАДАНИЕ: Краткое название
+1. Первый шаг
+2. Второй шаг
+Нажми [V] когда выполнишь — Совет Магов проверит.
 
 VALIDATION
 #!/bin/bash
@@ -330,23 +344,48 @@ HINTS
 Третья — почти готовое заклинание
 ```
 
+### Секции свитка
+
+| Секция | Обязательна | Описание |
+|--------|-------------|----------|
+| `META` | ✅ | Метаданные задания. Обязательно только `Title`, остальные поля опциональны |
+| `SETUP` | ❌ | Bash-скрипт подготовки окружения. Выполняется перед открытием терминала |
+| `TASK` | ✅ | Основной текст свитка — теория, примеры, объяснения. Разбивается на страницы |
+| `ASSIGNMENT` | ❌ | Краткое пошаговое задание. Показывается отдельной страницей после TASK |
+| `VALIDATION` | ✅ | Bash-скрипт проверки. `exit 0` = успех, строки с `✓`/`✗` подсвечиваются |
+| `HINTS` | ❌ | Подсказки (по одной за нажатие [H]) |
+
+### Поля META
+
+| Поле | Обязательное | По умолчанию | Примечание |
+|------|-------------|--------------|------------|
+| `Title` | ✅ | — | Название свитка |
+| `Number` | ❌ | Из имени файла | Трёхзначный номер (001, 002...) |
+| `Level` | ❌ | 1 | Уровень (1, 2, 3) |
+| `Type` | ❌ | practice | Тип: theory, practice, boss, uberboss |
+| `Difficulty` | ❌ | medium | Сложность: easy, medium, hard, expert |
+| `TimeLimitMin` | ❌ | 0 | Лимит времени в минутах (0 = без лимита) |
+
+> **Примечание**: Факультет (`Track`) определяется автоматически из пути файла (`tasks/<track>/...`), поле `# Track` в META игнорируется. XP вычисляется из `Difficulty`.
+
 ## ➕ Создание нового свитка
 
 1. Создай файл `tasks/<факультет>/levelXX/NNN_name.ex`
 2. Номер (NNN) — трёхзначный, уникальный в пределах уровня
-3. Заполни META (обязательно: Track, Title и Type), SETUP, TASK, VALIDATION, HINTS
+3. Заполни META (обязательно: `Title`), SETUP, TASK, VALIDATION, HINTS
 4. Используй шаблон: `tasks/TEMPLATE.ex.example`
 5. Перезапусти тренажёр — свиток появится в каталоге автоматически
 
 **Порядок в уровне**: theory → practice → boss → uberboss
-(сортировка по `# Type`, затем по `# Number`)
+(сортировка по `Type`, затем по `Number`)
 
 ## ⚠️ Особенности магии
 
 - На macOS `sed -i` требует аргумент: `sed -i "" "s/old/new/g" file`
 - Магический Терминал призывает `bash` (не zsh)
 - VALIDATION выполняется в отдельном магическом круге — не видит переменные интерактивной сессии
-- Рабочая директория SETUP — `~/.ninja_trainer/<track>_<number>/`
+- Рабочая директория SETUP — `/tmp/termtrainer_lab/`
+- `progress.json` создаётся в текущей рабочей директории
 
 ## 🛠 Технологии
 
